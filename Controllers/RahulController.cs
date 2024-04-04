@@ -8,5 +8,16 @@ namespace Hiraj_Foods.Controllers
         {
             return View();
         }
+
+        public IActionResult Feedback()
+        {
+            return View();
+        }
+
+        public IActionResult Enquiry()
+        {
+            return View();
+        }
+
     }
 }
