@@ -18,5 +18,10 @@ namespace Hiraj_Foods.Controllers
         {
             return View();
         }
+
+        public IActionResult HomeInside()
+        {
+            return View();
+        }
     }
 }
