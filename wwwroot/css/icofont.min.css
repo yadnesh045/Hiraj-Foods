@@ -8475,15 +8475,15 @@
     margin-left: 0
 }
 
-.icofont-ul>li {
-    position: relative;
-    line-height: 2em
-}
+    .icofont-ul > li {
+        position: relative;
+        line-height: 2em
+    }
 
-.icofont-ul>li .icofont {
-    display: inline-block;
-    vertical-align: middle
-}
+        .icofont-ul > li .icofont {
+            display: inline-block;
+            vertical-align: middle
+        }
 
 .icofont-border {
     border: solid .08em #f1f1f1;
