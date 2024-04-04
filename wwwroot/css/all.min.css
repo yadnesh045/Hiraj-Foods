@@ -81,9 +81,9 @@
     padding-left: 0
 }
 
-.fa-ul>li {
-    position: relative
-}
+    .fa-ul > li {
+        position: relative
+    }
 
 .fa-li {
     left: -2em;
