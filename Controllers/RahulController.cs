@@ -2,21 +2,22 @@
 
 namespace Hiraj_Foods.Controllers
 {
-    public class YadneshController : Controller
+    public class RahulController : Controller
     {
-        public IActionResult Aboutus()
+        public IActionResult Contact()
         {
             return View();
         }
 
-        public IActionResult Quality_Values()
+        public IActionResult Feedback()
         {
             return View();
         }
 
-        public IActionResult Home()
+        public IActionResult Enquiry()
         {
             return View();
         }
+
     }
 }
