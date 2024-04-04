@@ -4,10 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Hiraj_Foods</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+@*     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/all.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Hiraj_Foods.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Hiraj_Foods.styles.css" asp-append-version="true" /> *@
+    <link href="~/css/animate.css" rel="stylesheet" />
+    <link href="~/css/icofont.min.css" rel="stylesheet" />
+    <link href="~/css/lightcase.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/swiper.min.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 <body>
     <header>
@@ -30,12 +49,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Yadnesh" asp-action="Aboutus">AboutUs</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Yadnesh" asp-action="Quality_Values">Quality</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Yadnesh" asp-action="Home">Home</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+
+
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -49,6 +78,24 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/fontawesome.min.js"></script>
+<script src="~/js/functions.js"></script>
+<script src="~/js/isotope.pkgd.min.js"></script>
+<script src="~/js/jquery.countdown.min.js"></script>
+<script src="~/js/jquery.counterup.min.js"></script>
+<script src="~/js/jquery.js"></script>
+<script src="~/js/lightcase.js"></script>
+<script src="~/js/swiper.min.js"></script>
+<script src="~/js/waypoints.min.js"></script>
+<script src="~/js/wow.min.js"></script>
+
+
+
+
+
+
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

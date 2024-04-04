@@ -1920,10 +1920,9 @@ ontent .entry-meta, .shop-single .review .review-content .review-showing .conten
          
 /* @@@@@@@@@@@@@  Page Header Section Start Here  @@@@@@@@@@@@@@ */
 .page-header {
-  margin-top: 0px;
-
-  background: url(../images/bg-images/QualityW.jpg);
-  height: 300px;
+    margin-top: 0px;
+    background: url('../images/bg-images/qualityw.jpg');
+    height: 300px;
     width: 100%;
 }
 .page-header1 {
