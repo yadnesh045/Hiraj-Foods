@@ -3850,6 +3850,7 @@ ontent .entry-meta, .shop-single .review .review-content .review-showing .conten
 
 .contact-section .contac-bottom {
     margin-bottom: 15px;
+    margin-left:350px;
 }
 
 @media (max-width: 991px) {
@@ -5862,4 +5863,14 @@ table, th, td {
 th, td {
     padding: 15px;
     text-align: center;
+}
+
+
+.contact-form {
+    border-width: 2px;
+    border-style: inset;
+    padding: 15px;
+    margin: 0 auto; /* Center the form horizontally */
+    max-width: 600px; /* Adjust the maximum width as needed */
+
 }
