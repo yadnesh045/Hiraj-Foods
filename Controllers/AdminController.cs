@@ -1,4 +1,5 @@
-﻿using Hiraj_Foods.Models.View_Model;
+
+
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,14 @@ namespace Hiraj_Foods.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly ApplicationDbContext _db;
+        public AdminController(ApplicationDbContext db)
+        {
+
+            _db = db;
+
+
+        }
 
         private readonly IUnitOfWorks unitOfWorks;
 
@@ -48,8 +57,20 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult dashboard()
         {
-            return View();
+            var products = _db.Products.ToList();
+
+            var productPrice = products.Select(p => p.ProductPrice).ToList();
+            ViewBag.ProductPrices = productPrice;
+
+
+            var flavors = products.Select(p => p.ProductFlavour).ToList();
+            ViewBag.Flavors = flavors;
+
+
+
+            return View(products);
         }
+
 
 
     }
