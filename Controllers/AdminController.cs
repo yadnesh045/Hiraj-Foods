@@ -10,14 +10,13 @@ namespace Hiraj_Foods.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly ApplicationDbContext _db;
+       
 
         private readonly IUnitOfWorks unitOfWorks;
 
-        public AdminController(IUnitOfWorks unitOfWorks , ApplicationDbContext db)
+        public AdminController(IUnitOfWorks unitOfWorks)
         {
             this.unitOfWorks = unitOfWorks;
-            _db = db;
         }
 
         public IActionResult Login()
@@ -53,7 +52,7 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult dashboard()
         {
-            var products = _db.Products.ToList();
+            var products = unitOfWorks.Product.GetAll().ToList();
 
             var productPrice = products.Select(p => p.ProductPrice).ToList();
             ViewBag.ProductPrices = productPrice;
@@ -63,11 +62,27 @@ namespace Hiraj_Foods.Controllers
             ViewBag.Flavors = flavors;
 
 
+         //   var FeedBacks = unitOfWorks.FeedBack.GetAll().ToList();
+         //   ViewBag.FeedBacks = FeedBacks;
+
+
 
             return View(products);
         }
 
 
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct(AddProductVM productVM)
+        {
+          
+            return View();
+        }
 
     }
 }
