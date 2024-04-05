@@ -3,6 +3,7 @@ using Hiraj_Foods.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hiraj_Foods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240405092638_Removing-Admin-Image")]
+    partial class RemovingAdminImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,17 +60,6 @@ namespace Hiraj_Foods.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Admins");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Nashik",
-                            Email = "Admin@gmail.com",
-                            Mobile = "8668212142",
-                            Name = "Admin",
-                            Password = "Admin@123"
-                        });
                 });
 
             modelBuilder.Entity("Hiraj_Foods.Models.Contact", b =>
