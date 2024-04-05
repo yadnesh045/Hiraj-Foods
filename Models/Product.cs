@@ -30,6 +30,14 @@ namespace Hiraj_Foods.Models
         public string ProductNutrition { get; set; }
 
 
+
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Weight")]
+        public string ProductWeight { get; set; }
+
+
+
         [Required]
         [StringLength(100)]
         [Display(Name = "Ingredients")]
