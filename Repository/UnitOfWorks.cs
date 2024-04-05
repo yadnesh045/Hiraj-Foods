@@ -8,10 +8,13 @@ namespace Hiraj_Foods.Repository
 
         private readonly ApplicationDbContext _db;
         public IAdminRepository Admin { get; set; }
+
+        public IProductRepository Product { get; set; }
         public UnitOfWorks(ApplicationDbContext _db)
         {
             this._db = _db;
             Admin = new AdminRepository(_db);
+            Product = new ProductRepository(_db);
 
         }
   

@@ -4,5 +4,7 @@
     {
 
         IAdminRepository Admin { get; }
+
+        IProductRepository Product { get; }
     }
 }

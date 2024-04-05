@@ -1,12 +1,8 @@
-﻿@model IEnumerable<Hiraj_Foods.Models.Product>
-@{
-    var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
-    var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
-}
+﻿
+
 @{
     Layout = null;
 }
-
 
 
 <!DOCTYPE html>
@@ -51,11 +47,11 @@
     <script src="/js/Admin-js/config.js"></script>
 </head>
 
+
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <!-- Menu -->
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
@@ -93,11 +89,9 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="AddProduct" class="menu-link">
+                                <a href="layouts-without-menu.html" class="menu-link">
                                     <div data-i18n="Without menu">Add Products</div>
-
                                 </a>
-
                             </li>
                             <li class="menu-item">
                                 <a href="layouts-without-navbar.html" class="menu-link">
@@ -192,10 +186,9 @@
                     </li>
                 </ul>
             </aside>
-            <!-- / Menu -->
-            <!-- Layout container -->
+
+
             <div class="layout-page">
-                <!-- Navbar -->
 
                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                      id="layout-navbar">
@@ -288,176 +281,115 @@
                         </ul>
                     </div>
                 </nav>
+                <div class="content-wrapper">
+                    <!-- Content -->
 
-                <!-- / Navbar -->
-                <!-- Content wrapper -->
-                <div class="content-wrapper" style="background-color:white">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row gy-4">
+                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Add Product</h4>
 
-                            <!-- Total Product Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
+                        <!-- Basic Layout -->
+                        <div class="row">
+                            <div class="col-xl">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Add New Product Details</h5>
+                                        <small class="text-muted float-end">Default label</small>
+                                    </div>
                                     <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Products : 9 </h4>
+                                        <form method="post" asp-controller="Admin" asp-action="AddProduct" enctype="multipart/form-data">
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input  type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" />
+                                                <label for="basic-default-fullname">Product Name</label>
+                                            </div>
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" />
+                                                <label for="basic-default-company">Product Flavour</label>
+                                            </div>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" />
+                                                <label for="basic-default-company">Product Price</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" />
+                                                <label for="basic-default-company">Nutrition</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" />
+                                                <label for="basic-default-company">Ingredients</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" />
+                                                <label for="basic-default-company">Product Description</label>
+                                            </div>
+
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="mb-3">
+                                                        <label for="formFile" class="form-label">Input Product Flavour Image</label>
+                                                        <input class="form-control" type="file" id="formFile" />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="formFileMultiple" class="form-label">Input Product Flavour Image</label>
+                                                        <input class="form-control" type="file" id="formFileMultiple" multiple />
+                                                    </div>
+                                                 
+                                                </div>
+                                            </div>
+
+                                         
+                                            <div class="form-floating form-floating-outline mb-4 mt-3">
+                                                <button type="submit" class="btn btn-primary">Send</button>
+
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Total Product Card card -->
-                            <!-- Total Feedback Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Feedback : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Total Feedback Card card -->
-                            <!-- Total Enquiry Card-->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Total Enquiry Card-->
-
-
-                            <div class="col-md-12 col-lg-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Product Prices</h4>
-                                        <div class="chart-container" style="height:400px;">
-                                            <canvas id="productPricesChart"></canvas>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        @* to show the total count of flavours *@
-                                        <h4 class="card-title mb-1" id="flavorsCount"> </h4>
-                                        <canvas id="flavorsChart">
-                                        </canvas>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
+                            <!-- Merged -->
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    <!-- / Content -->
                     <!-- Footer -->
-                    @*    <footer class="content-footer footer bg-footer-theme">
-                    <div class="container-xxl">
-                    <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
-                    <div class="text-body mb-2 mb-md-0">
-                    ©
-                    <script>
-                    document.write(new Date().getFullYear());
-                    </script>
-                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
-                    </div>
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
+                                <div class="text-body mb-2 mb-md-0">
+                                    ©
+                                    <script>
+                                        document.write(new Date().getFullYear());
+                                    </script>
+                                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
+                                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
+                                </div>
+                                <div class="d-none d-lg-inline-block">
+                                    <a href="https://themeselection.com/license/" class="footer-link me-3" target="_blank">License</a>
+                                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-3">More Themes</a>
 
-                    </div>
-                    </div>
-                    </footer> *@
+                                    <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/"
+                                       target="_blank"
+                                       class="footer-link me-3">Documentation</a>
+
+                                    <a href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free/issues"
+                                       target="_blank"
+                                       class="footer-link">Support</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
                     <!-- / Footer -->
 
                     <div class="content-backdrop fade"></div>
                 </div>
-                <!-- Content wrapper -->
-            </div>
-            <!-- / Layout page -->
-        </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+
+
+            </div>
+        </div>
     </div>
 
-
-
-
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-
-    <script src="/js/Admin-js/jquery.js"></script>
-    <script src="/js/Admin-js/popper.js"></script>
-    <script src="/js/Admin-js/bootstrap.js"></script>
-    <script src="/js/Admin-js/node-waves.js"></script>
-    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
-    <script src="/js/Admin-js/menu.js"></script>
-
-    <!-- endbuild -->
-
-    <script src="/js/Admin-js/apexcharts.js"></script>
-
-    <!-- Main JS -->
-    <script src="/js/Admin-js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="/js/Admin-js/dashboards-analytics.js"></script>
-
-
-    <!--Charts js-->
-    <script src="~/js/chart-js/chart.js"></script>
-
-    <!--script for charts-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        var productPrices = @Html.Raw(productPricesJson);
-        var flavors = @Html.Raw(flavorsJson);
-
-    </script>
-
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
-
 </html>
