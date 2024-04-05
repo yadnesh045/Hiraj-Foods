@@ -1,5 +1,7 @@
 
 
+using Hiraj_Foods.Data;
+using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -9,19 +11,13 @@ namespace Hiraj_Foods.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public AdminController(ApplicationDbContext db)
-        {
-
-            _db = db;
-
-
-        }
 
         private readonly IUnitOfWorks unitOfWorks;
 
-        public AdminController(IUnitOfWorks unitOfWorks)
+        public AdminController(IUnitOfWorks unitOfWorks , ApplicationDbContext db)
         {
             this.unitOfWorks = unitOfWorks;
+            _db = db;
         }
 
         public IActionResult Login()
