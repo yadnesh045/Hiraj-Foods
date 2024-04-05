@@ -24,13 +24,13 @@ namespace Hiraj_Foods.Models
         public string Password { get; set; }
 
 
-        [Required]
-        [NotMapped]
-        [Display(Name = "Image")]
-        public IFormFile Image { get; set; }
+        //[Required]
+        //[NotMapped]
+        //[Display(Name = "Image")]
+        //public IFormFile Image { get; set; }
 
 
-        public string ImageUrl { get; set; }
+        //public string ImageUrl { get; set; }
 
 
         [Required]
