@@ -10,13 +10,29 @@ namespace Hiraj_Foods.Repository
         public IAdminRepository Admin { get; set; }
 
         public IProductRepository Product { get; set; }
-        public UnitOfWorks(ApplicationDbContext _db)
+
+        public IContactRepository Contact {get;set;}
+
+		public IUserRepository users {  get; set; } 
+
+		public UnitOfWorks(ApplicationDbContext _db)
         {
             this._db = _db;
             Admin = new AdminRepository(_db);
             Product = new ProductRepository(_db);
+            Contact = new ContactRepository(_db); 
+            users = new UserRepository(_db);    
 
         }
-  
-    }
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
+
+		public void FirstOrDefault()
+		{
+			
+		}
+	}
 }

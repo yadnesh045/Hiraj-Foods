@@ -21,11 +21,15 @@ namespace Hiraj_Foods.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Enquiry> Enquiries { get; set; }
 
+        public DbSet<User> Users { get; set; }  
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Admin>().HasData(
                 new Admin { Id = 1, Email = "Admin@gmail.com", Name="Admin", Mobile="8668212142", Address="Nashik", Password = "Admin@123"}
             );
+
+
         }
 
         }

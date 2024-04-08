@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Hiraj_Foods.Models.Contact
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Contact Us</title>
@@ -133,14 +134,12 @@
                 <h4 class="text-center">Contact Form</h4>
                 <div class="contact-form" style=" border-width:2px;
 
-                                      border-style:inset;padding-top: 15px;padding-left: 15px;padding-right: 15px;padding-bottom: 15px">
-
                                       border-style:inset;padding-top: 15px;padding-left: 15px;padding-right: 15px;padding-bottom: 15px;">
-                    <form method="post" id="commentform" class="comment-form">
-                        <input type="text" name="name" class="" placeholder="Enter Name" required="">
-                        <input type="email" name="email" class="" placeholder="Enter Email" required="">
-                        <input type="text" name="mobno" class="" placeholder="Enter Mobile Number" required="">
-                        <textarea type="text" name="message" id="role" cols="30" rows="10" placeholder="Enter Message" required=""></textarea>
+                    <form method="post" asp-action="Contact" asp-controller="Admin" id="commentform" class="comment-form">
+                        <input type="text" asp-for="Name" name="name" class="" placeholder="Enter Name" required="">
+                        <input type="email" asp-for="Email" name="email" class="" placeholder="Enter Email" required="">
+                        <input type="text" asp-for="Phone" name="Phone" class="" placeholder="Enter Mobile Number" required="">
+                        <textarea type="text" asp-for="Message" name="message" id="role" cols="30" rows="10" placeholder="Enter Message" required=""></textarea>
                         <button type="submit" class="lab-btn" name="submit" value="submit">
                             <span>Submit Now</span>
                         </button>

@@ -6,5 +6,16 @@
         IAdminRepository Admin { get; }
 
         IProductRepository Product { get; }
-    }
+
+        IContactRepository Contact { get; }
+
+        IUserRepository users { get; }    
+
+        void Save();
+
+
+
+
+
+	}
 }
