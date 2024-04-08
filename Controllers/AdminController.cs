@@ -1,5 +1,3 @@
-
-
 using Azure.Core;
 using Hiraj_Foods.Data;
 using Hiraj_Foods.Models;
