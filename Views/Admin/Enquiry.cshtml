@@ -309,77 +309,83 @@
                 <!--  Main For Enquiry-->
                 <!-- Hoverable Table rows -->
 
-                <div class="content-wrapper">
+                <div class="content-wrapper" style="background-color:white">
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
 
-                        <hr class ="my-5"   />
-                <div class="card">
-                    <h5 class="card-header">Enquiries</h5>
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Subject</th>
-                                    <th>Mobile No</th>
-                                    <th>Message</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                @foreach (var data in Model)
-                                {
-                                    <tr>
-                                        <td>@data.Name</td>
-                                        <td>@data.Email</td>
-                                        <td>@data.Subject</td>
-                                        <td>@data.Phone</td>
-                                        <td>@data.Message</td>
-                                    </tr>
+                        <hr class ="my-5" />
 
-                                }
-                            </tbody>
-                        </table>
+                        <div class="card">
+                            <h5 class="card-header">Enquiries</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Subject</th>
+                                            <th>Mobile No</th>
+                                            <th>Message</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @foreach (var data in Model)
+                                        {
+                                            <tr>
+                                                <td>@data.Name</td>
+                                                <td>@data.Email</td>
+                                                <td>@data.Subject</td>
+                                                <td>@data.Phone</td>
+                                                <td style="word-wrap: break-word; white-space:normal ">@data.Message</td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                </div>
-                </div>
-                <!--/ Hoverable Table rows -->
-                <!--  Main For Enquiry-->
-                <!-- Core JS -->
-                <!-- build:js assets/vendor/js/core.js -->
+            </div>
+        </div>
+    </div>
+    
+    <!--/ Hoverable Table rows -->
+    <!--  Main For Enquiry-->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
 
-                <script src="/js/Admin-js/jquery.js"></script>
-                <script src="/js/Admin-js/popper.js"></script>
-                <script src="/js/Admin-js/bootstrap.js"></script>
-                <script src="/js/Admin-js/node-waves.js"></script>
-                <script src="/js/Admin-js/perfect-scrollbar.js"></script>
-                <script src="/js/Admin-js/menu.js"></script>
+    <script src="/js/Admin-js/jquery.js"></script>
+    <script src="/js/Admin-js/popper.js"></script>
+    <script src="/js/Admin-js/bootstrap.js"></script>
+    <script src="/js/Admin-js/node-waves.js"></script>
+    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+    <script src="/js/Admin-js/menu.js"></script>
 
-                <!-- endbuild -->
+    <!-- endbuild -->
 
-                <script src="/js/Admin-js/apexcharts.js"></script>
+    <script src="/js/Admin-js/apexcharts.js"></script>
 
-                <!-- Main JS -->
-                <script src="/js/Admin-js/main.js"></script>
+    <!-- Main JS -->
+    <script src="/js/Admin-js/main.js"></script>
 
-                <!-- Page JS -->
-                <script src="/js/Admin-js/dashboards-analytics.js"></script>
-
-
-                <!--Charts js-->
-                <script src="~/js/chart-js/chart.js"></script>
-
-                <!--script for charts-->
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Page JS -->
+    <script src="/js/Admin-js/dashboards-analytics.js"></script>
 
 
+    <!--Charts js-->
+    <script src="~/js/chart-js/chart.js"></script>
 
-                <!-- Place this tag in your head or just before your close body tag. -->
-                <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--script for charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>

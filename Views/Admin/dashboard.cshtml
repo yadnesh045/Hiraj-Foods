@@ -1,7 +1,13 @@
-﻿@model IEnumerable<Hiraj_Foods.Models.Product>
+﻿@model Tuple<List<Hiraj_Foods.Models.Product>, List<Hiraj_Foods.Models.FeedBack>, List<Hiraj_Foods.Models.Enquiry>>
+
 @{
     var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
     var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
+
+    var products = Model.Item1;
+    var feedback = Model.Item2;
+    var enquiry = Model.Item3;
+
 }
 @{
     Layout = null;
@@ -49,6 +55,11 @@
     <!-- Helpers -->
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
+
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -130,7 +141,7 @@
                     </li>
 
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <a href="javascript:void(0);" class="menu-link">
                             <i class="menu-icon tf-icons mdi mdi-phone"></i>
                             <div data-i18n="Dashboards">Contact</div>
                         </a>
@@ -150,6 +161,30 @@
                             <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
                             <div data-i18n="Dashboards">Feedback</div>
                         </a>
+                    </li>
+
+                    <!--Settings-->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+
+                            <div data-i18n="Layouts">Settings </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="MyProfile" class="menu-link">
+                                    <div data-i18n="Without menu">My Profile</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="ChangePassword" class="menu-link">
+                                    <div data-i18n="Without navbar">Change Password</div>
+                                </a>
+                            </li>
+
+                        </ul>
                     </li>
 
                     <!-- Pages -->
@@ -319,9 +354,9 @@
                             <div class="col-md-12 col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Products : 9 </h4>
+                                        <h4 class="card-title mb-1">Total Products : @Model.Item1.Count()  </h4>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
+                                        <a asp-controller="Admin" asp-action="ViewProduct" class="btn btn-sm btn-primary">View Products</a>
                                     </div>
                                 </div>
                             </div>
@@ -330,9 +365,9 @@
                             <div class="col-md-12 col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Feedback : 9 </h4>
+                                        <h4 class="card-title mb-1">Total Feedback : @Model.Item2.Count() </h4>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
+                                        <a href="javascript:;" class="btn btn-sm btn-primary">View FeedBack</a>
                                     </div>
                                 </div>
                             </div>
@@ -341,9 +376,9 @@
                             <div class="col-md-12 col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
+                                        <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
+                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Enquiries</a>
                                     </div>
                                 </div>
                             </div>
@@ -381,17 +416,6 @@
 
 
 
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
 
 
 
@@ -481,3 +505,37 @@
 </body>
 
 </html>
+
+
+
+@if (TempData["Message"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Message"]');
+    </script>
+
+}
