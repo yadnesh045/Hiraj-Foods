@@ -25,7 +25,7 @@ namespace Hiraj_Foods.Models
 
 
         [Required]
-        [StringLength(100)]
+        [StringLength(500)]
         [Display(Name = "Nutrition")]
         public string ProductNutrition { get; set; }
 
@@ -53,7 +53,7 @@ namespace Hiraj_Foods.Models
         [Display(Name = "FlavourImage")]
         public IFormFile ProductFlavourImage { get; set; }
 
-        public string ProductFlavourImageUrl { get; set; }
+        public string? ProductFlavourImageUrl { get; set; }
 
 
         [Required]
@@ -61,6 +61,6 @@ namespace Hiraj_Foods.Models
         [Display(Name = "ProductImage")]
         public IFormFile ProductImage { get; set; }
 
-        public string ProductImageUrl { get; set; }
+        public string? ProductImageUrl { get; set; }
     }
 }

@@ -6,7 +6,6 @@ namespace Hiraj_Foods.Controllers
     public class AddProductVM
     {
 
-    
         public string ProductName { get; set; }
 
         public string ProductFlavour { get; set; }

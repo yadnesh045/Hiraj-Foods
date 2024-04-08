@@ -7,12 +7,12 @@
 
         IProductRepository Product { get; }
 
+
         IEnquiry Enquiry { get; }
 
         IFeedBackRepository Feedback { get; }
 
         IBannerRepository Banner { get; }
-
         void Save();
     }
 }
