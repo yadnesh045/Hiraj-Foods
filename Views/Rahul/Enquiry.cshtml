@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿
+@model Hiraj_Foods.Models.Enquiry
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Enquiry</title>
@@ -125,15 +130,15 @@
                             <div class="contact-form" style="border-width:2px;  
                                       border-style:inset; border-width:2px;  
                                       border-style:inset;padding-top: 15px;padding-left: 15px;padding-right: 15px;padding-bottom: 15px;">
-                                <form  method="post" id="commentform" class="comment-form">
-                                    <input type="text" name="name" class="form-control" placeholder="Enter Name" required="">
+                            <form method="post" id="commentform" asp-controller="Admin" asp-action="Enquiry" class="comment-form">
+                                    <input type="text" name="name"  class="form-control" placeholder="Enter Name" required="">
                                     <input type="email" name="email" class="form-control" placeholder="Enter Email" required="">
                                     <input type="text" name="subject" class="form-control" placeholder="Enter Subject" required="">
-                                    <input type="text" name="mobno" class="form-control" placeholder="Enter Mobile Number" required="">
+                                <input type="text" name="Phone" class="form-control" placeholder="Enter Mobile Number" required="">
 
                                     <textarea type ="text" id="role" cols="30" rows="10" name="message" placeholder="Enter Message" required=""></textarea>
                                     <button type="submit" class="lab-btn" name="submit" value="Submit">
-                                        <span>Submit Now</span>
+                                        Submit Now
                                     </button>
                                 </form>
                             </div>
@@ -142,33 +147,6 @@
             </div>
         </div>
     </div>
-    <!-- Contact Us Section ENding Here -->
-    <!-- newsletters section start here -->
-    <!-- <div class="newsletter-section">
-      <div class="container">
-        <div class="row justify-content-lg-between justify-content-center align-items-center">
-          <div class="col-lg-6 col-12">
-            <div class="newsletter-title">
-              <h4>Subscribe Our Newsletter</h4>
-            </div>
-          </div>
-          <div class="col-lg-6 col-12">
-            <div class="newsletter-form">
-              <form action="/" class="d-flex flex-wrap">
-                <input type="text" placeholder="Enter Your Email" class="input-email">
-                <input type="submit" value="Suibscribe" class="subscribe-btn">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- newsletters section ending here -->
-    <!-- footer section start here -->
-    <!-- footer section ending here -->
-    <!-- scrollToTop start here -->
-    <!-- <a href="#" class="scrollToTop"><i class="icofont-swoosh-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a> -->
-    <!-- scrollToTop ending here -->
 
 
 
@@ -183,6 +161,36 @@
     <script src="assets\js\isotope.pkgd.min.js"></script>
     <script src="assets\js\lightcase.js"></script>
     <script src="assets\js\functions.js"></script>
+
+    @if (TempData["Enquiry"] != null)
+    {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+        <script type="text/javascript">
+            // Set Toastr options including custom background color
+            toastr.options = {
+                "toastClass": "toastr-custom", // Custom class for styling
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-left",
+                "progressBarColor": "white"
+            };
+
+            // Display the Toastr notification
+            toastr.success('@TempData["Enquiry"]');
+        </script>
+
+        <style>
+            /* Custom style for Toastr notification */
+            .toastr-custom {
+                background-color: greenyellow !important; /* Change to your desired background color */
+                color: #000000 !important;
+                font-family: Cambria; /* Change to your desired text color */
+            }
+        </style>
+    }
 
 
 </body>
