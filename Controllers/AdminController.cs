@@ -1,6 +1,7 @@
 
 
 using Hiraj_Foods.Data;
+using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
@@ -83,6 +84,64 @@ namespace Hiraj_Foods.Controllers
           
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Enquiry()
+        {
+            var Enquires = unitOfWorks.Enquiry.GetAll().ToList();
+            return View(Enquires);
+        }
+
+        [HttpPost]
+        public IActionResult Enquiry(Enquiry Enq)
+        {
+
+            if(ModelState.IsValid)
+            {
+                
+                unitOfWorks.Enquiry.Add(Enq);
+                unitOfWorks.Save();
+            }
+            else
+            {
+                Console.WriteLine("-----------------------------------------------");
+                return RedirectToAction("Enquiry" , "Rahul");
+            }
+
+            TempData["Enquiry"] = "Enquiry Sent to Admin";
+            return RedirectToAction("Enquiry", "Rahul");
+        }
+
+
+        [HttpGet]
+        public IActionResult Feedback()
+        {
+            var Feedback = unitOfWorks.Feedback.GetAll().ToList();
+            return View(Feedback);
+        }
+
+
+        [HttpPost]
+        public IActionResult Feedback(FeedBack Enq)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                unitOfWorks.Feedback.Add(Enq);
+                unitOfWorks.Save();
+            }
+            else
+            {
+                Console.WriteLine("-----------------------------------------------");
+                return RedirectToAction("Feedback", "Rahul");
+            }
+
+            TempData["Feedback"] = "Feedback Sent to Admin";
+            return RedirectToAction("Feedback", "Rahul");
+        }
+
+
 
     }
 }

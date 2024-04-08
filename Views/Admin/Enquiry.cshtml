@@ -1,13 +1,8 @@
-﻿@model IEnumerable<Hiraj_Foods.Models.Product>
-@{
-    var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
-    var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
-}
+﻿@model List<Hiraj_Foods.Models.Enquiry>
+
 @{
     Layout = null;
 }
-
-
 
 <!DOCTYPE html>
 
@@ -76,8 +71,8 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboards -->
-                    <li class="menu-item">
-                        <a asp-area="" asp-controller="Admin" asp-action="dashboard" class="menu-link">
+                    <li class="menu-item active open">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
                             <div data-i18n="Dashboards">Home</div>
                         </a>
@@ -97,6 +92,7 @@
                                     <div data-i18n="Without menu">Add Products</div>
 
                                 </a>
+
                             </li>
                             <li class="menu-item">
                                 <a href="layouts-without-navbar.html" class="menu-link">
@@ -116,7 +112,7 @@
 
 
                     <li class="menu-item">
-                        <a asp-area="" asp-controller="Admin" asp-action="Enquiry" class="menu-link">
+                        <a asp-controller="Admin" asp-action="Enquiry" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons mdi mdi-format-align-justify"></i>
 
                             <div data-i18n="Dashboards">Enquiry</div>
@@ -124,8 +120,9 @@
                     </li>
 
                     <li class="menu-item">
-                        <a asp-area="" asp-controller="Admin" asp-action="Feedback" class="menu-link">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
+
                             <div data-i18n="Dashboards">Feedback</div>
                         </a>
                     </li>
@@ -288,174 +285,81 @@
                 </nav>
 
                 <!-- / Navbar -->
-                <!-- Content wrapper -->
-                <div class="content-wrapper" style="background-color:white">
+                <!--  Main For Enquiry-->
+                <!-- Hoverable Table rows -->
+
+                <div class="content-wrapper">
+                    <!-- Content -->
+
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row gy-4">
 
-                            <!-- Total Product Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Products : 9 </h4>
+                        <hr class ="my-5"   />
+                <div class="card">
+                    <h5 class="card-header">Enquiries</h5>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Subject</th>
+                                    <th>Mobile No</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var data in Model)
+                                {
+                                    <tr>
+                                        <td>@data.Name</td>
+                                        <td>@data.Email</td>
+                                        <td>@data.Subject</td>
+                                        <td>@data.Phone</td>
+                                        <td>@data.Message</td>
+                                    </tr>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Total Product Card card -->
-                            <!-- Total Feedback Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Feedback : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Total Feedback Card card -->
-                            <!-- Total Enquiry Card-->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Total Enquiry Card-->
-
-
-                            <div class="col-md-12 col-lg-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Product Prices</h4>
-                                        <div class="chart-container" style="height:400px;">
-                                            <canvas id="productPricesChart"></canvas>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        @* to show the total count of flavours *@
-                                        <h4 class="card-title mb-1" id="flavorsCount"> </h4>
-                                        <canvas id="flavorsChart">
-                                        </canvas>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </div>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <!-- Footer -->
-                    @*    <footer class="content-footer footer bg-footer-theme">
-                    <div class="container-xxl">
-                    <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
-                    <div class="text-body mb-2 mb-md-0">
-                    ©
-                    <script>
-                    document.write(new Date().getFullYear());
-                    </script>
-                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
-                    </div>
-
-                    </div>
-                    </div>
-                    </footer> *@
-                    <!-- / Footer -->
-
-                    <div class="content-backdrop fade"></div>
                 </div>
-                <!-- Content wrapper -->
-            </div>
-            <!-- / Layout page -->
-        </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
+                </div>
+                </div>
+                <!--/ Hoverable Table rows -->
+                <!--  Main For Enquiry-->
+                <!-- Core JS -->
+                <!-- build:js assets/vendor/js/core.js -->
 
+                <script src="/js/Admin-js/jquery.js"></script>
+                <script src="/js/Admin-js/popper.js"></script>
+                <script src="/js/Admin-js/bootstrap.js"></script>
+                <script src="/js/Admin-js/node-waves.js"></script>
+                <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+                <script src="/js/Admin-js/menu.js"></script>
 
+                <!-- endbuild -->
 
+                <script src="/js/Admin-js/apexcharts.js"></script>
 
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
+                <!-- Main JS -->
+                <script src="/js/Admin-js/main.js"></script>
 
-    <script src="/js/Admin-js/jquery.js"></script>
-    <script src="/js/Admin-js/popper.js"></script>
-    <script src="/js/Admin-js/bootstrap.js"></script>
-    <script src="/js/Admin-js/node-waves.js"></script>
-    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
-    <script src="/js/Admin-js/menu.js"></script>
-
-    <!-- endbuild -->
-
-    <script src="/js/Admin-js/apexcharts.js"></script>
-
-    <!-- Main JS -->
-    <script src="/js/Admin-js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="/js/Admin-js/dashboards-analytics.js"></script>
+                <!-- Page JS -->
+                <script src="/js/Admin-js/dashboards-analytics.js"></script>
 
 
-    <!--Charts js-->
-    <script src="~/js/chart-js/chart.js"></script>
+                <!--Charts js-->
+                <script src="~/js/chart-js/chart.js"></script>
 
-    <!--script for charts-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        var productPrices = @Html.Raw(productPricesJson);
-        var flavors = @Html.Raw(flavorsJson);
-
-    </script>
+                <!--script for charts-->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+                <!-- Place this tag in your head or just before your close body tag. -->
+                <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>
+

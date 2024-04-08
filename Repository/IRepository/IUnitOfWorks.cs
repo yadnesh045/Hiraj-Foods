@@ -6,5 +6,11 @@
         IAdminRepository Admin { get; }
 
         IProductRepository Product { get; }
+
+        IEnquiry Enquiry { get; }
+
+        IFeedBackRepository Feedback { get; }
+
+        void Save();
     }
 }
