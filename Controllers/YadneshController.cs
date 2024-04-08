@@ -23,17 +23,16 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-        public IActionResult Home()
-        {
-            var product = unitOfWorks.Product.GetAll().ToList();
-            var banner = unitOfWorks.Banner.GetAll().ToList();
+		public IActionResult Home()
+		{
+			var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
+			var banners = unitOfWorks.Banner.GetAll().ToList();
 
+			var model = new Tuple<List<Product>, List<Banner>>(products, banners);
+			return View(model);
+		}
 
-            var model = new Tuple<List<Product>, List<Banner>>(product, banner);
-            return View(model);
-        }
-
-        public IActionResult HomeInside(int id)
+		public IActionResult HomeInside(int id)
         {
 
             var product = unitOfWorks.Product.GetById(id);

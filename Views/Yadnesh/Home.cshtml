@@ -1,5 +1,7 @@
 ﻿@model Tuple<List<Hiraj_Foods.Models.Product> , List<Hiraj_Foods.Models.Banner>>
-
+@{
+	var firstProduct = Model.Item1.FirstOrDefault();
+}
 
 <body>
 
@@ -67,77 +69,94 @@
 			<img src="~/images/about/shape/01.png" alt="abs-thumb" class="shape-1">
 			<!-- <img src="assets\images\about\shape\02.png" alt="abs-thumb" class="shape-2"> -->
 		</div>
-		<div class="container">
-			<div class="about-wrapper">
-				<div class="row">
-					<div class="col-xl-8 col-12">
-						<div class="section-header text-center text-xl-left wow fadeInUp" data-wow-delay="0.3s">
-							<h3>ABOUT HIRAJ</h3>
-							<p>Best product, Best service</p>
-						</div>
-						<div class="section-wrapper">
-							<div class="row justify-content-center">
-								<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-									<div class="about-item">
-										<div class="about-inner">
 
-											<div class="about-content" style="font-size: 15px;">
-												Our Brand gives us the opportunity to create positive change to grow our products & achieve our purpose of making sustainable living in common place.
+
+
+
+
+		@if (firstProduct != null)
+		{
+
+
+			<div class="container">
+				<div class="about-wrapper">
+					<div class="row">
+						<div class="col-xl-8 col-12">
+							<div class="section-header text-center text-xl-left wow fadeInUp" data-wow-delay="0.3s">
+								<h3>ABOUT HIRAJ</h3>
+								<p>Best product, Best service</p>
+							</div>
+							<div class="section-wrapper">
+								<div class="row justify-content-center">
+									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+										<div class="about-item">
+											<div class="about-inner">
+
+												<div class="about-content" style="font-size: 15px;">
+													Our Brand gives us the opportunity to create positive change to grow our products & achieve our purpose of making sustainable living in common place.
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
-									<div class="about-item">
-										<div class="about-inner">
-											<div class="about-thumb">
-												<img src="~/images/about/icon/02.png" alt="about">
-											</div>
-											<div class="about-content">
-												<h5>Best products</h5>
-												<p>variety of foods that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
+									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
+										<div class="about-item">
+											<div class="about-inner">
+												<div class="about-thumb">
+
+													<img src="~/images/about/icon/02.png" alt="about">
+												</div>
+												<div class="about-content">
+													<h5>Best products</h5>
+													<p>variety of foods that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
-									<div class="about-item">
-										<div class="about-inner">
-											<h5>Who We Are</h5>
-											<div class="about-content" style="font-size: 15px;">
-												We are just another you with ambition to make our Hiraj product that people love.
+									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
+										<div class="about-item">
+											<div class="about-inner">
+												<h5>Who We Are</h5>
+												<div class="about-content" style="font-size: 15px;">
+													We are just another you with ambition to make our Hiraj product that people love.
 
-												That make a difference in Hiraj nutritious foods, Affordable, Tasty foods, Hiraj is bound to make positive impact on lives of people who buy them.
+													That make a difference in Hiraj nutritious foods, Affordable, Tasty foods, Hiraj is bound to make positive impact on lives of people who buy them.
 
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.7s">
-									<div class="about-item">
-										<div class="about-inner">
-											<div class="about-thumb">
-												<img src="~/images/about/icon/03.png" alt="about">
-											</div>
-											<div class="about-content">
-												<a href="#"><h5>Healthy and nutritious</h5></a>
-												<p>variety of Products that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
+									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.7s">
+										<div class="about-item">
+											<div class="about-inner">
+												<div class="about-thumb">
+													<img src="~/images/about/icon/03.png" alt="about">
+												</div>
+												<div class="about-content">
+													<a href="#"><h5>Healthy and nutritious</h5></a>
+													<p>variety of Products that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="about-thumb-1 wow fadeInUp" data-wow-delay="0.4s">
-						<img src="~/img/pomogranate.jpg" alt="about-thumb">
-						<center><h4>"Pomogranate"<br> Flavour</h4></center>
-					</div>
+						<div class="about-thumb-1 wow fadeInUp" data-wow-delay="0.4s" style="position: relative;">
+							<!-- New image -->
+							<img src="~/anurag-images/new (2).png" style="position: absolute; top: 0; left: 240px; z-index: 1;" />
+							<!-- Existing content -->
+							<img src="@firstProduct.ProductImageUrl" alt="about-thumb">
+							<center><h4>"@firstProduct.ProductFlavour"<br> Flavour</h4></center>
+						</div>
+						
 
+					</div>
+					
 				</div>
 			</div>
-		</div>
-	</section>
+			}
+			</section>
+		
 
 	<!-- Feature Secton ending Here -->
 
