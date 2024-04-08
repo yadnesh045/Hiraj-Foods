@@ -20,6 +20,8 @@ namespace Hiraj_Foods.Data
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Enquiry> Enquiries { get; set; }
+        public DbSet<Banner> Banners { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

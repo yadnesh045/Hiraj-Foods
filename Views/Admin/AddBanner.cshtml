@@ -1,8 +1,10 @@
-﻿
+﻿@model Hiraj_Foods.Models.Banner
+
+
 
 @{
     Layout = null;
-}   
+}
 
 
 <!DOCTYPE html>
@@ -107,6 +109,7 @@
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
 
+
                             <div data-i18n="Layouts">Products </div>
                         </a>
 
@@ -116,7 +119,6 @@
                                     <div data-i18n="Without menu">Add Products</div>
 
                                 </a>
-
                             </li>
                             <li class="menu-item">
                                 <a href="layouts-without-navbar.html" class="menu-link">
@@ -312,72 +314,32 @@
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Add Product</h4>
-
+                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Add Banner</h4>
                         <!-- Basic Layout -->
                         <div class="row">
                             <div class="col-xl">
                                 <div class="card mb-4">
                                     <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Add New Product Details</h5>
+                                        <h5 class="mb-0">Add New Banner Details</h5>
+                                        <small class="text-muted float-end">Default label</small>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post" asp-controller="Admin" asp-action="AddProduct" enctype="multipart/form-data">
+                                        <form method="post" asp-controller="Admin" asp-action="AddBanner" enctype="multipart/form-data">
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" name="ProductName" />
-                                                <label for="basic-default-fullname">Product Name</label>
+                                                <input type="text" class="form-control" asp-for="Flavour_title" placeholder="Banner Name" />
+                                                <label for="basic-default-fullname">Banner Title</label>
                                             </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" name="ProductFlavour" />
-                                                <label for="basic-default-company">Product Flavour</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" name="ProductPrice" />
-                                                <label for="basic-default-company">Product Price</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Weight" name="ProductWeight" />
-                                                <label for="basic-default-company">Product Weight</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" name="ProductNutrition" />
-                                                <label for="basic-default-company">Nutrition</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" name="ProductIngredient" />
-                                                <label for="basic-default-company">Ingredients</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" name="ProductDescription" />
-                                                <label for="basic-default-company">Product Description</label>
-                                            </div>
-
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="mb-3">
-                                                        <label for="formFile" class="form-label">Input Product Flavour Image</label>
-
-                                                        <input class="form-control" type="file" id="formFile" name="ProductFlavourImage" />
+                                                        <label for="formFile" class="form-label">Input Banner Flavour Image</label>
+                                                        <input class="form-control" type="file" name="file" asp-for="Banner_Img" />
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="formFileMultiple" class="form-label">Input Product Image</label>
-
-                                                        <input class="form-control" type="file" id="formFile" name="ProductImage" />
-                                                    </div>
-                                                 
                                                 </div>
                                             </div>
-
-                                         
                                             <div class="form-floating form-floating-outline mb-4 mt-3">
-                                                <button type="submit" class="btn btn-primary">Send</button>
-
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                                <a class="btn btn-outline-primary" asp-action="Banner" asp-controller="Admin"> View banners</a>
                                             </div>
                                         </form>
                                     </div>
@@ -418,9 +380,73 @@
 
                     <div class="content-backdrop fade"></div>
                 </div>
+
+
+
             </div>
         </div>
     </div>
 
 </body>
 </html>
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        // Set Toastr options including custom background color
+        toastr.options = {
+            "toastClass": "toastr-custom", // Custom class for styling
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "progressBarColor": "white"
+        };
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Error"]');
+    </script>
+
+    <style>
+        /* Custom style for Toastr notification */
+        .toastr-custom {
+            background-color: red !important; /* Change to your desired background color */
+            color: #000000 !important;
+            font-family: Cambria; /* Change to your desired text color */
+        }
+    </style>
+}
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        // Set Toastr options including custom background color
+        toastr.options = {
+            "toastClass": "toastr-custom", // Custom class for styling
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "progressBarColor": "white"
+        };
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+
+    <style>
+        /* Custom style for Toastr notification */
+        .toastr-custom {
+            background-color: greenyellow !important; /* Change to your desired background color */
+            color: #000000 !important;
+            font-family: Cambria; /* Change to your desired text color */
+        }
+    </style>
+}
+
+
