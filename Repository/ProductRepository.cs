@@ -15,6 +15,17 @@ namespace Hiraj_Foods.Repository
             _db = db;
         }
 
+        public Product GetById(int id)
+        {
+            return _db.Products.Find(id);
+        }
+
+
+        public void Save(Product obj)
+        {
+            _db.Products.Add(obj);
+        }
+
         public void Update(Product obj)
         {
             _db.Products.Update(obj);

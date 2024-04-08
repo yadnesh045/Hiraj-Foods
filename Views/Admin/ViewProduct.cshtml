@@ -1,8 +1,10 @@
-﻿
+﻿@model List<Hiraj_Foods.Models.Product>
 
 @{
     Layout = null;
-}   
+}
+
+
 
 
 <!DOCTYPE html>
@@ -38,6 +40,7 @@
     <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
     <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+
     <!-- Vendors CSS -->
     <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
     <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
@@ -45,10 +48,19 @@
     <!-- Helpers -->
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
+
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+
 </head>
 
 
 <body>
+
+
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -233,7 +245,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2 pe-1">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="~/assets/1.png" alt="No Profile Image" class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -286,79 +298,76 @@
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Add Product</h4>
 
-                        <!-- Basic Layout -->
-                        <div class="row">
-                            <div class="col-xl">
-                                <div class="card mb-4">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Add New Product Details</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <form method="post" asp-controller="Admin" asp-action="AddProduct" enctype="multipart/form-data">
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" name="ProductName" />
-                                                <label for="basic-default-fullname">Product Name</label>
-                                            </div>
+                        <hr class="my-5" />
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" name="ProductFlavour" />
-                                                <label for="basic-default-company">Product Flavour</label>
-                                            </div>
+                        <!-- Hoverable Table rows -->
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Product Flavour	</th>
+                                            <th>Product Price</th>
+                                            <th>Nutrition</th>
+                                            <th>Ingredients</th>
+                                            <th>Description</th>
+                                            <th>Flavour Image</th>
+                                            <th>Product Image</th>
+                                            <th>Actions</th>
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" name="ProductPrice" />
-                                                <label for="basic-default-company">Product Price</label>
-                                            </div>
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Weight" name="ProductWeight" />
-                                                <label for="basic-default-company">Product Weight</label>
-                                            </div>
+                                        </tr>
+                                    </thead>
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" name="ProductNutrition" />
-                                                <label for="basic-default-company">Nutrition</label>
-                                            </div>
+                                    <tbody class="table-border-bottom-0">
+                                        @foreach (var product in Model)
+                                        {
+                                            <tr>
+                                                <td>@product.ProductName</td>
+                                                <td>@product.ProductFlavour</td>
+                                                <td>@product.ProductPrice</td>
+                                                <td style="word-wrap: break-word; white-space:normal ">@product.ProductNutrition</td>
+                                                <td style="word-wrap: break-word; white-space:normal ">@product.ProductIngredient</td>
+                                                <td style="word-wrap: break-word; white-space:normal ">@product.ProductDescription</td>
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" name="ProductIngredient" />
-                                                <label for="basic-default-company">Ingredients</label>
-                                            </div>
+                                                <td>
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" name="ProductDescription" />
-                                                <label for="basic-default-company">Product Description</label>
-                                            </div>
 
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="mb-3">
-                                                        <label for="formFile" class="form-label">Input Product Flavour Image</label>
+                                                    <img src="@Url.Content($"~/{product.ProductFlavourImageUrl}")" alt="Product Image" width="100" height="100" />
 
-                                                        <input class="form-control" type="file" id="formFile" name="ProductFlavourImage" />
+
+                                                </td>
+                                                <td>
+
+                                                    <img src="@Url.Content($"~/{product.ProductImageUrl}")" alt="Product Image" width="100" height="100" />
+
+                                                </td>
+
+
+
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                            <i class="mdi mdi-dots-vertical"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@product.Id"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@product.Id"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                                        </div>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="formFileMultiple" class="form-label">Input Product Image</label>
 
-                                                        <input class="form-control" type="file" id="formFile" name="ProductImage" />
-                                                    </div>
-                                                 
-                                                </div>
-                                            </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
 
-                                         
-                                            <div class="form-floating form-floating-outline mb-4 mt-3">
-                                                <button type="submit" class="btn btn-primary">Send</button>
-
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                                </table>
                             </div>
-                            <!-- Merged -->
                         </div>
+                        <!--/ Hoverable Table rows -->
+
                     </div>
                     <!-- / Content -->
                     <!-- Footer -->
@@ -396,5 +405,46 @@
         </div>
     </div>
 
+   
+
 </body>
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/admin-js/bootstrap.js"></script>
+
+
+
+@if (TempData["Message"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Message"]');
+    </script>
+
+}

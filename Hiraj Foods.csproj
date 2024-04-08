@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\DB-Images\**" />
+    <Content Remove="wwwroot\DB-Images\**" />
+    <EmbeddedResource Remove="wwwroot\DB-Images\**" />
+    <None Remove="wwwroot\DB-Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Db_Images\ProductImages\" />
+    <Folder Include="wwwroot\Db_Images\ProductFlavourImages\" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">

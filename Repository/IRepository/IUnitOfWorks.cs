@@ -6,5 +6,7 @@
         IAdminRepository Admin { get; }
 
         IProductRepository Product { get; }
+
+        void Save();
     }
 }

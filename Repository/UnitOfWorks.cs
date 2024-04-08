@@ -17,6 +17,10 @@ namespace Hiraj_Foods.Repository
             Product = new ProductRepository(_db);
 
         }
-  
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
     }
 }

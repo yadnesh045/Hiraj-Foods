@@ -77,5 +77,7 @@ namespace Hiraj_Foods.Repository
         {
             dbSet.RemoveRange(entity);
         }
+
+   
     }
 }
