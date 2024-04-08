@@ -5,6 +5,7 @@ namespace Hiraj_Foods.Models
 {
     public class Admin
     {
+
         [Key]
         public int Id { get; set; }
 
@@ -31,6 +32,11 @@ namespace Hiraj_Foods.Models
 
 
         //public string ImageUrl { get; set; }
+
+        [NotMapped]
+        [StringLength(50)]
+        [Display(Name = "NewPassword")]
+        public string NewPassword { get; set;}
 
 
         [Required]
