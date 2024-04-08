@@ -11,6 +11,12 @@ namespace Hiraj_Foods.Repository
 
         public IProductRepository Product { get; set; }
 
+        public IContactRepository Contact {get;set;}
+
+		public IUserRepository users {  get; set; } 
+
+		public UnitOfWorks(ApplicationDbContext _db)
+
         public IEnquiry Enquiry { get; set; }
 
         public IFeedBackRepository Feedback { get; set; }
@@ -18,10 +24,15 @@ namespace Hiraj_Foods.Repository
         public IBannerRepository Banner { get; set; }
 
         public UnitOfWorks(ApplicationDbContext _db)
+
         {
             this._db = _db;
             Admin = new AdminRepository(_db);
             Product = new ProductRepository(_db);
+
+            Contact = new ContactRepository(_db); 
+            users = new UserRepository(_db);    
+
             Enquiry = new EnquiryRepository(_db);
             Feedback = new FeedbackRepository(_db);
             Banner = new BannerRepository(_db);
@@ -32,5 +43,5 @@ namespace Hiraj_Foods.Repository
         {
             _db.SaveChanges();
         }
-    }
+}
 }
