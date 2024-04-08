@@ -70,6 +70,27 @@ namespace Hiraj_Foods.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Hiraj_Foods.Models.Banner", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Banner_Img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Flavour_title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Banners");
+                });
+
             modelBuilder.Entity("Hiraj_Foods.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -193,11 +214,9 @@ namespace Hiraj_Foods.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ProductFlavourImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductIngredient")
@@ -212,8 +231,8 @@ namespace Hiraj_Foods.Migrations
 
                     b.Property<string>("ProductNutrition")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ProductPrice")
                         .IsRequired()
