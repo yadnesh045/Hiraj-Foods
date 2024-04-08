@@ -1,5 +1,4 @@
 
-
 using Azure.Core;
 using Hiraj_Foods.Data;
 using Hiraj_Foods.Models;
@@ -44,6 +43,9 @@ namespace Hiraj_Foods.Controllers
 
                 if (Admin != null && Admin.Password == enteredPassword)
                 {
+                    //set session for admin store admin id and email
+                    HttpContext.Session.SetInt32("AdminId", Admin.Id);
+                    HttpContext.Session.SetString("AdminEmail", Admin.Email);
                     return RedirectToAction("dashboard", "Admin");
                 }
 
@@ -68,12 +70,15 @@ namespace Hiraj_Foods.Controllers
             ViewBag.Flavors = flavors;
 
 
-            //   var FeedBacks = unitOfWorks.FeedBack.GetAll().ToList();
-            //   ViewBag.FeedBacks = FeedBacks;
 
 
+            var feedback = unitOfWorks.Feedback.GetAll().ToList();
 
-            return View(products);
+            var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
+
+            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>> (products, feedback, enquiry);
+
+            return View(model);
         }
 
 
@@ -358,11 +363,6 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public IActionResult Contact()
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         public IActionResult Contact(Contact contact)
@@ -383,7 +383,7 @@ namespace Hiraj_Foods.Controllers
                 var contacts = unitOfWorks.Contact.GetAll(); 
                 return View(contacts);
         }
-    }
+    
 
 		[HttpGet]
 		public IActionResult DeleteBanner()
@@ -423,6 +423,49 @@ namespace Hiraj_Foods.Controllers
             TempData["Success"] = "Banner Deleted Succefully";
             return RedirectToAction("Banner","Admin");
 		}
+
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            if (AdminEmail == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            return View(Admin);
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(Admin admin)
+        {
+
+            var AdminEmailInDb = HttpContext.Session.GetString("AdminEmail");
+            if (AdminEmailInDb == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            // get admin by email from db and check if entered password old password is same as in db then update the password
+            var AdminInDb = unitOfWorks.Admin.GetByEmail(AdminEmailInDb);
+
+            if (AdminInDb.Password == admin.Password)
+            {
+                AdminInDb.Password = admin.NewPassword;
+                unitOfWorks.Admin.Update(AdminInDb);
+                unitOfWorks.Save();
+                TempData["Message"] = "Password Changed Successfully!";
+                return RedirectToAction("dashboard", "Admin");
+            }
+            else
+            {
+                return RedirectToAction("dashboard", "Admin");
+            }
+        }
 
 	}
 }
