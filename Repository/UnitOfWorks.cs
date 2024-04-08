@@ -15,7 +15,7 @@ namespace Hiraj_Foods.Repository
 
         public IFeedBackRepository Feedback { get; set; }
 
-
+        public IBannerRepository Banner { get; set; }
 
         public UnitOfWorks(ApplicationDbContext _db)
         {
@@ -24,6 +24,7 @@ namespace Hiraj_Foods.Repository
             Product = new ProductRepository(_db);
             Enquiry = new EnquiryRepository(_db);
             Feedback = new FeedbackRepository(_db);
+            Banner = new BannerRepository(_db);
 
         }
 

@@ -5,19 +5,21 @@ using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hiraj_Foods.Controllers
 {
     public class AdminController : Controller
     {
-       
 
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUnitOfWorks unitOfWorks;
 
-        public AdminController(IUnitOfWorks unitOfWorks)
+        public AdminController(IUnitOfWorks unitOfWorks, IWebHostEnvironment _webHostEnvironment)
         {
             this.unitOfWorks = unitOfWorks;
+            this._webHostEnvironment = _webHostEnvironment;
         }
 
         public IActionResult Login()
@@ -143,5 +145,95 @@ namespace Hiraj_Foods.Controllers
 
 
 
-    }
+
+        [HttpGet]
+        public IActionResult Banner()
+        {
+            var Banner = unitOfWorks.Banner.GetAll().ToList();
+            return View(Banner);
+        }
+
+        [HttpGet]
+        public IActionResult AddBanner()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddBanner(Banner banner, IFormFile File)
+        {
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (File != null)
+                {
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(File.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"BannerImages");
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        File.CopyTo(fileStream);
+                    }
+
+                    var Cl = @"\BannerImages\" + filename;
+
+                    var banner1 = new Banner
+                    {
+                        Flavour_title = banner.Flavour_title,
+                        Banner_Img = Cl,
+                    };
+
+                    unitOfWorks.Banner.Add(banner1);
+                    unitOfWorks.Save();
+
+                    TempData["Success"] = "Banner Added Succefully";
+                    return View();
+                }
+            }
+          
+                TempData["Error"] = "Banner Not Added";
+ 
+            return View();
+        }
+
+		[HttpGet]
+		public IActionResult DeleteBanner()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult DeleteBanner(int id)
+		{
+            var banner = unitOfWorks.Banner.GetById(id);
+            if (banner == null)
+            {
+                return NotFound();
+            }
+
+            string logoImagePath = banner.Banner_Img;
+
+
+            if (!string.IsNullOrEmpty(logoImagePath))
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string logoFilePath = Path.Combine(wwwRootPath, logoImagePath.TrimStart('\\'));
+                if (System.IO.File.Exists(logoFilePath))
+                {
+                    System.IO.File.Delete(logoFilePath);
+                }
+            }
+            else
+            {
+                TempData["Error"] = "Banner Not Deleted";
+                return RedirectToAction("Banner", "Admin");
+            }
+            unitOfWorks.Banner.Remove(banner);
+            unitOfWorks.Save();
+
+            TempData["Success"] = "Banner Deleted Succefully";
+            return RedirectToAction("Banner","Admin");
+		}
+
+	}
 }

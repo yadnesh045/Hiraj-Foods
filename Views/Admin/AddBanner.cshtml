@@ -1,12 +1,10 @@
-﻿@model IEnumerable<Hiraj_Foods.Models.Product>
-@{
-    var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
-    var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
-}
+﻿@model Hiraj_Foods.Models.Banner
+
+
+
 @{
     Layout = null;
 }
-
 
 
 <!DOCTYPE html>
@@ -50,6 +48,7 @@
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
 </head>
+
 
 <body>
     <!-- Layout wrapper -->
@@ -311,174 +310,143 @@
                 </nav>
 
                 <!-- / Navbar -->
-                <!-- Content wrapper -->
-                <div class="content-wrapper" style="background-color:white">
+                <div class="content-wrapper">
+                    <!-- Content -->
+
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row gy-4">
-
-                            <!-- Total Product Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
+                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Add Banner</h4>
+                        <!-- Basic Layout -->
+                        <div class="row">
+                            <div class="col-xl">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Add New Banner Details</h5>
+                                        <small class="text-muted float-end">Default label</small>
+                                    </div>
                                     <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Products : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
+                                        <form method="post" asp-controller="Admin" asp-action="AddBanner" enctype="multipart/form-data">
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" asp-for="Flavour_title" placeholder="Banner Name" />
+                                                <label for="basic-default-fullname">Banner Title</label>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="mb-3">
+                                                        <label for="formFile" class="form-label">Input Banner Flavour Image</label>
+                                                        <input class="form-control" type="file" name="file" asp-for="Banner_Img" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-floating form-floating-outline mb-4 mt-3">
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                                <a class="btn btn-outline-primary" asp-action="Banner" asp-controller="Admin"> View banners</a>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Total Product Card card -->
-                            <!-- Total Feedback Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Feedback : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Total Feedback Card card -->
-                            <!-- Total Enquiry Card-->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Total Enquiry Card-->
-
-
-                            <div class="col-md-12 col-lg-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Product Prices</h4>
-                                        <div class="chart-container" style="height:400px;">
-                                            <canvas id="productPricesChart"></canvas>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        @* to show the total count of flavours *@
-                                        <h4 class="card-title mb-1" id="flavorsCount"> </h4>
-                                        <canvas id="flavorsChart">
-                                        </canvas>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : 9 </h4>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
+                            <!-- Merged -->
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    <!-- / Content -->
                     <!-- Footer -->
-                    @*    <footer class="content-footer footer bg-footer-theme">
-                    <div class="container-xxl">
-                    <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
-                    <div class="text-body mb-2 mb-md-0">
-                    ©
-                    <script>
-                    document.write(new Date().getFullYear());
-                    </script>
-                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
-                    </div>
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
+                                <div class="text-body mb-2 mb-md-0">
+                                    ©
+                                    <script>
+                                        document.write(new Date().getFullYear());
+                                    </script>
+                                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
+                                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
+                                </div>
+                                <div class="d-none d-lg-inline-block">
+                                    <a href="https://themeselection.com/license/" class="footer-link me-3" target="_blank">License</a>
+                                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-3">More Themes</a>
 
-                    </div>
-                    </div>
-                    </footer> *@
+                                    <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/"
+                                       target="_blank"
+                                       class="footer-link me-3">Documentation</a>
+
+                                    <a href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free/issues"
+                                       target="_blank"
+                                       class="footer-link">Support</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
                     <!-- / Footer -->
 
                     <div class="content-backdrop fade"></div>
                 </div>
-                <!-- Content wrapper -->
-            </div>
-            <!-- / Layout page -->
-        </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+
+
+            </div>
+        </div>
     </div>
 
+</body>
+</html>
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
+    <script type="text/javascript">
+        // Set Toastr options including custom background color
+        toastr.options = {
+            "toastClass": "toastr-custom", // Custom class for styling
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "progressBarColor": "white"
+        };
 
-
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-
-    <script src="/js/Admin-js/jquery.js"></script>
-    <script src="/js/Admin-js/popper.js"></script>
-    <script src="/js/Admin-js/bootstrap.js"></script>
-    <script src="/js/Admin-js/node-waves.js"></script>
-    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
-    <script src="/js/Admin-js/menu.js"></script>
-
-    <!-- endbuild -->
-
-    <script src="/js/Admin-js/apexcharts.js"></script>
-
-    <!-- Main JS -->
-    <script src="/js/Admin-js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="/js/Admin-js/dashboards-analytics.js"></script>
-
-
-    <!--Charts js-->
-    <script src="~/js/chart-js/chart.js"></script>
-
-    <!--script for charts-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        var productPrices = @Html.Raw(productPricesJson);
-        var flavors = @Html.Raw(flavorsJson);
-
+        // Display the Toastr notification
+        toastr.success('@TempData["Error"]');
     </script>
 
+    <style>
+        /* Custom style for Toastr notification */
+        .toastr-custom {
+            background-color: red !important; /* Change to your desired background color */
+            color: #000000 !important;
+            font-family: Cambria; /* Change to your desired text color */
+        }
+    </style>
+}
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-</body>
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-</html>
+    <script type="text/javascript">
+        // Set Toastr options including custom background color
+        toastr.options = {
+            "toastClass": "toastr-custom", // Custom class for styling
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "progressBarColor": "white"
+        };
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+
+    <style>
+        /* Custom style for Toastr notification */
+        .toastr-custom {
+            background-color: greenyellow !important; /* Change to your desired background color */
+            color: #000000 !important;
+            font-family: Cambria; /* Change to your desired text color */
+        }
+    </style>
+}
+
+

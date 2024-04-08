@@ -71,11 +71,34 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboards -->
-                    <li class="menu-item active open">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <li class="menu-item">
+                        <a asp-area="" asp-controller="Admin" asp-action="dashboard" class="menu-link">
                             <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
                             <div data-i18n="Dashboards">Home</div>
                         </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+
+
+                            <div data-i18n="Layouts">Banner </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
+                                    <div data-i18n="Without menu">Add Banner</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
+                                    <div data-i18n="Without navbar">View Banner</div>
+                                </a>
+                            </li>
+
+                        </ul>
                     </li>
                     <!-- Layouts -->
                     <li class="menu-item">
@@ -92,7 +115,6 @@
                                     <div data-i18n="Without menu">Add Products</div>
 
                                 </a>
-
                             </li>
                             <li class="menu-item">
                                 <a href="layouts-without-navbar.html" class="menu-link">
@@ -112,7 +134,7 @@
 
 
                     <li class="menu-item">
-                        <a asp-controller="Admin" asp-action="Enquiry" class="menu-link menu-toggle">
+                        <a asp-area="" asp-controller="Admin" asp-action="Enquiry" class="menu-link">
                             <i class="menu-icon tf-icons mdi mdi-format-align-justify"></i>
 
                             <div data-i18n="Dashboards">Enquiry</div>
@@ -120,9 +142,8 @@
                     </li>
 
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <a asp-area="" asp-controller="Admin" asp-action="Feedback" class="menu-link">
                             <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
-
                             <div data-i18n="Dashboards">Feedback</div>
                         </a>
                     </li>
