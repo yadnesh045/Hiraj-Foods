@@ -6,6 +6,7 @@ using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -115,7 +116,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    product.ProductFlavourImageUrl = Path.Combine("Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
+                    product.ProductFlavourImageUrl = Path.Combine("/Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
 
                 }
 
@@ -129,7 +130,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    product.ProductImageUrl = Path.Combine("Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
+                    product.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
                 }
 
 
@@ -361,7 +362,39 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-		
+
+        //[HttpGet]
+        //public IActionResult Contact()
+        //{
+        //    return View();
+        //}
+
+        [HttpPost]
+        public IActionResult Contact(Contact contact)
+        {
+            if (ModelState.IsValid) 
+            {
+                
+                unitOfWorks.Contact.Update(contact);
+                unitOfWorks.Save();   
+            }
+
+            // If model state is not valid or an error occurred, return the same view with validation errors
+            return RedirectToAction("Contact", "Rahul");
+        }
+        [HttpGet]
+        public IActionResult ViewContact()
+        {
+                var contacts = unitOfWorks.Contact.GetAll(); 
+                return View(contacts);
+        }
+    }
+
+		[HttpGet]
+		public IActionResult DeleteBanner()
+		{
+			return View();
+		}
 
 		[HttpPost]
 		public IActionResult DeleteBanner(int id)
@@ -441,3 +474,4 @@ namespace Hiraj_Foods.Controllers
 
 	}
 }
+

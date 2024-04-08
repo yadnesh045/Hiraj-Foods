@@ -8,6 +8,10 @@
         IProductRepository Product { get; }
 
 
+        IContactRepository Contact { get; }
+
+        IUserRepository users { get; }    
+
         IEnquiry Enquiry { get; }
 
         IFeedBackRepository Feedback { get; }
