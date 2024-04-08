@@ -11,6 +11,8 @@
 
         IFeedBackRepository Feedback { get; }
 
+        IBannerRepository Banner { get; }
+
         void Save();
     }
 }

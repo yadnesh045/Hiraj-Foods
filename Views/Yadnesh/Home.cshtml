@@ -1,4 +1,6 @@
-﻿<body>
+﻿@model List<Hiraj_Foods.Models.Banner>
+
+<body>
 
 @*     =============================Pre Loader========================== *@
     <div class="preloader">
@@ -26,81 +28,34 @@
 	</div>
 	<!-- search area -->
     <!-- Banner Section Start Here -->
-    <section class="banner banner-2">
-        <div class="banner-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="banner-item">
-                            <div class="banner-inner">
-                                <div class="banner-thumb">
-                                    <img src="~/img/updated-slider-1.jpg" alt="banner-slider">
-                                </div>
-                                <div class="banner-content" style="margin-right:650px;">
-                                    <h3>Apple</h3>
-                                    <div class="banner-title" style="padding-left: 0px;">Healthish<br>Foods</div>
-                                    <div class="banner-desc" style="margin-left: 20px;">Best cereal food <br> for your child.</div>
-                                    <a href="#" class="lab-btn"><span>More Info</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="banner-item">
-                            <div class="banner-inner">
-                                <div class="banner-thumb">
-									<img src="~/img/updated-slider-4.jpg" alt="banner-slider">
-                                </div>
-                                <div class="banner-content" style="margin-right:650px;">
-                                    <h3>Kaju Badam</h3>
-                                    <div class="banner-title" style="padding-left: 0px;">Healthish<br>Foods</div>
-                                    <div class="banner-desc" style="margin-left: 20px;">Best cereal food <br> for your child.</div>
-                                    <a href="#" class="lab-btn"><span>More Info</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="banner-item">
-                            <div class="banner-inner">
-                                <div class="banner-thumb">
-									<img src="~/img/s3.jpg" alt="banner-slider">
-                                </div>
-                                <div class="banner-content">
-                                    <h3>Apple</h3>
-                                    <div class="banner-title">Healthish<br>Foods</div>
-                                    <div class="banner-desc">Best cereal food <br> for your child.</div>
-                                    <a href="#" class="lab-btn"><span>More Info</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="banner-item">
-                            <div class="banner-inner">
-                                <div class="banner-thumb">
-									<img src="~/img/s4.jpg" alt="banner-slider">
-                                </div>
-                                <div class="banner-content" style="margin-right:650px;">
-                                    <h3>Guava</h3>
-                                    <div class="banner-title" style="padding-left: 0px;">Healthish<br>Foods</div>
-                                    <div class="banner-desc" style="margin-left: 20px;">Best cereal food <br> for your child.</div>
-                                    <a href="#" class="lab-btn"><span>More Info</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="banner-pagination"></div>
-        </div>
-    </section>
+	<section class="banner banner-2">
+		<div class="banner-slider">
+			<div class="swiper-wrapper">
+				@foreach (var banner in Model)
+				{
+					<div class="swiper-slide">
+						<div class="container">
+							<div class="banner-item">
+								<div class="banner-inner">
+									<div class="banner-thumb">
+										<img src="@banner.Banner_Img" alt="banner-slider">
+									</div>
+									<div class="banner-content" style="margin-right:650px;">
+										<h3>@banner.Flavour_title</h3>
+										<div class="banner-title" style="padding-left: 0px;">Healthish<br>Foods</div>
+										<div class="banner-desc" style="margin-left: 20px;">Best cereal food <br> for your child.</div>
+										<a href="#" class="lab-btn"><span>More Info</span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+			<div class="banner-pagination"></div>
+		</div>
+	</section>
+
     <!-- Banner Section Ending Here -->
 
 
