@@ -1,5 +1,4 @@
 
-
 using Azure.Core;
 using Hiraj_Foods.Data;
 using Hiraj_Foods.Models;
@@ -358,11 +357,6 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public IActionResult Contact()
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         public IActionResult Contact(Contact contact)
@@ -383,7 +377,7 @@ namespace Hiraj_Foods.Controllers
                 var contacts = unitOfWorks.Contact.GetAll(); 
                 return View(contacts);
         }
-    }
+    
 
 		[HttpGet]
 		public IActionResult DeleteBanner()
