@@ -1,4 +1,8 @@
-﻿<div class="preloader">
+﻿@model Hiraj_Foods.Models.Product
+
+
+
+<div class="preloader">
     <div class="preloader-inner">
         <div class="preloader-icon">
             <span></span>
@@ -12,7 +16,7 @@
     <div class="overlay"></div>
     <div class="container">
         <div class="page-header-content-area">
-            <h3 class="ph-title" style="margin-top:70px;">Healthish Chocolate Product</h3>
+            <h3 class="ph-title" style="margin-top:70px;">Healthish @Model.ProductFlavour Product</h3>
         </div>
     </div>
 </section>
@@ -31,7 +35,7 @@
                                         <div class="swiper-slide">
                                             <div class="shop-item">
                                                 <div class="shop-thumb" style="padding-top:-50px; " height="300">
-                                                    <img src="~/img/choco.png" alt="shop-single">
+                                                    <img src="@Model.ProductImageUrl" alt="shop-single">
                                                 </div><br>
 
                                             </div>
@@ -43,24 +47,24 @@
 
                         <div class="col-md-6 col-12">
                             <div class="post-content">
-                                <label><b>Product Name : </b></label><p style="margin-left: 120px;margin-top: -30px;">Healthish Chocolate</p>
+                                <label><b>Product Name : </b></label><p style="margin-left: 120px;margin-top: -30px;">@Model.ProductName</p>
                                 <label>
                                     <b>
                                         Nutritions :
                                     </b>
                                 </label> <p style="margin-left: 120px;margin-top: -30px;">
-                                    Energy                 - 372, Proteins.              - 8.94, Fats                   - 2.59, Carbohydrates.         - 78.2, Calcium.               - 265,  Iron.                  - 8.39, Sugar.                 - 31
+                                   @Model.ProductNutrition
                                 </p>
                                 <label>
                                     <b>
                                         Ingradients :
                                     </b>
                                 </label> <p style="margin-left: 120px;margin-top: -33px;">
-                                    Malted ragi , Rajgira , Jaggery powder & Cocoa powder
+                                   @Model.ProductIngredient
                                 </p>
 
 
-                                <label><b>Net.Wt. :</b></label><p style="margin-left: 120px;margin-top: -30px;">200gm.</p>
+                                <label><b>Net.Wt. :</b></label><p style="margin-left: 120px;margin-top: -30px;">@Model.ProductWeight</p>
                                 <br>
 
                                 <label>
@@ -68,7 +72,7 @@
                                         Description :
                                     </b>
                                 </label><p style="margin-left: 120px;margin-top: -31px;">
-                                    Its very tasty.
+                                   @Model.ProductDescription
                                 </p>
 
                             </div>

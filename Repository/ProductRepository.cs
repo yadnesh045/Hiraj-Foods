@@ -15,6 +15,11 @@ namespace Hiraj_Foods.Repository
             _db = db;
         }
 
+        public Product GetByFlavourName(string name)
+        {
+            return _db.Products.FirstOrDefault(u => u.ProductFlavour == name);
+        }
+
         public Product GetById(int id)
         {
             return _db.Products.Find(id);

@@ -1,4 +1,5 @@
-﻿using Hiraj_Foods.Repository.IRepository;
+﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hiraj_Foods.Controllers
@@ -24,13 +25,29 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult Home()
         {
+            var product = unitOfWorks.Product.GetAll().ToList();
             var banner = unitOfWorks.Banner.GetAll().ToList();
-            return View(banner);
+
+
+            var model = new Tuple<List<Product>, List<Banner>>(product, banner);
+            return View(model);
         }
 
-        public IActionResult HomeInside()
+        public IActionResult HomeInside(int id)
         {
-            return View();
+
+            var product = unitOfWorks.Product.GetById(id);
+            return View(product);
         }
+
+
+        public IActionResult MoreInfo(string name)
+        {
+
+            var product = unitOfWorks.Product.GetByFlavourName(name);
+            return View(product);
+        }
+
+     
     }
 }

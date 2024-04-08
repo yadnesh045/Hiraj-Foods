@@ -1,4 +1,5 @@
-﻿@model List<Hiraj_Foods.Models.Banner>
+﻿@model Tuple<List<Hiraj_Foods.Models.Product> , List<Hiraj_Foods.Models.Banner>>
+
 
 <body>
 
@@ -31,20 +32,20 @@
 	<section class="banner banner-2">
 		<div class="banner-slider">
 			<div class="swiper-wrapper">
-				@foreach (var banner in Model)
+				@foreach (var banner1 in Model.Item2)
 				{
 					<div class="swiper-slide">
 						<div class="container">
 							<div class="banner-item">
 								<div class="banner-inner">
 									<div class="banner-thumb">
-										<img src="@banner.Banner_Img" alt="banner-slider">
+										<img src="@banner1.Banner_Img" alt="banner-slider">
 									</div>
 									<div class="banner-content" style="margin-right:650px;">
-										<h3>@banner.Flavour_title</h3>
+										<h3>@banner1.Flavour_title</h3>
 										<div class="banner-title" style="padding-left: 0px;">Healthish<br>Foods</div>
 										<div class="banner-desc" style="margin-left: 20px;">Best cereal food <br> for your child.</div>
-										<a href="#" class="lab-btn"><span>More Info</span></a>
+										<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="@banner1.Flavour_title" class="lab-btn"><span>More Info</span></a>
 									</div>
 								</div>
 							</div>
@@ -102,13 +103,6 @@
 								<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
 									<div class="about-item">
 										<div class="about-inner">
-											<!-- <div class="about-thumb">
-												<img src="assets\images\about\icon\03.png" alt="about">
-											</div>
-											<div class="about-content">
-												<a href="#"><h5>Healthy and nutritious</h5></a>
-												<p>variety of Products that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
-											</div> -->
 											<h5>Who We Are</h5>
 											<div class="about-content" style="font-size: 15px;">
 												We are just another you with ambition to make our Hiraj product that people love.
@@ -209,6 +203,9 @@
 		</div>
 	</section>
 	<!-- about section ending here -->
+
+
+
 	<!-- product section start here -->
 	<section class="product-section product-style2 padding-tb">
 		<div class="shape-image">
@@ -222,139 +219,27 @@
 			</div>
 			<div class="section-wrapper">
 				<div class="row justify-content-center">
-					<a asp-action="HomeInside" asp-controller="Yadnesh">
+					@foreach (var product in Model.Item1)
+					{
 						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
 							<div class="product-item-2">
 								<div class="product-inner">
 									<div class="product-thumb rounded-circle">
-										<img src="~/img/chocolate.png" alt="product">
+										<img src="@product.ProductFlavourImageUrl" alt="product">
 									</div>
 									<div class="product-content">
-										<a class="mau" href="">Healthish Chocolate</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/954826.png" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish Pineapple</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/apple.png" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish Apple</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
+										<a class="mau" href="@Url.Action("HomeInside", "Yadnesh", new { id = product.Id })">@product.ProductName</a>
 
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/kajubadam.png" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish KajuBadam</a>
 									</div>
 								</div>
 							</div>
 						</div>
-					</a>
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/mango.png" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish Mango</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/Guava.png" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish Guava</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/pomogranate.png" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish Pomegranate</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/elaichi.jpg" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish Pomegranate</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-
-					<a href="product-single.php?pid=2">
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="~/img/mixfruit.jpg" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="">Healthish Mix Fruite</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</a>
-				
+					}
 				</div>
 			</div>
 		</div>
 	</section>
+
 	<!-- product section end here -->
 
 

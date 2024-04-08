@@ -111,7 +111,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    product.ProductFlavourImageUrl = Path.Combine("Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
+                    product.ProductFlavourImageUrl = Path.Combine("/Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
 
                 }
 
@@ -125,7 +125,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    product.ProductImageUrl = Path.Combine("Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
+                    product.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
                 }
 
 
