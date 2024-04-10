@@ -5,124 +5,138 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Hiraj_Foods.Models;
+using Newtonsoft.Json;
 
 namespace Hiraj_Foods.Controllers
 {
 
-    public class LoginController : Controller
-    {
+	public class LoginController : Controller
+	{
 
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IUnitOfWorks unitOfWorks;
-
-
-        public LoginController(IUnitOfWorks unitOfWorks, IWebHostEnvironment _webHostEnvironment)
-        {
-            this.unitOfWorks = unitOfWorks;
-            this._webHostEnvironment = _webHostEnvironment;
-        }
+		private readonly IWebHostEnvironment _webHostEnvironment;
+		private readonly IUnitOfWorks unitOfWorks;
 
 
+		public LoginController(IUnitOfWorks unitOfWorks, IWebHostEnvironment _webHostEnvironment)
+		{
+			this.unitOfWorks = unitOfWorks;
+			this._webHostEnvironment = _webHostEnvironment;
+		}
 
-        // for admin login
-        public IActionResult Login()
-        {
-            return View();
-        }
 
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginData Vm)
-        {
+		// for admin login
+		public IActionResult Login()
+		{
+			return View();
+		}
 
-            if (Vm != null)
-            {
-                string enteredEmail = Vm.EnteredEmail;
-                string enteredPassword = Vm.EnteredPassword;
 
-                var Admin = unitOfWorks.Admin.GetByEmail(enteredEmail);
+		[HttpPost]
+		public async Task<IActionResult> Login(LoginData Vm)
+		{
 
-                if (Admin != null && Admin?.Password == enteredPassword)
-                {
-                    //set session for admin store admin id and email
-                    HttpContext.Session.SetInt32("AdminId", Admin.Id);
-                    HttpContext.Session.SetString("AdminEmail", Admin.Email);
+			if (Vm != null)
+			{
+				string enteredEmail = Vm.EnteredEmail;
+				string enteredPassword = Vm.EnteredPassword;
 
-                    // Sign in the admin
-                    var claims = new List<Claim>
-                    {
-                            new Claim(ClaimTypes.Name, Admin.Email)
-                    };
+				var Admin = unitOfWorks.Admin.GetByEmail(enteredEmail);
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+				if (Admin != null && Admin?.Password == enteredPassword)
+				{
+					//set session for admin store admin id and email
+					HttpContext.Session.SetInt32("AdminId", Admin.Id);
+					HttpContext.Session.SetString("AdminEmail", Admin.Email);
 
-                    var authProperties = new AuthenticationProperties();
+					// Sign in the admin
+					var claims = new List<Claim>
+					{
+							new Claim(ClaimTypes.Name, Admin.Email)
+					};
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+					var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    return RedirectToAction("dashboard", "Admin");
-                }
+					var authProperties = new AuthenticationProperties();
 
-                else
-                {
-                    return View();
-                }
+					await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-            }
-            return View();
-        }
+					return RedirectToAction("dashboard", "Admin");
+				}
 
-        // for admin logout
-        public async Task<IActionResult> Logout()
-        {
+				else
+				{
+					return View();
+				}
+
+			}
+			return View();
+		}
+
+		// for admin logout
+		public async Task<IActionResult> Logout()
+		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
+			HttpContext.Session.Clear();
 			return RedirectToAction("Login", "Login");
 		}
 
 
 
-        // for user login
+		// for user login
 
-        public IActionResult Signup()
-        {
-            return View();
-        }
+		public IActionResult Signup()
+		{
+			return View();
+		}
 
-
-        [HttpPost]
-        public IActionResult UserReg(User_SignIn_Login usr)
-        {
-
-            if (usr.User != null)
-            {
-                unitOfWorks.users.Add(usr.User);
-                unitOfWorks.Save();
-
-                return RedirectToAction("Home", "Yadnesh");
-
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult UserLogin(User_SignIn_Login log)
-        {
-            var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
+		[HttpPost]
+		public IActionResult UserReg(User_SignIn_Login usr)
+		{
 
 
-            if (existingUser != null && existingUser.Password == log.Login.Password)
-            {
+			if (usr != null)
+			{
+				unitOfWorks.users.Add(usr.User);
+				unitOfWorks.Save();
 
-                return RedirectToAction("Home", "Yadnesh");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Invalid email or password.");
-                return View("Signup");
-            }
-        }
+				return RedirectToAction("Home", "Yadnesh");
+			}
 
 
-    }
+			return View();
+		}
+
+
+
+
+		[HttpPost]
+		public IActionResult UserLogin(User_SignIn_Login log)
+		{
+			var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
+
+
+			if (existingUser != null && existingUser.Password == log.Login.Password)
+			{
+
+				return RedirectToAction("Home", "Yadnesh");
+			}
+			else
+			{
+				ModelState.AddModelError("", "Invalid email or password.");
+				return View("Signup");
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+	}
 }

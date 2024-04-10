@@ -1,7 +1,6 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
 
 
-
     var distinctFlavors = new Set(flavors);
     document.getElementById('flavorsCount').innerText = "Total Distinct Flavors: " + distinctFlavors.size;
 
@@ -43,7 +42,7 @@
 
     // Flavors chart
     var flavorsCount = {};
-  
+
     flavors.forEach(function (flavor) {
         flavorsCount[flavor] = (flavorsCount[flavor] || 0) + 1;
     });

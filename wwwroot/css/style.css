@@ -3753,7 +3753,7 @@ ontent .entry-meta, .shop-single .review .review-content .review-showing .conten
     height: 100%;
     top: 50%;
     left: 0;
-    background: url(bg-image/footer-top-bg.png) no-repeat;
+    background: url(/images/bg-images/footer-top-bg.png) no-repeat;
     transform: translateY(-50%); }
   .footer-section .footer-top .footer-item {
     margin-bottom: 40px; }
