@@ -13,7 +13,7 @@ namespace Hiraj_Foods.Repository
 
         public IContactRepository Contact {get;set;}
 
-		public IUserRepository users {  get; set; } 
+		public IUserRepository Users {  get; set; } 
 
 
         public IEnquiry Enquiry { get; set; }
@@ -30,7 +30,7 @@ namespace Hiraj_Foods.Repository
             Product = new ProductRepository(_db);
 
             Contact = new ContactRepository(_db); 
-            users = new UserRepository(_db);    
+            Users = new UserRepository(_db);    
 
             Enquiry = new EnquiryRepository(_db);
             Feedback = new FeedbackRepository(_db);

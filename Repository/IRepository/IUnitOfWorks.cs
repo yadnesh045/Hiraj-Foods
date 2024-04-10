@@ -10,7 +10,7 @@
 
         IContactRepository Contact { get; }
 
-        IUserRepository users { get; }    
+        IUserRepository Users { get; }    
 
         IEnquiry Enquiry { get; }
 

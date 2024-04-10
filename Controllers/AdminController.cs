@@ -29,7 +29,7 @@ namespace Hiraj_Foods.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
-     
+
         public IActionResult dashboard()
         {
             var products = unitOfWorks.Product.GetAll().ToList();
@@ -440,6 +440,48 @@ namespace Hiraj_Foods.Controllers
             {
                 return RedirectToAction("dashboard", "Admin");
             }
+        }
+
+        [HttpGet]
+        public IActionResult AccountSetting()
+        {
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+
+            if (AdminEmail == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            return View(Admin);
+        }
+
+
+
+        [HttpPost]
+        public IActionResult AccountSetting(UpdateAdmin updateadmin)
+        {
+            var AdminEmailInDb = HttpContext.Session.GetString("AdminEmail");
+            if (AdminEmailInDb == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            var AdminInDb = unitOfWorks.Admin.GetByEmail(AdminEmailInDb);
+
+            AdminInDb.FirstName = updateadmin.FirstName;
+            AdminInDb.LastName = updateadmin.LastName;
+            AdminInDb.Address = updateadmin.Address;
+            AdminInDb.Mobile = updateadmin.Mobile;
+            AdminInDb.State = updateadmin.State;
+            AdminInDb.ZipCode = updateadmin.ZipCode;
+
+
+            unitOfWorks.Admin.Update(AdminInDb);
+            unitOfWorks.Save();
+
+            TempData["Message"] = "Account Updated Successfully!";
+            return RedirectToAction("dashboard", "Admin");
         }
 
     }
