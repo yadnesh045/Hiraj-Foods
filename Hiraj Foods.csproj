@@ -16,13 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\User\" />
     <Folder Include="wwwroot\Db_Images\ProductImages\" />
     <Folder Include="wwwroot\Db_Images\ProductFlavourImages\" />
 
     <Folder Include="wwwroot\BannerImages\" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
+
+    <PackageReference Include="MailboxValidator.SingleValidation" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

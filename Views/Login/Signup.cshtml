@@ -18,7 +18,7 @@
 	<div class="container">
 		<div class="forms-container">
 			<div class="signin-signup">
-				<form method="post" asp-controller="User" asp-action="UserLogin" class="sign-in-form">
+				<form method="post" asp-controller="Login" asp-action="UserLogin" class="sign-in-form">
 					<h2 class="title">Login</h2>
 					<div class="input-field">
 						<i class="fas fa-user"></i>
@@ -45,7 +45,7 @@
 						</a>
 					</div>
 				</form>
-				<form method="post" asp-action="UserReg" asp-controller="User" class="sign-up-form">
+				<form method="post" asp-action="UserReg" asp-controller="Login" class="sign-up-form">
 					<h2 class="title">Sign up</h2>
 					<div class="input-field">
 						<i class="fas fa-user"></i>
@@ -55,10 +55,13 @@
 						<i class="fas fa-user"></i>
 						<input type="text" asp-for="User.LastName" placeholder="Last Name" />
 					</div>
+
 					<div class="input-field">
 						<i class="fas fa-envelope"></i>
 						<input type="email" asp-for="User.Email" placeholder="Email" />
 					</div>
+
+
 					<div class="input-field">
 						<i class="fas fa-lock"></i>
 						<input type="password" asp-for="User.Password" placeholder="Password" />

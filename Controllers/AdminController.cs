@@ -5,12 +5,18 @@ using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Hiraj_Foods.Controllers
 {
+
+    [Authorize]
     public class AdminController : Controller
     {
 
@@ -59,6 +65,7 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
+     
         public IActionResult dashboard()
         {
             var products = unitOfWorks.Product.GetAll().ToList();
@@ -77,7 +84,7 @@ namespace Hiraj_Foods.Controllers
 
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
 
-            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>> (products, feedback, enquiry);
+            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
 
             return View(model);
         }
@@ -192,7 +199,7 @@ namespace Hiraj_Foods.Controllers
 
                 }
 
-                if(product.ProductImage != null && product.ProductImage.Length > 0)
+                if (product.ProductImage != null && product.ProductImage.Length > 0)
                 {
                     var file = product.ProductImage;
                     var fileName = Guid.NewGuid().ToString() + file.FileName;
@@ -266,16 +273,16 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Enquiry(Enquiry Enq)
         {
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                
+
                 unitOfWorks.Enquiry.Add(Enq);
                 unitOfWorks.Save();
             }
             else
             {
                 Console.WriteLine("-----------------------------------------------");
-                return RedirectToAction("Enquiry" , "Rahul");
+                return RedirectToAction("Enquiry", "Rahul");
             }
 
             TempData["Enquiry"] = "Enquiry Sent to Admin";
@@ -358,43 +365,46 @@ namespace Hiraj_Foods.Controllers
                     return View();
                 }
             }
-          
-                TempData["Error"] = "Banner Not Added";
- 
+
+            TempData["Error"] = "Banner Not Added";
+
             return View();
         }
+
+
 
 
         [HttpPost]
         public IActionResult Contact(Contact contact)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                
+
                 unitOfWorks.Contact.Update(contact);
-                unitOfWorks.Save();   
+                unitOfWorks.Save();
             }
 
             // If model state is not valid or an error occurred, return the same view with validation errors
             return RedirectToAction("Contact", "Rahul");
         }
+
         [HttpGet]
         public IActionResult ViewContact()
         {
-                var contacts = unitOfWorks.Contact.GetAll(); 
-                return View(contacts);
+            var contacts = unitOfWorks.Contact.GetAll();
+            return View(contacts);
         }
-    
 
-		[HttpGet]
-		public IActionResult DeleteBanner()
-		{
-			return View();
-		}
 
-		[HttpPost]
-		public IActionResult DeleteBanner(int id)
-		{
+        [HttpGet]
+        public IActionResult DeleteBanner()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteBanner(int id)
+        {
             var banner = unitOfWorks.Banner.GetById(id);
             if (banner == null)
             {
@@ -422,14 +432,14 @@ namespace Hiraj_Foods.Controllers
             unitOfWorks.Save();
 
             TempData["Success"] = "Banner Deleted Succefully";
-            return RedirectToAction("Banner","Admin");
-		}
+            return RedirectToAction("Banner", "Admin");
+        }
 
 
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            
+
             var AdminEmail = HttpContext.Session.GetString("AdminEmail");
             if (AdminEmail == null)
             {
@@ -476,6 +486,6 @@ namespace Hiraj_Foods.Controllers
             }
         }
 
-	}
+    }
 }
 
