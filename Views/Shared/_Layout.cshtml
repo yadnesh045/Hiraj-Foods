@@ -1,4 +1,8 @@
-﻿
+﻿@{
+    var userEmail = Context.Session.GetString("UserEmail");
+    var userId = Context.Session.GetInt32("UserId");
+}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,10 +10,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    
+
 
     <title>@ViewData["Title"] - Hiraj_Foods</title>
-    <link rel="icon"  href="~/favicon.ico">
+    <link rel="icon" href="~/favicon.ico">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -67,14 +71,15 @@
 
 
                         <li>
-                        <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
+                            <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
                         </li>
 
                         <li>       <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a></li>
 
 
-                        <li>       <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
-                            </li>
+                        <li>
+                            <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
+                        </li>
 
 
                     </ul>
@@ -109,21 +114,21 @@
                                 </li>
                             </ul>
 
-                         
+
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-12">
-                     
+
                         <div class="ht-right">
-                            
+
                             <div class="scocial-media">
-                    
+
                                 <a href="https://fb.me/hirajf00ds" target="_blank" class="facebook"><img src="~/img/facebook.png" /></a>&nbsp;&nbsp;
                                 <a href="https://www.instagram.com/hiraj_foods?r=nametag" target="_blank" class=""><img src="~/img/instagram.png" /></a>&nbsp;&nbsp;
                                 <a href="mailto:info@hirajfoods.com" target="_blank" class="Email"><img src="~/img/email.png" /></a>&nbsp;&nbsp;&nbsp;
                                 <a href="#" target="_blank" class="vimeo"><img src="~/img/whatsapp.png" /></a>&nbsp;&nbsp;&nbsp;
-                                <a asp-action="Login" asp-controller="Login"  class="Email"><img src="~/anurag-images/navigation-button.png" /></a>
+                                <a asp-action="Login" asp-controller="Login" class="Email"><img src="~/anurag-images/navigation-button.png" /></a>
                             </div>
                         </div>
                     </div>
@@ -152,6 +157,10 @@
                                         <a asp-area="" asp-controller="Yadnesh" asp-action="Quality_Values">Quality & Values</a>
 
                                     </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Rahul" asp-action="Feedback">FeedBack</a>
+
+                                    </li>
                                 </ul>
                                 <div class="logo px-4">
                                     <a asp-area="" asp-controller="Yadnesh" asp-action="Home"><img src="~/img/hiraj food.png" alt="logo"></a>
@@ -160,10 +169,7 @@
                                 </div>
                                 <ul class="agri-ul">
 
-                                    <li>
-                                        <a asp-area="" asp-controller="Rahul" asp-action="Feedback">FeedBack</a>
-
-                                    </li>
+                                   
                                     <li>
                                         <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
 
@@ -173,9 +179,32 @@
                                     </li>
 
 
-                                    <li>
-                                        <a asp-area="" asp-controller="Login" asp-action="Signup">Login and Signup</a>
-                                    </li>
+
+
+                                    @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
+                                    {
+                                        <li>
+                                            <a asp-area="" asp-controller="Login" asp-action="UserLogout">Logout</a>
+                                        </li>
+
+
+                                        <li>
+
+                                        </li>
+
+
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a asp-area="" asp-controller="Login" asp-action="Signup">Login and Signup</a>
+                                        </li>
+                                    }
+
+
+
+
+
 
                                 </ul>
                             </div>
