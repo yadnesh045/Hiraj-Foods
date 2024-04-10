@@ -45,7 +45,7 @@ namespace Hiraj_Foods.Controllers
 			}
 			else
 			{
-				ModelState.AddModelError("", "Invalid email or password.");
+				TempData["Error"] = "Invalid Crendentails";
 				return View("Signup");
 			}
 		}
