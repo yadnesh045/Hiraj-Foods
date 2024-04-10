@@ -2,6 +2,7 @@ using Hiraj_Foods.Repository.IRepository;
 using Hiraj_Foods.Repository;
 using Microsoft.EntityFrameworkCore;
 using Hiraj_Foods.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<IUnitOfWorks, UnitOfWorks>();
 
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       .AddCookie(options =>
+       {
+           options.LoginPath = "/Admin/Login";
+       });
+
 
 var app = builder.Build();
 
@@ -40,6 +47,7 @@ app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();
 
+app.UseAuthentication();
 
 app.UseAuthorization();
 

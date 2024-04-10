@@ -13,43 +13,7 @@ namespace Hiraj_Foods.Controllers
 			this.unitOfWorks = unitOfWorks;
 		}
 
-		public IActionResult Signup()
-        {
-            return View();
-        }
-		[HttpPost]
-        public IActionResult UserReg(User_SignIn_Login usr)
-        {
-               
-            if (usr.User!= null)
-            {
-                unitOfWorks.users.Add(usr.User);
-                unitOfWorks.Save();
-
-                return RedirectToAction("Home", "Yadnesh");
-
-            }
-			return View();
-		}
-
-		[HttpPost]
-        public IActionResult UserLogin(User_SignIn_Login log)
-        {
-			var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
-
-
-			if (existingUser != null && existingUser.Password == log.Login.Password)
-			{
-			
-				return RedirectToAction("Home", "Yadnesh");
-			}
-			else
-			{
-				ModelState.AddModelError("", "Invalid email or password.");
-				return View("Signup");
-			}
-		}
-
+	
 
 		}
 

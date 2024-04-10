@@ -337,7 +337,7 @@
                                         <div class="dropdown-divider my-1"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="javascript:void(0);">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">
                                             <i class="mdi mdi-power me-1 mdi-20px"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
@@ -372,7 +372,8 @@
                                     <div class="card-body">
                                         <h4 class="card-title mb-1">Total Feedback : @Model.Item2.Count() </h4>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View FeedBack</a>
+                                        <a asp-controller="Admin" asp-action="Feedback" class="btn btn-sm btn-primary">View FeedBack</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -382,8 +383,8 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
+                                        <a asp-controller="Admin" asp-action="Enquiry" class="btn btn-sm btn-primary">View Enquiries</a>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Enquiries</a>
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +398,6 @@
                                         <div class="chart-container" style="height:400px;">
                                             <canvas id="productPricesChart"></canvas>
                                         </div>
-
 
                                     </div>
                                 </div>

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\User\" />
     <Folder Include="wwwroot\Db_Images\ProductImages\" />
     <Folder Include="wwwroot\Db_Images\ProductFlavourImages\" />
 

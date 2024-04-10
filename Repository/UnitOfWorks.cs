@@ -15,7 +15,6 @@ namespace Hiraj_Foods.Repository
 
 		public IUserRepository users {  get; set; } 
 
-		public UnitOfWorks(ApplicationDbContext _db)
 
         public IEnquiry Enquiry { get; set; }
 
