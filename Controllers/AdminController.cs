@@ -51,6 +51,7 @@ namespace Hiraj_Foods.Controllers
 
                 else
                 {
+                    TempData["Error"] = "Invalid Credentials";
                     return View();
                 }
 
@@ -438,6 +439,14 @@ namespace Hiraj_Foods.Controllers
             var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
 
             return View(Admin);
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Home", "Yadnesh");
         }
 
         [HttpPost]
