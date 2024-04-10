@@ -118,6 +118,9 @@ namespace Hiraj_Foods.Controllers
 
 			if (existingUser != null && existingUser.Password == log.Login.Password)
 			{
+				//set session for user -- store user id and email
+				HttpContext.Session.SetInt32("UserId", existingUser.Id);
+				HttpContext.Session.SetString("UserEmail", existingUser.Email);
 
 				return RedirectToAction("Home", "Yadnesh");
 			}
@@ -128,6 +131,15 @@ namespace Hiraj_Foods.Controllers
 			}
 		}
 
+
+		[HttpGet]
+		public async Task<IActionResult> UserLogout()
+		{
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Home", "Yadnesh");
+        }
 
 
 
