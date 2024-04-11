@@ -37,9 +37,6 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult Login(LoginData Vm)
-        {
 
             if (Vm != null)
             {
@@ -501,14 +498,12 @@ namespace Hiraj_Foods.Controllers
             return View(Admin);
         }
 
-        [HttpGet]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
-
             return RedirectToAction("Home", "Yadnesh");
         }
-
         [HttpPost]
         public IActionResult ChangePassword(Admin admin)
         {
@@ -535,6 +530,7 @@ namespace Hiraj_Foods.Controllers
                 return RedirectToAction("dashboard", "Admin");
             }
         }
+
 
         [HttpGet]
         public IActionResult AccountSetting()
