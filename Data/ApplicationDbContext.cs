@@ -19,6 +19,11 @@ namespace Hiraj_Foods.Data
         public DbSet<Enquiry> Enquiries { get; set; }
         public DbSet<Banner> Banners { get; set; }
 
+        public DbSet<Cart> Cart { get; set; }
+
+        public DbSet<Checkout> Checkout { get; set; }
+
+
 
         public DbSet<User> Users { get; set; }
 

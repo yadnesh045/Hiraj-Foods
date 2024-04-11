@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\User\" />
     <Folder Include="wwwroot\Db_Images\ProductImages\" />
     <Folder Include="wwwroot\Db_Images\ProductFlavourImages\" />
 
@@ -35,10 +34,6 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\Admin\Source\Repos\Hiraj-Foods\Repository\IRepository\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\Admin\Source\Repos\Hiraj-Foods\Repository\IRepository\.editorconfig" />
   </ItemGroup>
 
 </Project>

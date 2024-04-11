@@ -30,40 +30,7 @@ namespace Hiraj_Foods.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
 
-
-        [HttpPost]
-        public IActionResult Login(LoginData Vm)
-        {
-
-            if (Vm != null)
-            {
-                string enteredEmail = Vm.EnteredEmail;
-                string enteredPassword = Vm.EnteredPassword;
-
-                var Admin = unitOfWorks.Admin.GetByEmail(enteredEmail);
-
-                if (Admin != null && Admin.Password == enteredPassword)
-                {
-                    //set session for admin store admin id and email
-                    HttpContext.Session.SetInt32("AdminId", Admin.Id);
-                    HttpContext.Session.SetString("AdminEmail", Admin.Email);
-                    return RedirectToAction("dashboard", "Admin");
-                }
-
-                else
-                {
-                    TempData["Error"] = "Invalid Credentials";
-                    return View();
-                }
-
-            }
-            return View();
-        }
 
      
         public IActionResult dashboard()
@@ -451,14 +418,12 @@ namespace Hiraj_Foods.Controllers
             return View(Admin);
         }
 
-        [HttpGet]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
-
             return RedirectToAction("Home", "Yadnesh");
         }
-
         [HttpPost]
         public IActionResult ChangePassword(Admin admin)
         {
@@ -485,6 +450,9 @@ namespace Hiraj_Foods.Controllers
                 return RedirectToAction("dashboard", "Admin");
             }
         }
+
+
+      
 
     }
 }
