@@ -1,6 +1,6 @@
 ﻿@model Hiraj_Foods.Models.Product
 
-
+<link href="~/css/user-css/timeline.css" rel="stylesheet" />
 
 <div class="preloader">
     <div class="preloader-inner">
@@ -37,7 +37,6 @@
                                                 <div class="shop-thumb" style="padding-top:-50px; " height="300">
                                                     <img src="@Model.ProductImageUrl" alt="shop-single">
                                                 </div><br>
-
                                             </div>
                                         </div>
                                     </div>
@@ -53,14 +52,14 @@
                                         Nutritions :
                                     </b>
                                 </label> <p style="margin-left: 120px;margin-top: -30px;">
-                                   @Model.ProductNutrition
+                                    @Model.ProductNutrition
                                 </p>
                                 <label>
                                     <b>
                                         Ingradients :
                                     </b>
                                 </label> <p style="margin-left: 120px;margin-top: -33px;">
-                                   @Model.ProductIngredient
+                                    @Model.ProductIngredient
                                 </p>
 
 
@@ -72,8 +71,11 @@
                                         Description :
                                     </b>
                                 </label><p style="margin-left: 120px;margin-top: -31px;">
-                                   @Model.ProductDescription
+                                    @Model.ProductDescription
                                 </p>
+
+                                <!-- Add to Cart button -->
+                                <a asp-action="AddCart" asp-controller="User" asp-route-id=@Model.Id class="btn btn-warning">Add to Cart</a>
 
                             </div>
                         </div>
@@ -85,9 +87,149 @@
             <div class="row">
                 <div class="col-md-12">
                     <h4 style="font-size: 20px;margin-top: 10px;"><b>Steps to prepare Healthish Products</b></h4>
-                    <img src="~/img/procedure.jpg" style="margin-bottom: 40px;">
+                    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+
+                    <!-- The Timeline -->
+
+                    <ul class="timeline">
+
+                        <!-- Item 1 -->
+                        <li>
+                            <div class="direction-r">
+                                <div class="flag-wrapper">
+                                    <span class="flag">Step 1</span>
+                                    <span class="time-wrapper">
+                                </div>
+                                <div class="desc">Take 2-3 Spoon of Healthish</div>
+                                <img src="~/anurag-images/spoons.png" alt="Step 1 Image">
+                            </div>
+                        </li>
+
+                        <!-- Item 2 -->
+                        <li>
+                            <div class="direction-l">
+                                <div class="flag-wrapper">
+                                    <span class="flag">Step 2</span>
+                                    <span class="time-wrapper">
+                                </div>
+                                <div class="desc">Mix It With One Bowl Of Water</div>
+                                <img src="~/anurag-images/bowl.png" alt="Step 2 Image">
+                            </div>
+                        </li>
+
+                        <!-- Item 3 -->
+                        <li>
+                            <div class="direction-r">
+                                <div class="flag-wrapper">
+                                    <span class="flag">Step 3</span>
+                                    <span class="time-wrapper">
+                                </div>
+                                <div class="desc">Cook for 2-3 minutes on low Flame and Serve</div>
+                                <img src="~/anurag-images/bowl-of-rice.png" alt="Step 3 Image">
+                            </div>
+                        </li>
+                    </ul>
+
+
+
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script src="~/js/timeline.js"></script>
+
+
+
+
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        // Set Toastr options including custom background color
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+}
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        toastr.info('@TempData["Error"]');
+    </script>
+
+    }
+
+
+@if (TempData["Info"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        // Set Toastr options including custom background color
+        toastr.options = {
+            "toastClass": "toastr-custom", // Custom class for styling
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "progressBarColor": "white"
+        };
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Info"]');
+    </script>
+
+    <style>
+        /* Custom style for Toastr notification */
+        .toastr-custom {
+            background-color: blue !important; /* Change to your desired background color */
+            color: antiquewhite !important;
+            font-family: Cambria; /* Change to your desired text color */
+        }
+    </style>
+}

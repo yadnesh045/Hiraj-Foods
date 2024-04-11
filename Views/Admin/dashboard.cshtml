@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Hiraj_Foods.Models.Product>, List<Hiraj_Foods.Models.FeedBack>, List<Hiraj_Foods.Models.Enquiry>>
+﻿@model Tuple<List<Hiraj_Foods.Models.Product>, List<Hiraj_Foods.Models.FeedBack>, List<Hiraj_Foods.Models.Enquiry>,Admin>
 
 @{
     var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
@@ -7,6 +7,7 @@
     var products = Model.Item1;
     var feedback = Model.Item2;
     var enquiry = Model.Item3;
+    var admin = Model.Item4;
 
 }
 @{
@@ -72,9 +73,9 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo me-1">
-                            <span style="color: var(--bs-primary)">
+                            <a  asp-action="Logout" asp-controller="Admin" style="color: var(--bs-primary)">
                                 <img src="~/img/hiraj food.png" />
-                            </span>
+                            </a>
                         </span>
                     </a>
 
@@ -92,29 +93,6 @@
                             <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
                             <div data-i18n="Dashboards">Home</div>
                         </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
-
-
-                            <div data-i18n="Layouts">Banner </div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
-                                    <div data-i18n="Without menu">Add Banner</div>
-
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
-                                    <div data-i18n="Without navbar">View Banner</div>
-                                </a>
-                            </li>
-
-                        </ul>
                     </li>
                     <!-- Layouts -->
                     <li class="menu-item">
@@ -139,16 +117,36 @@
 
                         </ul>
                     </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+
+
+                            <div data-i18n="Layouts">Banner </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
+                                    <div data-i18n="Without menu">Add Banner</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
+                                    <div data-i18n="Without navbar">View Banner</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
 
                     <li class="menu-item">
 
-                        <a href="javascript:void(0);" class="menu-link">
-
                         <a asp-action="ViewContact" asp-controller="Admin" class="menu-link ">
-                        @* <a href="javascript:void(0);" class="menu-link menu-toggle"> *@
                             <i class="menu-icon tf-icons mdi mdi-phone"></i>
                             <div data-i18n="Dashboards" asp->Contact</div>
-                            
+
                         </a>
                     </li>
 
@@ -171,7 +169,7 @@
                     <!--Settings-->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+                            <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
 
                             <div data-i18n="Layouts">Settings </div>
                         </a>
@@ -210,25 +208,6 @@
                                 </a>
                             </li>
 
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-lock-open-outline"></i>
-                            <div data-i18n="Authentications">Authentications</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                                    <div data-i18n="Basic">Login</div>
-                                </a>
-                            </li>
-
-                            <li class="menu-item">
-                                <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                                    <div data-i18n="Basic">Forgot Password</div>
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -289,7 +268,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/1.png" class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.Item4.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -299,11 +278,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2 pe-1">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <!--Show the profile picture of current admin-->
+
+                                                        <img src="@Model.Item4.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">John Doe</h6>
+                                                    <h6 class="mb-0">@Model.Item4.FirstName @Model.Item4.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -313,7 +294,7 @@
                                         <div class="dropdown-divider my-1"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AccountSetting">
                                             <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
@@ -337,7 +318,7 @@
                                         <div class="dropdown-divider my-1"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="javascript:void(0);">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">
                                             <i class="mdi mdi-power me-1 mdi-20px"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
@@ -372,7 +353,7 @@
                                     <div class="card-body">
                                         <h4 class="card-title mb-1">Total Feedback : @Model.Item2.Count() </h4>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View FeedBack</a>
+                                        <a hasp-controller="Admin" asp-action="Feedback" class="btn btn-sm btn-primary">View FeedBack</a>
                                     </div>
                                 </div>
                             </div>
@@ -382,6 +363,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
+                                        <a asp-controller="Admin" asp-action="Enquiry" class="btn btn-sm btn-primary">View Enquiries</a>
 
                                         <a href="javascript:;" class="btn btn-sm btn-primary">View Enquiries</a>
                                     </div>
@@ -397,7 +379,6 @@
                                         <div class="chart-container" style="height:400px;">
                                             <canvas id="productPricesChart"></canvas>
                                         </div>
-
 
                                     </div>
                                 </div>
@@ -543,4 +524,34 @@
         toastr.success('@TempData["Message"]');
     </script>
 
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
 }

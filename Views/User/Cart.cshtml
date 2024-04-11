@@ -1,0 +1,121 @@
+﻿@model List<Hiraj_Foods.Models.Cart>
+
+@if (Model.Count != 0)
+{
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 shadow">
+                            <img src="@item.ProductImageUrl" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.ProductName</h5>
+                                <p class="card-text">@item.ProductDescription</p>
+                                <p class="card-text">Price: $@item.ProductPrice</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="quantity-label">Quantity</span>
+                                    </div>
+                                    <input type="number" class="form-control quantity-input" value="1" data-price="@item.ProductPrice" aria-label="Quantity" aria-describedby="quantity-label" min="1">
+                                </div>
+                                <a asp-action="DeleteFromCart" asp-controller="User" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="float-right">
+                        <h4>Total: <span id="totalAmount">00</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 d-flex align-items-center">
+                <div class="col-sm-6 order-md-2 text-right">
+                    <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
+                </div>
+                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                    <a href="catalog.html">
+                        <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div style="text-align: center; margin: 50px 50px; padding: 200px; background-color: white; color: #ffb11f; border: 3px solid #ffb11f; border-radius: 5px;">
+        <h3>Cart Is Empty</h3>
+        <a class="btn btn-outline-warning" asp-action="Home" asp-controller="Yadnesh">Continue Shopping</a>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <script type="text/javascript">
+        toastr.error('@TempData["Error"]');
+    </script>
+}
+
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+        toastr.success('@TempData["Success"]');
+    </script>
+}
+
+<style>
+    .card {
+        transition: transform 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .quantity-input {
+        max-width: 80px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        updateTotalPrice();
+        document.querySelectorAll('.quantity-input').forEach(function (input) {
+            input.addEventListener('input', function () {
+                updateTotalPrice();
+            });
+            input.addEventListener('change', function () {
+                validateQuantity(input);
+            });
+        });
+    });
+
+    function updateTotalPrice() {
+        var totalPrice = 0;
+        var quantityInputs = document.querySelectorAll('.quantity-input');
+        quantityInputs.forEach(function (input) {
+            var price = parseFloat(input.getAttribute('data-price'));
+            var quantity = parseInt(input.value);
+            totalPrice += price * quantity;
+        });
+        document.getElementById('totalAmount').textContent = '$' + totalPrice.toFixed(2);
+    }
+
+    function validateQuantity(input) {
+        var quantity = parseInt(input.value);
+        if (quantity < 1) {
+            input.value = 1; // Reset quantity to 1 if less than 1
+        }
+        updateTotalPrice(); // Update total price after validating quantity
+    }
+</script>

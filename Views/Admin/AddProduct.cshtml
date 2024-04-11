@@ -1,4 +1,4 @@
-﻿
+﻿@model Hiraj_Foods.Models.Admin
 
 @{
     Layout = null;
@@ -79,29 +79,6 @@
                             <div data-i18n="Dashboards">Home</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
-
-
-                            <div data-i18n="Layouts">Banner </div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
-                                    <div data-i18n="Without menu">Add Banner</div>
-
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
-                                    <div data-i18n="Without navbar">View Banner</div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
                     <!-- Layouts -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -121,6 +98,29 @@
                             <li class="menu-item">
                                 <a href="layouts-without-navbar.html" class="menu-link">
                                     <div data-i18n="Without navbar">View Products</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+
+
+                            <div data-i18n="Layouts">Banner </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
+                                    <div data-i18n="Without menu">Add Banner</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
+                                    <div data-i18n="Without navbar">View Banner</div>
                                 </a>
                             </li>
 
@@ -247,7 +247,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/1.png" class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -257,11 +257,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2 pe-1">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <!--Show the profile picture of current admin-->
+
+                                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">John Doe</h6>
+                                                    <h6 class="mb-0">@Model.FirstName @Model.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -271,7 +273,7 @@
                                         <div class="dropdown-divider my-1"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AccountSetting">
                                             <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
@@ -295,7 +297,7 @@
                                         <div class="dropdown-divider my-1"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="javascript:void(0);">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">
                                             <i class="mdi mdi-power me-1 mdi-20px"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>

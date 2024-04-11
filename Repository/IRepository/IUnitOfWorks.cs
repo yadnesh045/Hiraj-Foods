@@ -8,13 +8,17 @@
 
         IContactRepository Contact { get; }
 
-        IUserRepository users { get; }    
+        IUserRepository Users { get; }    
 
         IEnquiry Enquiry { get; }
 
         IFeedBackRepository Feedback { get; }
 
         IBannerRepository Banner { get; }
+
+        ICartRepository Cart { get; }
+
+        ICheckoutRepository Checkout { get; }
         void Save();
     }
 }
