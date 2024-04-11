@@ -1,5 +1,7 @@
 ﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository.IRepository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -8,10 +10,13 @@ namespace Hiraj_Foods.Controllers
     public class UserController : Controller
     {
         private readonly IUnitOfWorks unitOfWorks;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserController(IUnitOfWorks unitOfWorks)
+        public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWorks = unitOfWorks;
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
         public IActionResult Profile()
@@ -80,7 +85,8 @@ namespace Hiraj_Foods.Controllers
 
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
 
-            ViewBag.CartItemCount = cartItems.Count();
+            SetLayoutModel();
+
             return View(cartItems);
         }
 
@@ -145,6 +151,16 @@ namespace Hiraj_Foods.Controllers
             return RedirectToAction("Cart", "User");
         }
 
+
+
+
+        private void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
+            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+        }
 
 
     }
