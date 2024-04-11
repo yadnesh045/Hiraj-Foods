@@ -43,6 +43,14 @@ namespace Hiraj_Foods.Controllers
 
 				var Admin = unitOfWorks.Admin.GetByEmail(enteredEmail);
 
+				// just check if admin is active or not
+				if (Admin.IsActive == false)
+				{
+                    TempData["Error"] = "Not Authorized to Login!!!";
+
+                    return RedirectToAction("Login", "Login");
+                }
+
 				if (Admin != null && Admin?.Password == enteredPassword)
 				{
 					//set session for admin store admin id and email
@@ -61,7 +69,9 @@ namespace Hiraj_Foods.Controllers
 
 					await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-					return RedirectToAction("dashboard", "Admin");
+                    TempData["Message"] = "Login Successfull !";
+
+                    return RedirectToAction("dashboard", "Admin");
 				}
 
 				else

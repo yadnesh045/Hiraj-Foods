@@ -35,11 +35,8 @@ namespace Hiraj_Foods.Models
 
         //[Required]
         //[NotMapped]
-        //[Display(Name = "Image")]
-        //public IFormFile Image { get; set; }
-
-
-        //public string ImageUrl { get; set; }
+        [Display(Name = "ImageUrl")]
+        public string? ImageUrl { get; set; }
 
         [NotMapped]
         [StringLength(50)]
@@ -67,6 +64,11 @@ namespace Hiraj_Foods.Models
         [Display(Name = "ZipCode")]
         [StringLength(6)]
         public string? ZipCode { get; set; }
+
+
+        [Display(Name = "IsActive")]
+        public bool? IsActive { get; set; }
+
 
     }
 }

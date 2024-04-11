@@ -1,10 +1,11 @@
-﻿@model Hiraj_Foods.Models.Banner
+﻿@model Hiraj_Foods.Models.Admin
 
 
 
 @{
     Layout = null;
 }
+
 
 
 <!DOCTYPE html>
@@ -81,29 +82,6 @@
                             <div data-i18n="Dashboards">Home</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
-
-
-                            <div data-i18n="Layouts">Banner </div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
-                                    <div data-i18n="Without menu">Add Banner</div>
-
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
-                                    <div data-i18n="Without navbar">View Banner</div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
                     <!-- Layouts -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -123,6 +101,29 @@
                             <li class="menu-item">
                                 <a href="layouts-without-navbar.html" class="menu-link">
                                     <div data-i18n="Without navbar">View Products</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+
+
+                            <div data-i18n="Layouts">Banner </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
+                                    <div data-i18n="Without menu">Add Banner</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
+                                    <div data-i18n="Without navbar">View Banner</div>
                                 </a>
                             </li>
 
@@ -249,7 +250,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/1.png" class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -259,11 +260,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2 pe-1">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <!--Show the profile picture of current admin-->
+
+                                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">John Doe</h6>
+                                                    <h6 class="mb-0">@Model.FirstName @Model.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -326,14 +329,14 @@
                                     <div class="card-body">
                                         <form method="post" asp-controller="Admin" asp-action="AddBanner" enctype="multipart/form-data">
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" asp-for="Flavour_title" placeholder="Banner Name" />
+                                                <input type="text" class="form-control" name="Flavour_title" placeholder="Banner Name" />
                                                 <label for="basic-default-fullname">Banner Title</label>
                                             </div>
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="mb-3">
                                                         <label for="formFile" class="form-label">Input Banner Flavour Image</label>
-                                                        <input class="form-control" type="file" name="file" asp-for="Banner_Img" />
+                                                        <input class="form-control" type="file" name="file" name="Banner_Img" />
                                                     </div>
                                                 </div>
                                             </div>

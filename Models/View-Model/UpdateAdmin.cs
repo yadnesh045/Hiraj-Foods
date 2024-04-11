@@ -8,7 +8,10 @@
         public string LastName { get; set; }
         public string Mobile { get; set; }
         public string Address { get; set; }
-        public string Password { get; set; }
+        public string? Password { get; set; }
+
+        // for profile picture
+        public IFormFile? ProfilePicture { get; set; }
 
         public string? State { get; set; }
         public string? ZipCode { get; set; }

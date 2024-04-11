@@ -1,5 +1,6 @@
 ﻿@model Hiraj_Foods.Models.Admin
 
+
 @{
     Layout = null;
 }
@@ -44,6 +45,14 @@
     <!-- Helpers -->
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
+
+
+    <!--For Sweet Alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
 </head>
 
 <body>
@@ -77,29 +86,6 @@
                             <div data-i18n="Dashboards">Home</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
-
-
-                            <div data-i18n="Layouts">Banner </div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
-                                    <div data-i18n="Without menu">Add Banner</div>
-
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
-                                    <div data-i18n="Without navbar">View Banner</div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
                     <!-- Layouts -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -118,6 +104,29 @@
                             <li class="menu-item">
                                 <a asp-area="" asp-controller="Admin" asp-action="ViewProduct" class="menu-link">
                                     <div data-i18n="Without navbar">View Products</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+
+
+                            <div data-i18n="Layouts">Banner </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
+                                    <div data-i18n="Without menu">Add Banner</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
+                                    <div data-i18n="Without navbar">View Banner</div>
                                 </a>
                             </li>
 
@@ -244,7 +253,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/1.png" class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -254,11 +263,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2 pe-1">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <!--Show the profile picture of current admin-->
+
+                                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">John Doe</h6>
+                                                    <h6 class="mb-0">@Model.FirstName @Model.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -324,21 +335,21 @@
                             <!-- Account -->
                             <div class="card-body">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                    <form id="formAccountSettings" method="POST" asp-controller="Admin" asp-action="AccountSetting" onsubmit="return false">
+                                    <form method="post" asp-area="" asp-controller="Admin" asp-action="AccountSetting" enctype="multipart/form-data">
 
-                                        <img src="../assets/img/avatars/1.png"
+                                        <img src="@Model.ImageUrl"
                                              alt="user-avatar"
                                              class="d-block w-px-120 h-px-120 rounded"
                                              id="uploadedAvatar" />
+                                        <br />
                                         <div class="button-wrapper">
                                             <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
                                                 <span class="d-none d-sm-block">Upload new photo</span>
                                                 <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
-                                                <input type="file"
+                                                <input type="file" hidden
                                                        id="upload"
                                                        class="account-file-input"
-                                                       hidden
-                                                       accept="image/png, image/jpeg" />
+                                                       name="ProfilePicture" />
                                             </label>
                                             <button type="button" class="btn btn-outline-danger account-image-reset mb-3">
                                                 <i class="mdi mdi-reload d-block d-sm-none"></i>
@@ -355,7 +366,7 @@
                                                         <input class="form-control"
                                                                type="text"
                                                                id="firstName"
-                                                               name="firstName"
+                                                               name="FirstName"
                                                                value="@Model.FirstName"
                                                                autofocus />
                                                         <label for="firstName">First Name</label>
@@ -363,7 +374,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating form-floating-outline">
-                                                        <input class="form-control" type="text" name="lastName" id="lastName" value="@Model.LastName" />
+                                                        <input class="form-control" type="text" name="LastName" id="lastName" value="@Model.LastName" />
                                                         <label for="lastName">Last Name</label>
                                                     </div>
                                                 </div>
@@ -372,7 +383,7 @@
                                                         <input class="form-control"
                                                                type="text"
                                                                id="email"
-                                                               name="email"
+                                                               name="Email"
                                                                value="@Model.Email"
                                                                placeholder="john.doe@example.com" />
                                                         <label for="email">E-mail</label>
@@ -384,10 +395,10 @@
                                                         <div class="form-floating form-floating-outline">
                                                             <input type="text"
                                                                    id="phoneNumber"
-                                                                   name="phoneNumber"
+                                                                   name="Mobile"
                                                                    class="form-control"
                                                                    value="@Model.Mobile" />
-                                                            <label for="phoneNumber">Phone Number</label>
+                                                            <label for="Mobile">Phone Number</label>
                                                         </div>
                                                         <span class="input-group-text">IN (+91)</span>
                                                     </div>
@@ -397,7 +408,7 @@
                                                         <input type="text"
                                                                class="form-control"
                                                                id="address"
-                                                               name="address"
+                                                               name="Address"
                                                                value="@Model.Address" />
                                                         <label for="address">Address</label>
                                                     </div>
@@ -407,9 +418,10 @@
                                                         <input class="form-control"
                                                                type="text"
                                                                id="state"
-                                                               name="state"
-                                                               placeholder="Maharashtra" />
-                                                        <label for="state">@Model.State</label>
+                                                               name="State"
+                                                               placeholder="Maharashtra"
+                                                               value="@Model.State" />
+                                                        <label for="state">State</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -417,10 +429,11 @@
                                                         <input type="text"
                                                                class="form-control"
                                                                id="zipCode"
-                                                               name="zipCode"
+                                                               name="ZipCode"
                                                                placeholder="422003"
+                                                               value="@Model.ZipCode"
                                                                maxlength="6" />
-                                                        <label for="zipCode">@Model.ZipCode</label>
+                                                        <label for="zipCode">ZipCode</label>
                                                     </div>
                                                 </div>
 
@@ -431,6 +444,7 @@
                                             </div>
                                     </form>
                                 </div>
+
                             </div>
                             <!-- /Account -->
 
@@ -449,7 +463,7 @@
                                         <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
                                     </div>
                                 </div>
-                                <form id="formAccountDeactivation" onsubmit="return false">
+                                <form method="post" asp-area="" asp-controller="Admin" asp-action="DeactivateAdmin">
                                     <div class="form-check mb-3 ms-3">
                                         <input class="form-check-input"
                                                type="checkbox"
@@ -457,7 +471,8 @@
                                                id="accountActivation" />
                                         <label class="form-check-label" for="accountActivation">I confirm my account deactivation</label>
                                     </div>
-                                    <button type="submit" class="btn btn-danger">Deactivate Account</button>
+                                    <button type="submit" class="btn btn-danger" id="deactivateButton">Deactivate Account</button>
+
                                 </form>
                             </div>
                         </div>
@@ -522,3 +537,92 @@
 </body>
 
 </html>
+
+
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
+}
+
+<script>
+    document.getElementById('deactivateButton').addEventListener('click', function (event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Deactivate my Account!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deactivated!',
+                    'Your Account has been Deactivated.',
+                    'success'
+                )
+                // If confirmed, submit the form
+                event.target.form.submit();
+            }
+        })
+    });
+</script>
