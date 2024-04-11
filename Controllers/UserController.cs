@@ -14,8 +14,6 @@ namespace Hiraj_Foods.Controllers
             this.unitOfWorks = unitOfWorks;
         }
 
-
-
         public IActionResult Profile()
         {
             // get user email from session
@@ -34,7 +32,8 @@ namespace Hiraj_Foods.Controllers
             return View(user);
         }
 
-		public IActionResult Signup()
+
+        public IActionResult Signup()
         {
             return View();
         }
@@ -76,6 +75,7 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Cart()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+	
 
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
 
@@ -143,6 +143,7 @@ namespace Hiraj_Foods.Controllers
             TempData["Error"] = "Item Not Removed";
             return RedirectToAction("Cart", "User");
         }
+
 
 
     }
