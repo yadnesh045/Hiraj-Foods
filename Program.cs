@@ -3,11 +3,23 @@ using Hiraj_Foods.Repository;
 using Microsoft.EntityFrameworkCore;
 using Hiraj_Foods.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Disable Caching
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new ResponseCacheAttribute
+    {
+        Location = ResponseCacheLocation.None,
+        NoStore = true
+    });
+});
 
 
 
@@ -31,6 +43,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
        });
 
 
+
+
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
@@ -42,6 +56,24 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.Use(async (context, next) =>
+{
+    context.Response.GetTypedHeaders().CacheControl =
+        new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+        {
+            NoCache = true,
+            NoStore = true,
+            MustRevalidate = true
+        };
+    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Pragma] = new string[] { "no-cache" };
+    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Expires] = new string[] { "0" };
+    await next();
+});
+
+
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

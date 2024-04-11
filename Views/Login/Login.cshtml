@@ -1,4 +1,4 @@
-﻿@model Hiraj_Foods.Models.View_Model.LoginData
+﻿@* @model Hiraj_Foods.Models.View_Model.LoginData *@
 
 
 @{
@@ -12,9 +12,9 @@
 <img class="Logo" src="~/img/hiraj food.png" />
 
 
-<form class="login" method="post">
-    <input asp-for="@Model.EnteredEmail" type="text" placeholder="Email">
-    <input asp-for="@Model.EnteredPassword" type="password" placeholder="Password">
+<form class="login" method="post" asp-controller="Login" asp-action="Login">
+    <input name="EnteredEmail" type="text" placeholder="Email">
+    <input name="EnteredPassword" type="password" placeholder="Password">
     <button type="submit">Login</button>
 </form>
 

@@ -30,17 +30,7 @@ namespace Hiraj_Foods.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-
-
-     
-
-        public IActionResult dashboard()
+        public async Task<IActionResult> dashboard()
         {
             var products = unitOfWorks.Product.GetAll().ToList();
 
@@ -120,8 +110,6 @@ namespace Hiraj_Foods.Controllers
                     product.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
                 }
 
-
-
                 unitOfWorks.Product.Add(product);
                 unitOfWorks.Save();
 
@@ -150,8 +138,6 @@ namespace Hiraj_Foods.Controllers
         public IActionResult EditProduct(int id)
         {
             var product = unitOfWorks.Product.GetById(id);
-
-
 
             var AdminEmail = HttpContext.Session.GetString("AdminEmail");
             var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
