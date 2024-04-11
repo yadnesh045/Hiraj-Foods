@@ -38,31 +38,6 @@ namespace Hiraj_Foods.Controllers
 
 
 
-            if (Vm != null)
-            {
-                string enteredEmail = Vm.EnteredEmail;
-                string enteredPassword = Vm.EnteredPassword;
-
-                var Admin = unitOfWorks.Admin.GetByEmail(enteredEmail);
-
-                if (Admin != null && Admin.Password == enteredPassword)
-                {
-                    //set session for admin store admin id and email
-                    HttpContext.Session.SetInt32("AdminId", Admin.Id);
-                    HttpContext.Session.SetString("AdminEmail", Admin.Email);
-                    return RedirectToAction("dashboard", "Admin");
-                }
-
-                else
-                {
-                    TempData["Error"] = "Invalid Credentials";
-                    return View();
-                }
-
-            }
-            return View();
-        }
-
      
 
         public IActionResult dashboard()
