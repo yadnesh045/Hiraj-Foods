@@ -30,6 +30,7 @@ namespace Hiraj_Foods.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
+
         public IActionResult Login()
         {
             return View();
@@ -65,6 +66,7 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
+     
 
         public IActionResult dashboard()
         {

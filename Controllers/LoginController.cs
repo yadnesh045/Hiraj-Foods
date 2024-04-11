@@ -107,7 +107,7 @@ namespace Hiraj_Foods.Controllers
 
 			if (usr != null)
 			{
-				unitOfWorks.Users.Add(usr.User);
+				unitOfWorks.users.Add(usr.User);
 				unitOfWorks.Save();
 
 				return RedirectToAction("Home", "Yadnesh");
@@ -123,7 +123,7 @@ namespace Hiraj_Foods.Controllers
 		[HttpPost]
 		public IActionResult UserLogin(User_SignIn_Login log)
 		{
-			var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
+			var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
 
 
 			if (existingUser != null && existingUser.Password == log.Login.Password)
