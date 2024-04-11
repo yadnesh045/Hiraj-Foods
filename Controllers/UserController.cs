@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hiraj_Foods.Controllers
 {
-    public class UserController : Controller
-    {
+	public class UserController : Controller
+	{
 		private readonly IUnitOfWorks unitOfWorks;
 
 		public UserController(IUnitOfWorks unitOfWorks)
@@ -14,44 +14,50 @@ namespace Hiraj_Foods.Controllers
 		}
 
 		public IActionResult Signup()
-        {
-            return View();
-        }
-		[HttpPost]
-        public IActionResult UserReg(User_SignIn_Login usr)
-        {
-               
-            if (usr.User!= null)
-            {
-                unitOfWorks.users.Add(usr.User);
-                unitOfWorks.Save();
-
-                return RedirectToAction("Home", "Yadnesh");
-
-            }
+		{
 			return View();
 		}
-
 		[HttpPost]
-        public IActionResult UserLogin(User_SignIn_Login log)
-        {
-			var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
+		public IActionResult UserReg(User_SignIn_Login usr)
+		{
 
-
-			if (existingUser != null && existingUser.Password == log.Login.Password)
+			var existingUser = unitOfWorks.users.GetByEmail(usr.User.Email);
+			if (existingUser != null)
 			{
-			
-				return RedirectToAction("Home", "Yadnesh");
-			}
-			else
-			{
-				ModelState.AddModelError("", "Invalid email or password.");
+				// If the email already exists, return a view with an error message
+				TempData["ErrorMessage"] = "Email is already registered.";
 				return View("Signup");
 			}
+
+			if (usr.User != null)
+				{
+					unitOfWorks.users.Add(usr.User);
+					unitOfWorks.Save();
+
+					return RedirectToAction("Home", "Yadnesh");
+
+				}
+				return View();
 		}
 
+		[HttpPost]
+		public IActionResult UserLogin(User_SignIn_Login log)
+		{
+			
+				var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
 
-		}
 
+				if (existingUser != null && existingUser.Password == log.Login.Password)
+				{
+					TempData["success"] = "Login Successful";
+					return RedirectToAction("Home", "Yadnesh");
+				}
+				else
+				{
+					TempData["UnSuccess"] = "Invalid creadentials";
+					return RedirectToAction("Signup", "User");
+				}
+			}
+	}
     }
 

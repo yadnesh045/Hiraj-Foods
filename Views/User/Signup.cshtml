@@ -2,6 +2,76 @@
 <!DOCTYPE html>
 <html lang="en">
 
+@if (TempData["UnSuccess"] != null)
+{
+	<h1>@TempData["UnSuccess"]</h1>
+	@* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+	<script type="text/javascript">
+		// Set Toastr options including custom background color
+		toastr.options = {
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": false,
+			"positionClass": "toast-top-right",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+
+		// Display the Toastr notification
+		toastr.Unsuccess('@TempData["UnSuccess"]');
+	</script> *@
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+	<h1>@TempData["ErrorMessage"]</h1>
+
+	@* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+	<script type="text/javascript">
+		// Set Toastr options including custom background color
+		toastr.options = {
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": false,
+			"positionClass": "toast-top-right",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+
+		// Display the Toastr notification
+		toastr.ErrorMessage('@TempData["ErrorMessage"]');
+	</script> *@
+
+}
+
+
+
+
+
 @{
 	Layout = null;
 }
@@ -12,22 +82,32 @@
 	<script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 	<link href="~/css/user-css/signup_login.css" rel="stylesheet" />
 	<title>Sign in & Sign up Form</title>
+
+	<style>
+		.text-danger {
+			color: #F93E07; /* Set the text color to red */
+			display: inline-block; /* Display error message in one line */
+			margin-left: 5px; /* Add some space between the input field and error message */
+		}
+	</style>
 </head>
 
 <body>
 	<div class="container">
 		<div class="forms-container">
 			<div class="signin-signup">
-				<form method="post" asp-controller="User" asp-action="UserLogin" class="sign-in-form">
+				<form method="post" asp-action="UserLogin" asp-controller="User" class="sign-in-form">
 					<h2 class="title">Login</h2>
 					<div class="input-field">
 						<i class="fas fa-user"></i>
 						<input type="text" asp-for="Login.Email" placeholder="Username" />
 					</div>
+					<span asp-validation-for="Login.Email" class="text-danger d-block mt-2"></span> <!-- Add d-block and mt-2 classes to ensure proper display -->
 					<div class="input-field">
 						<i class="fas fa-lock"></i>
 						<input type="password" asp-for="Login.Password" placeholder="Password" />
 					</div>
+					<span asp-validation-for="Login.Password" class="text-danger d-block mt-2"></span> <!-- Add d-block and mt-2 classes to ensure proper display -->
 					<input type="submit" value="Login" class="btn solid" />
 					<p class="social-text">Or Sign in with social platforms</p>
 					<div class="social-media">
@@ -45,27 +125,33 @@
 						</a>
 					</div>
 				</form>
+
 				<form method="post" asp-action="UserReg" asp-controller="User" class="sign-up-form">
 					<h2 class="title">Sign up</h2>
 					<div class="input-field">
 						<i class="fas fa-user"></i>
 						<input type="text" asp-for="User.FirstName" placeholder="First Name" />
+						<span asp-validation-for="User.FirstName" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
 					</div>
 					<div class="input-field">
 						<i class="fas fa-user"></i>
 						<input type="text" asp-for="User.LastName" placeholder="Last Name" />
+						<span asp-validation-for="User.LastName" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
 					</div>
 					<div class="input-field">
 						<i class="fas fa-envelope"></i>
-						<input type="email" asp-for="User.Email" placeholder="Email" />
+						<input type="text" asp-for="User.Email" placeholder="Email" />
+						<span asp-validation-for="User.Email" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
 					</div>
 					<div class="input-field">
 						<i class="fas fa-lock"></i>
 						<input type="password" asp-for="User.Password" placeholder="Password" />
+						<span asp-validation-for="User.Password" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
 					</div>
 					<div class="input-field">
 						<i class="fas fa-phone"></i>
 						<input type="text" asp-for="User.Phone" placeholder="Phone" />
+						<span asp-validation-for="User.Phone" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
 					</div>
 					<input type="submit" class="btn" value="Sign up" />
 					<p class="social-text">Or Sign up with social platforms</p>
@@ -84,6 +170,7 @@
 						</a>
 					</div>
 				</form>
+
 			</div>
 		</div>
 
@@ -134,4 +221,9 @@
 	</script>
 </body>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</html>
 </html>
