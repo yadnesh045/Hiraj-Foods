@@ -173,6 +173,7 @@
         toastr.success('@TempData["Success"]');
     </script>
 }
+
 @if (TempData["Error"] != null)
 {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -185,7 +186,7 @@
             "debug": false,
             "newestOnTop": false,
             "progressBar": false,
-            "positionClass": "toast-bottom-right",
+            "positionClass": "toast-top-right",
             "preventDuplicates": false,
             "onclick": null,
             "showDuration": "300",
@@ -198,10 +199,10 @@
             "hideMethod": "fadeOut"
         }
 
-        toastr.info('@TempData["Error"]');
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
     </script>
-
-    }
+}
 
 
 @if (TempData["Info"] != null)
@@ -210,26 +211,38 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-    <script type="text/javascript">
-        // Set Toastr options including custom background color
-        toastr.options = {
-            "toastClass": "toastr-custom", // Custom class for styling
-            "closeButton": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "progressBarColor": "white"
-        };
-
-        // Display the Toastr notification
-        toastr.success('@TempData["Info"]');
-    </script>
-
     <style>
-        /* Custom style for Toastr notification */
-        .toastr-custom {
-            background-color: blue !important; /* Change to your desired background color */
-            color: antiquewhite !important;
-            font-family: Cambria; /* Change to your desired text color */
+        /* Custom styling for info toastr notifications */
+        .toastr-custom-info {
+            background-color: #AEDDE0 !important; /* Bootstrap pestel info color; adjust as needed     #ABDBE3   #5BBCFF*/
         }
     </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Set Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "toastClass": "toast toastr-custom-info" // Apply custom class for styling
+            };
+
+            // Display the Toastr notification
+            toastr.info('@Html.Raw(TempData["Info"])'); // Ensure correct encoding
+        });
+    </script>
 }
+
