@@ -1,3 +1,4 @@
+
 using Azure.Core;
 using Hiraj_Foods.Data;
 using Hiraj_Foods.Models;
@@ -27,6 +28,41 @@ namespace Hiraj_Foods.Controllers
         {
             this.unitOfWorks = unitOfWorks;
             this._webHostEnvironment = _webHostEnvironment;
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Login(LoginData Vm)
+        {
+
+            if (Vm != null)
+            {
+                string enteredEmail = Vm.EnteredEmail;
+                string enteredPassword = Vm.EnteredPassword;
+
+                var Admin = unitOfWorks.Admin.GetByEmail(enteredEmail);
+
+                if (Admin != null && Admin.Password == enteredPassword)
+                {
+                    //set session for admin store admin id and email
+                    HttpContext.Session.SetInt32("AdminId", Admin.Id);
+                    HttpContext.Session.SetString("AdminEmail", Admin.Email);
+                    return RedirectToAction("dashboard", "Admin");
+                }
+
+                else
+                {
+                    TempData["Error"] = "Invalid Credentials";
+                    return View();
+                }
+
+            }
+            return View();
         }
 
 
@@ -461,6 +497,14 @@ namespace Hiraj_Foods.Controllers
             var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
 
             return View(Admin);
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Home", "Yadnesh");
         }
 
         [HttpPost]

@@ -115,7 +115,7 @@
 					Login
 					</button>
 				</div>
-				<img src="/img/LOGIN3.png" class="image" alt="" />
+				<img src="~/img/login.png" class="image" alt="" />
 			</div>
 		</div>
 	</div>
@@ -139,14 +139,34 @@
 
 </html>
 
-<script>
-	window.onload = function () {
-		var span = document.querySelector("span.text-danger");
-		if (span) {
-			var message = span.textContent || span.innerText;
-			if (message) {
-				alert(message);
-			}
+
+
+@if (TempData["Error"] != null)
+{
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+	<script type="text/javascript">
+		// Set Toastr options including custom background color
+		toastr.options = {
+			"toastClass": "toastr-custom", // Custom class for styling
+			"closeButton": true,
+			"progressBar": true,
+			"positionClass": "toast-top-right",
+			"progressBarColor": "white"
+		};
+
+		// Display the Toastr notification
+		toastr.success('@TempData["Error"]');
+	</script>
+
+	<style>
+		/* Custom style for Toastr notification */
+		.toastr-custom {
+			background-color: red !important; /* Change to your desired background color */
+			color: #000000 !important;
+			font-family: Cambria; /* Change to your desired text color */
 		}
-	};
-</script>
+	</style>
+}
