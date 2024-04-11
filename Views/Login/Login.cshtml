@@ -28,6 +28,28 @@
 
     <script type="text/javascript">
         toastr.options = {
+            "toastClass": "toastr-custom", // Custom class for styling
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "progressBarColor": "white"
+        };
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Error"]');
+    </script>
+
+    <style>
+        /* Custom style for Toastr notification */
+        .toastr-custom {
+            background-color: red !important; /* Change to your desired background color */
+            color: #000000 !important;
+            font-family: Cambria; /* Change to your desired text color */
+        }
+    </style>
+}
+
+        toastr.options = {
             "closeButton": false,
             "debug": false,
             "newestOnTop": false,
