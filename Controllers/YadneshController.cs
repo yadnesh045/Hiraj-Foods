@@ -62,7 +62,7 @@ namespace Hiraj_Foods.Controllers
             var userid = HttpContext.Session.GetInt32("UserId");
 
 
-            var user = unitOfWorks.users.GetById(userid);
+            var user = unitOfWorks.Users.GetById(userid);
 
 
             var Chec = new Checkout

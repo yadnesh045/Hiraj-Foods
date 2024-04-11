@@ -14,8 +14,6 @@ namespace Hiraj_Foods.Controllers
             this.unitOfWorks = unitOfWorks;
         }
 
-
-
         public IActionResult Profile()
         {
             // get user email from session
@@ -34,7 +32,8 @@ namespace Hiraj_Foods.Controllers
             return View(user);
         }
 
-		public IActionResult Signup()
+
+        public IActionResult Signup()
         {
             return View();
         }
@@ -44,7 +43,7 @@ namespace Hiraj_Foods.Controllers
                
             if (usr.User!= null)
             {
-                unitOfWorks.users.Add(usr.User);
+                unitOfWorks.Users.Add(usr.User);
                 unitOfWorks.Save();
 
                 return RedirectToAction("Home", "Yadnesh");
@@ -56,7 +55,7 @@ namespace Hiraj_Foods.Controllers
 		[HttpPost]
         public IActionResult UserLogin(User_SignIn_Login log)
         {
-			var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
+			var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
 
 
 			if (existingUser != null && existingUser.Password == log.Login.Password)
@@ -76,6 +75,7 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Cart()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+	
 
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
 
@@ -91,7 +91,7 @@ namespace Hiraj_Foods.Controllers
 
             if (userId is not null)
             {
-                var user = unitOfWorks.users.GetById(userId);
+                var user = unitOfWorks.Users.GetById(userId);
 
                 // Check if the product is already present in the user's cart
                 var existingCartItem = unitOfWorks.Cart.GetByUserIdAndProductId(user.Id, product.Id);
@@ -143,6 +143,7 @@ namespace Hiraj_Foods.Controllers
             TempData["Error"] = "Item Not Removed";
             return RedirectToAction("Cart", "User");
         }
+
 
 
     }

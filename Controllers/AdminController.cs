@@ -31,6 +31,14 @@ namespace Hiraj_Foods.Controllers
         }
 
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+
+     
 
         public IActionResult dashboard()
         {
@@ -591,6 +599,19 @@ namespace Hiraj_Foods.Controllers
                 unitOfWorks.Save();
                 return RedirectToAction("Login", "Login");
             }
+        }
+
+        [HttpGet]
+        public IActionResult ViewUser()
+        {
+            var user = unitOfWorks.Users.GetAll().ToList();
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+
+            var model = new Tuple<List<User>, Admin>(user, Admin);
+
+            return View(model);
         }
 
 
