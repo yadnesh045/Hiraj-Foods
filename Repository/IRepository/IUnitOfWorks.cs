@@ -15,6 +15,10 @@
         IFeedBackRepository Feedback { get; }
 
         IBannerRepository Banner { get; }
+
+        ICartRepository Cart { get; }
+
+        ICheckoutRepository Checkout { get; }
         void Save();
     }
 }

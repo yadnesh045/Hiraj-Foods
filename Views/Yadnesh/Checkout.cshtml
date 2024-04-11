@@ -1,0 +1,112 @@
+﻿@model Hiraj_Foods.Models.Checkout
+
+@{
+    Layout = null;
+}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link href="~/css/checkout/checkout.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <img src="~/img/hiraj2.png" />
+
+    <form asp-action="Checkout" asp-controller="Yadnesh" method="post" class="form">
+        <h1 class="Header">Checkout</h1>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+            <div class="progress-step active" data-title="Address"></div>
+            <div class="progress-step" data-title="Select Payment Way"></div>
+            <div class="progress-step" data-title="Confirm"></div>
+        </div>
+
+        <!-- Steps -->
+        <div class="form-step active">
+            <h3>Add Address</h3>
+
+            <div class="input-group">
+                <label asp-for="Country">Country</label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="City">City</label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="Address1">Address Line 1</label>
+                <input asp-for="Address1" class="form-control" />
+                <span asp-validation-for="Address1" class="text-danger"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="Address2">Address Line 2</label>
+                <input asp-for="Address2" class="form-control" />
+                <span asp-validation-for="Address2" class="text-danger"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="pincode">PIn-Code</label>
+                <input asp-for="pincode" class="form-control" />
+                <span asp-validation-for="pincode" class="text-danger"></span>
+            </div>
+
+            <div class="">
+                <a class="btn btn-next">Next</a>
+            </div>
+        </div>
+
+        <div class="form-step" style="text-align: center;">
+            <h3>Select Payment Way</h3>
+            <div class="input-group" style="margin-bottom: 20px;">
+                <input type="radio" id="cash-on-delivery" asp-for="paymentMethod" value="CashOnDelivery">
+                <label for="cash-on-delivery">Cash on Delivery</label>
+            </div>
+            <div class="input-group" style="margin-bottom: 20px;">
+                <input type="radio" id="netbanking" asp-for="paymentMethod" value="Netbanking">
+                <label for="netbanking">Netbanking</label>
+            </div>
+
+            <div class="btn-group" style="margin-top: 20px;">
+                <a class="btn btn-prev" style="display: inline-block; padding: 10px 20px; border: none; border-radius: 20px; background-color: #007bff; color: #fff; text-decoration: none; transition: background-color 0.3s;">Previous</a>
+                <a class="btn btn-next" style="display: inline-block; padding: 10px 20px; border: none; border-radius: 20px; background-color: #007bff; color: #fff; text-decoration: none; transition: background-color 0.3s;">Next</a>
+            </div>
+        </div>
+
+
+        <div class="form-step">
+            <h3>Confirm Order</h3>
+            <div class="experiences-group">
+                <div class="experience-item">
+                    <!-- Your order details go here -->
+                </div>
+            </div>
+            <div class="message">
+                <p>Please review your order details and confirm your purchase.</p>
+            </div>
+            <div class="add-experience">
+                <a class="add-exp-btn"></a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-prev">Previous</a>
+                <button type="submit" class="btn btn-complete">Complete</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="~/css/checkout/checkout.js"></script>
+</body>
+
+</html>

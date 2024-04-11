@@ -17,7 +17,12 @@ namespace Hiraj_Foods.Repository
 			return _db.Users.FirstOrDefault(u => u.Email == email);
 		}
 
-		public void Update(User obj)
+        public User GetById(int? id)
+        {
+            return _db.Users.Find(id);
+        }
+
+        public void Update(User obj)
 		{
 			_db.Users.Update(obj);
 		}

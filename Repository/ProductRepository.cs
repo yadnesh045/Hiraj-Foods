@@ -17,7 +17,7 @@ namespace Hiraj_Foods.Repository
 
         public Product GetByFlavourName(string name)
         {
-            return _db.Products.FirstOrDefault(u => u.ProductFlavour == name);
+            return _db.Products.FirstOrDefault(u => u.ProductName == name);
         }
 
         public Product GetById(int id)
@@ -25,6 +25,10 @@ namespace Hiraj_Foods.Repository
             return _db.Products.Find(id);
         }
 
+        public Product GetName(string name)
+        {
+            return _db.Products.FirstOrDefault(u => u.ProductFlavour == name);
+        }
 
         public void Save(Product obj)
         {

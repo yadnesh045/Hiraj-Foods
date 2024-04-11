@@ -9,15 +9,9 @@
 
   <ItemGroup>
 
-    <Compile Remove="Views\User\**" />
-
     <Compile Remove="wwwroot\DB-Images\**" />
-
-    <Content Remove="Views\User\**" />
     <Content Remove="wwwroot\DB-Images\**" />
-    <EmbeddedResource Remove="Views\User\**" />
     <EmbeddedResource Remove="wwwroot\DB-Images\**" />
-    <None Remove="Views\User\**" />
     <None Remove="wwwroot\DB-Images\**" />
   </ItemGroup>
 
@@ -40,10 +34,6 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\Admin\Source\Repos\Hiraj-Foods\Repository\IRepository\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\Admin\Source\Repos\Hiraj-Foods\Repository\IRepository\.editorconfig" />
   </ItemGroup>
 
 </Project>
