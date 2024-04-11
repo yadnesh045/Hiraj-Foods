@@ -15,7 +15,6 @@ namespace Hiraj_Foods.Repository
 
 
 
-		public IUserRepository users {  get; set; } 
 
         public IEnquiry Enquiry { get; set; }
 
@@ -38,7 +37,6 @@ namespace Hiraj_Foods.Repository
             Users = new UserRepository(_db);    
 
 
-            users = new UserRepository(_db);    
             Enquiry = new EnquiryRepository(_db);
             Feedback = new FeedbackRepository(_db);
             Banner = new BannerRepository(_db);

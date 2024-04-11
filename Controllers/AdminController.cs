@@ -31,6 +31,14 @@ namespace Hiraj_Foods.Controllers
         }
 
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+
+     
 
         public IActionResult dashboard()
         {
