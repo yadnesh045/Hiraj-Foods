@@ -44,7 +44,7 @@ namespace Hiraj_Foods.Controllers
                
             if (usr.User!= null)
             {
-                unitOfWorks.users.Add(usr.User);
+                unitOfWorks.Users.Add(usr.User);
                 unitOfWorks.Save();
 
                 return RedirectToAction("Home", "Yadnesh");
@@ -56,7 +56,7 @@ namespace Hiraj_Foods.Controllers
 		[HttpPost]
         public IActionResult UserLogin(User_SignIn_Login log)
         {
-			var existingUser = unitOfWorks.users.GetByEmail(log.Login.Email);
+			var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
 
 
 			if (existingUser != null && existingUser.Password == log.Login.Password)
@@ -91,7 +91,7 @@ namespace Hiraj_Foods.Controllers
 
             if (userId is not null)
             {
-                var user = unitOfWorks.users.GetById(userId);
+                var user = unitOfWorks.Users.GetById(userId);
 
                 // Check if the product is already present in the user's cart
                 var existingCartItem = unitOfWorks.Cart.GetByUserIdAndProductId(user.Id, product.Id);
