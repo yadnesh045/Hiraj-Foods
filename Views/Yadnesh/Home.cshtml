@@ -244,7 +244,7 @@
 							<div class="product-item-2">
 								<div class="product-inner">
 									<div class="product-thumb rounded-circle">
-										<img src="@product.ProductFlavourImageUrl" alt="product">
+										<img src="@product.ProductFlavourImageUrl" class="aboutImage" alt="product">
 									</div>
 									<div class="product-content">
 										<a class="mau" href="@Url.Action("HomeInside", "Yadnesh", new { id = product.Id })">@product.ProductName</a>
@@ -346,7 +346,7 @@
 									<img src="~/img/pineapple.jpg" alt="product">
 								</div>
 								<div class="product-content">
-									<a href="#" class="product-name">Pineapple</a>
+									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Pineapple" class="product-name">Pineapple</a>
 								</div>
 							</div>
 						</div>
@@ -358,7 +358,7 @@
 									<img src="~/img/apple.jpg" alt="product">
 								</div>
 								<div class="product-content">
-									<a href="#" class="product-name">Apple</a>
+									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Apple" class="product-name">Apple</a>
 								</div>
 							</div>
 						</div>
@@ -370,7 +370,7 @@
 									<img src="~/img/chocolate.jpg" alt="product">
 								</div>
 								<div class="product-content">
-									<a href="#" class="product-name">Chocolate</a>
+									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Chocolate" class="product-name">Chocolate</a>
 								</div>
 							</div>
 						</div>
@@ -382,7 +382,7 @@
 									<img src="~/img/mango-badam.jpg" alt="product">
 								</div>
 								<div class="product-content">
-									<a href="#" class="product-name">Kaju Badam</a>
+									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Kaju-Badam" class="product-name">Kaju Badam</a>
 								</div>
 							</div>
 						</div>

@@ -73,9 +73,9 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo me-1">
-                            <span style="color: var(--bs-primary)">
+                            <a  asp-action="Logout" asp-controller="Admin" style="color: var(--bs-primary)">
                                 <img src="~/img/hiraj food.png" />
-                            </span>
+                            </a>
                         </span>
                     </a>
 
@@ -142,7 +142,6 @@
                     </li>
 
                     <li class="menu-item">
-
 
                         <a asp-action="ViewContact" asp-controller="Admin" class="menu-link ">
                             <i class="menu-icon tf-icons mdi mdi-phone"></i>
@@ -354,8 +353,7 @@
                                     <div class="card-body">
                                         <h4 class="card-title mb-1">Total Feedback : @Model.Item2.Count() </h4>
 
-                                        <a asp-controller="Admin" asp-action="Feedback" class="btn btn-sm btn-primary">View FeedBack</a>
-
+                                        <a hasp-controller="Admin" asp-action="Feedback" class="btn btn-sm btn-primary">View FeedBack</a>
                                     </div>
                                 </div>
                             </div>
@@ -367,6 +365,7 @@
                                         <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
                                         <a asp-controller="Admin" asp-action="Enquiry" class="btn btn-sm btn-primary">View Enquiries</a>
 
+                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Enquiries</a>
                                     </div>
                                 </div>
                             </div>

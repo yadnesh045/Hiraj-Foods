@@ -1,3 +1,4 @@
+
 using Azure.Core;
 using Hiraj_Foods.Data;
 using Hiraj_Foods.Models;
@@ -28,6 +29,7 @@ namespace Hiraj_Foods.Controllers
             this.unitOfWorks = unitOfWorks;
             this._webHostEnvironment = _webHostEnvironment;
         }
+
 
 
         public IActionResult dashboard()
@@ -463,6 +465,12 @@ namespace Hiraj_Foods.Controllers
             return View(Admin);
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
+            return RedirectToAction("Home", "Yadnesh");
+        }
         [HttpPost]
         public IActionResult ChangePassword(Admin admin)
         {
@@ -489,6 +497,7 @@ namespace Hiraj_Foods.Controllers
                 return RedirectToAction("dashboard", "Admin");
             }
         }
+
 
         [HttpGet]
         public IActionResult AccountSetting()

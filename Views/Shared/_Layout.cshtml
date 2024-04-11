@@ -169,6 +169,10 @@
                                         <a asp-area="" asp-controller="Rahul" asp-action="Feedback">FeedBack</a>
 
                                     </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
+
+                                    </li>
                                 </ul>
                                 <div class="logo px-4">
                                     <a asp-area="" asp-controller="Yadnesh" asp-action="Home"><img src="~/img/hiraj food.png" alt="logo"></a>
@@ -178,13 +182,18 @@
                                 <ul class="agri-ul">
 
                                    
-                                    <li>
-                                        <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
-
-                                    </li>
+                                  
                                     <li>
                                         <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
                                     </li>
+
+                                    <li>
+                                    <li>
+                                        <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @ViewBag.CartItemCount) </span></a>
+                                    </li>
+
+                                    </li>
+
 
 
 
@@ -196,11 +205,13 @@
                                         </li>
 
 
+
                                         <li>
 
                                            <a asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
 
                                         </li>
+
 
 
 
@@ -216,7 +227,6 @@
 
 
 
-
                                 </ul>
                             </div>
                         </div>
@@ -225,6 +235,30 @@
             </div>
         </div>
     </header>
+    <!-- Include toastr CSS -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Include jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Include toastr JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        document.getElementById("cartLink").addEventListener("click", function (event) {
+            const isUserLoggedIn = @((userEmail != null || userId != null).ToString().ToLower());
+
+            if (!isUserLoggedIn) {
+                event.preventDefault();
+                // Display a toastr notification
+                toastr.error('You need to log in first to access the cart.');
+                // Redirect to the login/signup page after the toastr notification is shown
+                setTimeout(function () {
+                    window.location.href = "/Login/Signup";
+                }, 3000); // Redirect after 3 seconds (adjust as needed)
+            }
+        });
+    </script>
+
 
     <div>
 

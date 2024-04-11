@@ -2,11 +2,9 @@
 {
     public interface IUnitOfWorks
     {
-
         IAdminRepository Admin { get; }
 
         IProductRepository Product { get; }
-
 
         IContactRepository Contact { get; }
 
@@ -17,6 +15,10 @@
         IFeedBackRepository Feedback { get; }
 
         IBannerRepository Banner { get; }
+
+        ICartRepository Cart { get; }
+
+        ICheckoutRepository Checkout { get; }
         void Save();
     }
 }

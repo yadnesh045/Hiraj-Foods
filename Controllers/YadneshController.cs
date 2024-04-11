@@ -47,6 +47,40 @@ namespace Hiraj_Foods.Controllers
             return View(product);
         }
 
-     
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public IActionResult Checkout(Checkout checkout)
+        {
+
+            var userid = HttpContext.Session.GetInt32("UserId");
+
+
+            var user = unitOfWorks.users.GetById(userid);
+
+
+            var Chec = new Checkout
+            {
+                UserId = user.Id,
+                Country = checkout.Country,
+                City = checkout.City,
+                Address1 = checkout.Address1,
+                Address2 = checkout.Address2,
+                paymentMethod = checkout.paymentMethod,
+                pincode = checkout.pincode
+            };
+
+            unitOfWorks.Checkout.Add(Chec);
+            unitOfWorks.Save();
+
+
+            return RedirectToAction("Home" , "Yadnesh");
+        }
     }
 }
