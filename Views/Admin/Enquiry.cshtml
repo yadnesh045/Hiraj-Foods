@@ -1,9 +1,12 @@
-﻿@model List<Hiraj_Foods.Models.Enquiry>
+﻿@model Tuple<List<Enquiry>, Admin>
 
 @{
     Layout = null;
 }
-
+@{
+    var enquiry = Model.Item1;
+    var admin = Model.Item2;
+}
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
@@ -244,7 +247,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/1.png" class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.Item2.ImageUrl" class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -254,11 +257,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2 pe-1">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/1.png" class="w-px-40 h-auto rounded-circle" />
+                                                        <!--Show the profile picture of current admin-->
+
+                                                        <img src="@Model.Item2.ImageUrl" class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">John Doe</h6>
+                                                    <h6 class="mb-0">@Model.Item2.FirstName @Model.Item2.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -268,7 +273,7 @@
                                         <div class="dropdown-divider my-1"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AccountSetting">
                                             <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
@@ -328,7 +333,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach (var data in Model)
+                                        @foreach (var data in Model.Item1)
                                         {
                                             <tr>
                                                 <td>@data.Name</td>

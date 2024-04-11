@@ -10,7 +10,13 @@ namespace Hiraj_Foods.Repository
         public IAdminRepository Admin { get; set; }
         public IProductRepository Product { get; set; }
         public IContactRepository Contact {get;set;}
+
+		public IUserRepository Users {  get; set; } 
+
+
+
 		public IUserRepository users {  get; set; } 
+
         public IEnquiry Enquiry { get; set; }
 
         public IFeedBackRepository Feedback { get; set; }
@@ -28,6 +34,10 @@ namespace Hiraj_Foods.Repository
             Admin = new AdminRepository(_db);
             Product = new ProductRepository(_db);
             Contact = new ContactRepository(_db); 
+
+            Users = new UserRepository(_db);    
+
+
             users = new UserRepository(_db);    
             Enquiry = new EnquiryRepository(_db);
             Feedback = new FeedbackRepository(_db);

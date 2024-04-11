@@ -32,7 +32,6 @@ namespace Hiraj_Foods.Controllers
 
 
 
-     
         public IActionResult dashboard()
         {
             var products = unitOfWorks.Product.GetAll().ToList();
@@ -44,14 +43,15 @@ namespace Hiraj_Foods.Controllers
             var flavors = products.Select(p => p.ProductFlavour).ToList();
             ViewBag.Flavors = flavors;
 
-
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
 
 
             var feedback = unitOfWorks.Feedback.GetAll().ToList();
 
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
 
-            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
+            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>, Admin>(products, feedback, enquiry, Admin);
 
             return View(model);
         }
@@ -60,7 +60,10 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            return View();
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            return View(Admin);
         }
 
 
@@ -125,7 +128,13 @@ namespace Hiraj_Foods.Controllers
         public IActionResult ViewProduct()
         {
             var products = unitOfWorks.Product.GetAll().ToList();
-            return View(products);
+
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            var model = new Tuple<List<Product>, Admin>(products, Admin);
+
+            return View(model);
         }
 
 
@@ -133,7 +142,15 @@ namespace Hiraj_Foods.Controllers
         public IActionResult EditProduct(int id)
         {
             var product = unitOfWorks.Product.GetById(id);
-            return View(product);
+
+
+
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            var model = new Tuple<Product, Admin>(product, Admin);
+
+            return View(model);
         }
 
 
@@ -233,7 +250,14 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Enquiry()
         {
             var Enquires = unitOfWorks.Enquiry.GetAll().ToList();
-            return View(Enquires);
+
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+
+            var model = new Tuple<List<Enquiry>, Admin>(Enquires, Admin);
+
+            return View(model);
         }
 
         [HttpPost]
@@ -261,7 +285,14 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Feedback()
         {
             var Feedback = unitOfWorks.Feedback.GetAll().ToList();
-            return View(Feedback);
+
+
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            var model = new Tuple<List<FeedBack>, Admin>(Feedback, Admin);
+
+            return View(model);
         }
 
 
@@ -292,13 +323,23 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Banner()
         {
             var Banner = unitOfWorks.Banner.GetAll().ToList();
-            return View(Banner);
+
+
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            var model = new Tuple<List<Banner>, Admin>(Banner, Admin);
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult AddBanner()
         {
-            return View();
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+
+            return View(Admin);
         }
 
         [HttpPost]
@@ -358,8 +399,14 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult ViewContact()
         {
-            var contacts = unitOfWorks.Contact.GetAll();
-            return View(contacts);
+            var contacts = unitOfWorks.Contact.GetAll().ToList();
+
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+
+            var model = new Tuple<List<Contact>, Admin>(contacts, Admin);
+            return View(model);
         }
 
 
@@ -452,7 +499,100 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-      
+        [HttpGet]
+        public IActionResult AccountSetting()
+        {
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+
+            if (AdminEmail == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            return View(Admin);
+        }
+
+
+
+        [HttpPost]
+        public IActionResult AccountSetting(UpdateAdmin updateadmin)
+        {
+            if (ModelState.IsValid)
+            {
+                var AdminEmailInDb = HttpContext.Session.GetString("AdminEmail");
+                if (AdminEmailInDb == null)
+                {
+                    return RedirectToAction("Login", "Admin");
+                }
+
+                var AdminInDb = unitOfWorks.Admin.GetByEmail(AdminEmailInDb);
+
+                AdminInDb.FirstName = updateadmin.FirstName;
+                AdminInDb.LastName = updateadmin.LastName;
+                AdminInDb.Address = updateadmin.Address;
+                AdminInDb.Mobile = updateadmin.Mobile;
+                AdminInDb.State = updateadmin.State;
+                AdminInDb.ZipCode = updateadmin.ZipCode;
+
+                string wwwRootPath = _webHostEnvironment.WebRootPath; 
+
+                if (updateadmin.ProfilePicture != null)
+                {
+                    if (AdminInDb.ImageUrl != null)
+                    {
+                        //remove old image from wwwroot folder and db if new image is uploaded
+                        string imagePath = AdminInDb.ImageUrl;
+                        string imageFullPath = Path.Combine(wwwRootPath, imagePath.TrimStart('\\'));
+                        if (System.IO.File.Exists(imageFullPath))
+                        {
+                            System.IO.File.Delete(imageFullPath);
+                        }
+                    }
+
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(updateadmin.ProfilePicture.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"Db_Images\ProfileImages");
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        updateadmin.ProfilePicture.CopyTo(fileStream);
+                    }
+
+                    AdminInDb.ImageUrl = Path.Combine("/Db_Images", "ProfileImages", fileName).Replace("\\", "/");
+                }
+
+                unitOfWorks.Admin.Update(AdminInDb);
+                unitOfWorks.Save();
+                TempData["Success"] = "Account Updated Successfully!";
+                return RedirectToAction("AccountSetting", "Admin");
+            }
+            else
+            {
+                TempData["Error"] = "Account Data Not Updated !";
+                return RedirectToAction("AccountSetting", "Admin");
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult DeactivateAdmin()
+        {
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            if (AdminEmail == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+                Admin.IsActive = false;
+
+                unitOfWorks.Admin.Update(Admin);
+                unitOfWorks.Save();
+                return RedirectToAction("Login", "Login");
+            }
+        }
+
 
     }
 }

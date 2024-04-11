@@ -1,7 +1,11 @@
-﻿@model Hiraj_Foods.Models.Product
+﻿@model Tuple<Product, Admin>
 
 @{
     Layout = null;
+}
+@{
+    var product = Model.Item1;
+    var admin = Model.Item2;
 }
 
 
@@ -223,7 +227,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/1.png" class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.Item2.ImageUrl" class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -233,11 +237,13 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0 me-2 pe-1">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <!--Show the profile picture of current admin-->
+
+                                                        <img src="@Model.Item2.ImageUrl" class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">John Doe</h6>
+                                                    <h6 class="mb-0">@Model.Item2.FirstName @Model.Item2.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -247,7 +253,7 @@
                                         <div class="dropdown-divider my-1"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AccountSetting">
                                             <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
@@ -298,39 +304,39 @@
                                     <div class="card-body">
 
                                         <form method="post" asp-controller="Admin" asp-action="EditProduct" enctype="multipart/form-data">
-                                            <input type="hidden" name="Id" value="@Model.Id" />
+                                            <input type="hidden" name="Id" value="@Model.Item1.Id" />
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" name="ProductName" value="@Model.ProductName" />
+                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" name="ProductName" value="@Model.Item1.ProductName" />
                                                 <label for="basic-default-fullname">Product Name</label>
                                             </div>
 
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" name="ProductFlavour" value="@Model.ProductFlavour" />
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" name="ProductFlavour" value="@Model.Item1.ProductFlavour" />
                                                 <label for="basic-default-company">Product Flavour</label>
                                             </div>
 
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" name="ProductPrice" value="@Model.ProductPrice" />
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" name="ProductPrice" value="@Model.Item1.ProductPrice" />
                                                 <label for="basic-default-company">Product Price</label>
                                             </div>
 
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Weight" name="ProductWeight" value="@Model.ProductWeight" />
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Weight" name="ProductWeight" value="@Model.Item1.ProductWeight" />
                                                 <label for="basic-default-company">Product Weight</label>
                                             </div>
 
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" name="ProductNutrition" value="@Model.ProductNutrition" />
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" name="ProductNutrition" value="@Model.Item1.ProductNutrition" />
                                                 <label for="basic-default-company">Nutrition</label>
                                             </div>
 
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" name="ProductIngredient" value="@Model.ProductIngredient" />
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" name="ProductIngredient" value="@Model.Item1.ProductIngredient" />
                                                 <label for="basic-default-company">Ingredients</label>
                                             </div>
 
                                             <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" name="ProductDescription" value="@Model.ProductDescription" />
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" name="ProductDescription" value="@Model.Item1.ProductDescription" />
                                                 <label for="basic-default-company">Product Description</label>
                                             </div>
 
@@ -338,11 +344,11 @@
                                                 <div class="card-body">
                                                     <div class="mb-3">
                                                         <label for="formFile" class="form-label">Input Product Flavour Image</label>
-                                                        <input class="form-control" type="file" id="formFile" name="ProductFlavourImage" value="@Model.ProductFlavourImage" />
+                                                        <input class="form-control" type="file" id="formFile" name="ProductFlavourImage" value="@Model.Item1.ProductFlavourImage" />
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="formFileMultiple" class="form-label">Input Product Image</label>
-                                                        <input class="form-control" type="file" id="formFile" name="ProductImage" value="@Model.ProductImage" />
+                                                        <input class="form-control" type="file" id="formFile" name="ProductImage" value="@Model.Item1.ProductImage" />
                                                     </div>
                                                 </div>
                                             </div>

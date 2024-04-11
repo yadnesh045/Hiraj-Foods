@@ -1,9 +1,9 @@
 ﻿@model Hiraj_Foods.Models.Admin
 
+
 @{
     Layout = null;
-}   
-
+}
 
 <!DOCTYPE html>
 
@@ -45,8 +45,15 @@
     <!-- Helpers -->
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
-</head>
 
+
+    <!--For Sweet Alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+</head>
 
 <body>
     <!-- Layout wrapper -->
@@ -93,10 +100,9 @@
                                     <div data-i18n="Without menu">Add Products</div>
 
                                 </a>
-
                             </li>
                             <li class="menu-item">
-                                <a href="layouts-without-navbar.html" class="menu-link">
+                                <a asp-area="" asp-controller="Admin" asp-action="ViewProduct" class="menu-link">
                                     <div data-i18n="Without navbar">View Products</div>
                                 </a>
                             </li>
@@ -310,119 +316,313 @@
                 </nav>
 
                 <!-- / Navbar -->
+                <!--Content Start-->
                 <div class="content-wrapper">
-                    <!-- Content -->
-
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Add Product</h4>
 
-                        <!-- Basic Layout -->
+
                         <div class="row">
-                            <div class="col-xl">
-                                <div class="card mb-4">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Add New Product Details</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <form method="post" asp-controller="Admin" asp-action="AddProduct" enctype="multipart/form-data">
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" name="ProductName" />
-                                                <label for="basic-default-fullname">Product Name</label>
-                                            </div>
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills flex-column flex-md-row mb-4 gap-2 gap-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" asp-area="" asp-controller="Admin" asp-action="AccountSetting"><i class="mdi mdi-account-outline mdi-20px me-1"></i>My Profile</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <h4 class="card-header">Profile Details</h4>
+                            <!-- Account -->
+                            <div class="card-body">
+                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                    <form method="post" asp-area="" asp-controller="Admin" asp-action="AccountSetting" enctype="multipart/form-data">
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" name="ProductFlavour" />
-                                                <label for="basic-default-company">Product Flavour</label>
-                                            </div>
+                                        <img src="@Model.ImageUrl"
+                                             alt="user-avatar"
+                                             class="d-block w-px-120 h-px-120 rounded"
+                                             id="uploadedAvatar" />
+                                        <br />
+                                        <div class="button-wrapper">
+                                            <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                                <span class="d-none d-sm-block">Upload new photo</span>
+                                                <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                                                <input type="file" hidden
+                                                       id="upload"
+                                                       class="account-file-input"
+                                                       name="ProfilePicture" />
+                                            </label>
+                                            <button type="button" class="btn btn-outline-danger account-image-reset mb-3">
+                                                <i class="mdi mdi-reload d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Reset</span>
+                                            </button>
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" name="ProductPrice" />
-                                                <label for="basic-default-company">Product Price</label>
-                                            </div>
+                                            <div class="text-muted small">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                                        </div>
 
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Weight" name="ProductWeight" />
-                                                <label for="basic-default-company">Product Weight</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" name="ProductNutrition" />
-                                                <label for="basic-default-company">Nutrition</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" name="ProductIngredient" />
-                                                <label for="basic-default-company">Ingredients</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" name="ProductDescription" />
-                                                <label for="basic-default-company">Product Description</label>
-                                            </div>
-
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="mb-3">
-                                                        <label for="formFile" class="form-label">Input Product Flavour Image</label>
-
-                                                        <input class="form-control" type="file" id="formFile" name="ProductFlavourImage" />
+                                        <div class="card-body pt-2 mt-1">
+                                            <div class="row mt-2 gy-4">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control"
+                                                               type="text"
+                                                               id="firstName"
+                                                               name="FirstName"
+                                                               value="@Model.FirstName"
+                                                               autofocus />
+                                                        <label for="firstName">First Name</label>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="formFileMultiple" class="form-label">Input Product Image</label>
-
-                                                        <input class="form-control" type="file" id="formFile" name="ProductImage" />
-                                                    </div>
-                                                 
                                                 </div>
-                                            </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control" type="text" name="LastName" id="lastName" value="@Model.LastName" />
+                                                        <label for="lastName">Last Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control"
+                                                               type="text"
+                                                               id="email"
+                                                               name="Email"
+                                                               value="@Model.Email"
+                                                               placeholder="john.doe@example.com" />
+                                                        <label for="email">E-mail</label>
+                                                    </div>
+                                                </div>
 
-                                         
-                                            <div class="form-floating form-floating-outline mb-4 mt-3">
-                                                <button type="submit" class="btn btn-primary">Send</button>
+                                                <div class="col-md-6">
+                                                    <div class="input-group input-group-merge">
+                                                        <div class="form-floating form-floating-outline">
+                                                            <input type="text"
+                                                                   id="phoneNumber"
+                                                                   name="Mobile"
+                                                                   class="form-control"
+                                                                   value="@Model.Mobile" />
+                                                            <label for="Mobile">Phone Number</label>
+                                                        </div>
+                                                        <span class="input-group-text">IN (+91)</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               id="address"
+                                                               name="Address"
+                                                               value="@Model.Address" />
+                                                        <label for="address">Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control"
+                                                               type="text"
+                                                               id="state"
+                                                               name="State"
+                                                               placeholder="Maharashtra"
+                                                               value="@Model.State" />
+                                                        <label for="state">State</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               id="zipCode"
+                                                               name="ZipCode"
+                                                               placeholder="422003"
+                                                               value="@Model.ZipCode"
+                                                               maxlength="6" />
+                                                        <label for="zipCode">ZipCode</label>
+                                                    </div>
+                                                </div>
 
                                             </div>
-                                        </form>
+                                            <div class="mt-4">
+                                                <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                            </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <!-- /Account -->
+
+                        </div>
+
+
+
+
+
+                        <div class="card" style="margin-top:15px">
+                            <h5 class="card-header fw-normal">Delete Account</h5>
+                            <div class="card-body">
+                                <div class="mb-3 col-12 mb-0">
+                                    <div class="alert alert-warning">
+                                        <h6 class="alert-heading mb-1">Are you sure you want to delete your account?</h6>
+                                        <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
                                     </div>
                                 </div>
+                                <form method="post" asp-area="" asp-controller="Admin" asp-action="DeactivateAdmin">
+                                    <div class="form-check mb-3 ms-3">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="accountActivation"
+                                               id="accountActivation" />
+                                        <label class="form-check-label" for="accountActivation">I confirm my account deactivation</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger" id="deactivateButton">Deactivate Account</button>
+
+                                </form>
                             </div>
-                            <!-- Merged -->
                         </div>
                     </div>
-                    <!-- / Content -->
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl">
-                            <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
-                                <div class="text-body mb-2 mb-md-0">
-                                    ©
-                                    <script>
-                                        document.write(new Date().getFullYear());
-                                    </script>
-                                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-                                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
-                                </div>
-                                <div class="d-none d-lg-inline-block">
-                                    <a href="https://themeselection.com/license/" class="footer-link me-3" target="_blank">License</a>
-                                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-3">More Themes</a>
+                </div>
 
-                                    <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/"
-                                       target="_blank"
-                                       class="footer-link me-3">Documentation</a>
 
-                                    <a href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free/issues"
-                                       target="_blank"
-                                       class="footer-link">Support</a>
-                                </div>
+                <!--Footer-->
+                <footer class="content-footer footer bg-footer-theme">
+                    <div class="container-xxl">
+                        <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
+                            <div class="text-body mb-2 mb-md-0">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script>
+                                , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
+                                <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
                             </div>
                         </div>
-                    </footer>
-                    <!-- / Footer -->
+                    </div>
+                </footer>
 
-                    <div class="content-backdrop fade"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
+
+
+
+
+
+                <!--Content Over-->
+                <!-- Core JS -->
+                <!-- build:js assets/vendor/js/core.js -->
+
+                <script src="/js/Admin-js/jquery.js"></script>
+                <script src="/js/Admin-js/popper.js"></script>
+                <script src="/js/Admin-js/bootstrap.js"></script>
+                <script src="/js/Admin-js/node-waves.js"></script>
+                <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+                <script src="/js/Admin-js/menu.js"></script>
+
+                <!-- endbuild -->
+
+                <script src="/js/Admin-js/apexcharts.js"></script>
+
+                <!-- Main JS -->
+                <script src="/js/Admin-js/main.js"></script>
+
+                <!-- Page JS -->
+                <script src="/js/Admin-js/dashboards-analytics.js"></script>
+
+
+                <!--Charts js-->
+                <script src="~/js/chart-js/chart.js"></script>
+
+                <!--script for charts-->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+                <!-- Place this tag in your head or just before your close body tag. -->
+                <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
+
 </html>
+
+
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
+}
+
+<script>
+    document.getElementById('deactivateButton').addEventListener('click', function (event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Deactivate my Account!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deactivated!',
+                    'Your Account has been Deactivated.',
+                    'success'
+                )
+                // If confirmed, submit the form
+                event.target.form.submit();
+            }
+        })
+    });
+</script>
