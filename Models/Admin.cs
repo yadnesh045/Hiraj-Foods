@@ -11,8 +11,16 @@ namespace Hiraj_Foods.Models
 
         [Required]
         [StringLength(50)]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+
 
         [Required]
         [StringLength(50)]
@@ -27,16 +35,13 @@ namespace Hiraj_Foods.Models
 
         //[Required]
         //[NotMapped]
-        //[Display(Name = "Image")]
-        //public IFormFile Image { get; set; }
-
-
-        //public string ImageUrl { get; set; }
+        [Display(Name = "ImageUrl")]
+        public string? ImageUrl { get; set; }
 
         [NotMapped]
         [StringLength(50)]
         [Display(Name = "NewPassword")]
-        public string NewPassword { get; set;}
+        public string NewPassword { get; set; }
 
 
         [Required]
@@ -48,6 +53,21 @@ namespace Hiraj_Foods.Models
         [StringLength(100)]
         [Display(Name = "Address")]
         public string Address { get; set; }
+
+
+        [StringLength(100)]
+        [Display(Name = "State")]
+        public string? State { get; set; }
+
+
+        
+        [Display(Name = "ZipCode")]
+        [StringLength(6)]
+        public string? ZipCode { get; set; }
+
+
+        [Display(Name = "IsActive")]
+        public bool? IsActive { get; set; }
 
 
     }
