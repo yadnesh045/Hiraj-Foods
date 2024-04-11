@@ -18,6 +18,7 @@ namespace Hiraj_Foods.Controllers
         {
             return View();
         }
+
 		[HttpPost]
         public IActionResult UserReg(User_SignIn_Login usr)
         {
