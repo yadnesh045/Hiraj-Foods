@@ -593,6 +593,19 @@ namespace Hiraj_Foods.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult ViewUser()
+        {
+            var user = unitOfWorks.Users.GetAll().ToList();
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+
+            var model = new Tuple<List<User>, Admin>(user, Admin);
+
+            return View(model);
+        }
+
 
     }
 }

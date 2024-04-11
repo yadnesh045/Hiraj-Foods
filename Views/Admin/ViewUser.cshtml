@@ -1,19 +1,12 @@
-﻿@model Tuple<List<Hiraj_Foods.Models.Product>, List<Hiraj_Foods.Models.FeedBack>, List<Hiraj_Foods.Models.Enquiry>,Admin>
+﻿@model Tuple<List<User>, Admin>
 
-@{
-    var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
-    var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
-
-    var products = Model.Item1;
-    var feedback = Model.Item2;
-    var enquiry = Model.Item3;
-    var admin = Model.Item4;
-
-}
 @{
     Layout = null;
 }
-
+@{
+    var User = Model.Item1;
+    var admin = Model.Item2;
+}
 
 
 <!DOCTYPE html>
@@ -56,12 +49,8 @@
     <!-- Helpers -->
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
-
-
-    <!-- Toastr CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-
 </head>
+
 
 <body>
     <!-- Layout wrapper -->
@@ -73,9 +62,9 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo me-1">
-                            <a  asp-action="Logout" asp-controller="Admin" style="color: var(--bs-primary)">
+                            <span style="color: var(--bs-primary)">
                                 <img src="~/img/hiraj food.png" />
-                            </a>
+                            </span>
                         </span>
                     </a>
 
@@ -93,6 +82,29 @@
                             <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
                             <div data-i18n="Dashboards">Home</div>
                         </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+
+
+                            <div data-i18n="Layouts">Banner </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="AddBanner" class="menu-link">
+                                    <div data-i18n="Without menu">Add Banner</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="Banner" class="menu-link">
+                                    <div data-i18n="Without navbar">View Banner</div>
+                                </a>
+                            </li>
+
+                        </ul>
                     </li>
                     <!-- Layouts -->
                     <li class="menu-item">
@@ -141,18 +153,10 @@
                         </ul>
                     </li>
 
-                      <li class="menu-item">
-
-                        <a asp-action="ViewUser" asp-controller="Admin" class="menu-link ">
-                            <i class="menu-icon tf-icons mdi mdi-phone"></i>
-                            <div data-i18n="Dashboards" asp->Users</div>
-
-                        </a>
-                    </li>
-
                     <li class="menu-item">
 
                         <a asp-action="ViewContact" asp-controller="Admin" class="menu-link ">
+                            @* <a href="javascript:void(0);" class="menu-link menu-toggle"> *@
                             <i class="menu-icon tf-icons mdi mdi-phone"></i>
                             <div data-i18n="Dashboards" asp->Contact</div>
 
@@ -178,7 +182,7 @@
                     <!--Settings-->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
+                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
 
                             <div data-i18n="Layouts">Settings </div>
                         </a>
@@ -217,6 +221,25 @@
                                 </a>
                             </li>
 
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-lock-open-outline"></i>
+                            <div data-i18n="Authentications">Authentications</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="auth-login-basic.html" class="menu-link" target="_blank">
+                                    <div data-i18n="Basic">Login</div>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
+                                    <div data-i18n="Basic">Forgot Password</div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -277,7 +300,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="@Model.Item4.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.Item2.ImageUrl" class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -289,11 +312,11 @@
                                                     <div class="avatar avatar-online">
                                                         <!--Show the profile picture of current admin-->
 
-                                                        <img src="@Model.Item4.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="@Model.Item2.ImageUrl" class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">@Model.Item4.FirstName @Model.Item4.LastName</h6>
+                                                    <h6 class="mb-0">@Model.Item2.FirstName @Model.Item2.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -339,228 +362,87 @@
                     </div>
                 </nav>
 
-                <!-- / Navbar -->
-                <!-- Content wrapper -->
-                <div class="content-wrapper" style="background-color:white">
+
+                <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row gy-4">
 
-                            <!-- Total Product Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Products : @Model.Item1.Count()  </h4>
+                        <hr class="my-5" />
 
-                                        <a asp-controller="Admin" asp-action="ViewProduct" class="btn btn-sm btn-primary">View Products</a>
-                                    </div>
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>FirstName</th>
+                                            <th>LastName</th>
+                                            <th>Email</th>
+                                            <th>Password</th>
+                                            <th>Phone</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @foreach (var a in Model.Item1)
+                                        {
+                                            <tr>
+                                                <td>@a.FirstName</td>
+                                                <td>@a.LastName</td>
+                                                <td>@a.Email</td>
+                                                <td>@a.Password</td>
+                                                <td>@a.Phone</td>
+                                            </tr>
+
+                                        }
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!--/ Hoverable Table rows -->
+                                <!-- Footer -->
+                                @*  <footer class="content-footer footer bg-footer-theme">
+                                <div class="container-xxl">
+                                <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
+                                <div class="text-body mb-2 mb-md-0">
+                                ©
+                                <script>
+                                document.write(new Date().getFullYear());
+                                </script>
+                                , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
+                                <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
                                 </div>
-                            </div>
-                            <!-- Total Product Card card -->
-                            <!-- Total Feedback Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Feedback : @Model.Item2.Count() </h4>
+                                <div class="d-none d-lg-inline-block">
+                                <a href="https://themeselection.com/license/" class="footer-link me-3" target="_blank">License</a>
+                                <a href="https://themeselection.com/" target="_blank" class="footer-link me-3">More Themes</a>
 
-                                        <a hasp-controller="Admin" asp-action="Feedback" class="btn btn-sm btn-primary">View FeedBack</a>
-                                    </div>
+                                <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/"
+                                target="_blank"
+                                class="footer-link me-3">Documentation</a>
+
+                                <a href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free/issues"
+                                target="_blank"
+                                class="footer-link">Support</a>
                                 </div>
-                            </div>
-                            <!-- Total Feedback Card card -->
-                            <!-- Total Enquiry Card-->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
-                                        <a asp-controller="Admin" asp-action="Enquiry" class="btn btn-sm btn-primary">View Enquiries</a>
-
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Enquiries</a>
-                                    </div>
                                 </div>
-                            </div>
-                            <!-- Total Enquiry Card-->
-
-
-                            <div class="col-md-12 col-lg-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Product Prices</h4>
-                                        <div class="chart-container" style="height:400px;">
-                                            <canvas id="productPricesChart"></canvas>
-                                        </div>
-
-                                    </div>
                                 </div>
+                                </footer> *@
+                                <!-- / Footer -->
+
+                                <div class="content-backdrop fade"></div>
                             </div>
-
-
-
-
-
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        @* to show the total count of flavours *@
-                                        <h4 class="card-title mb-1" id="flavorsCount"> </h4>
-                                        <canvas id="flavorsChart">
-                                        </canvas>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
 
                         </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <!-- Footer -->
-                    @*    <footer class="content-footer footer bg-footer-theme">
-                    <div class="container-xxl">
-                    <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
-                    <div class="text-body mb-2 mb-md-0">
-                    ©
-                    <script>
-                    document.write(new Date().getFullYear());
-                    </script>
-                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
-                    </div>
 
                     </div>
-                    </div>
-                    </footer> *@
-                    <!-- / Footer -->
 
-                    <div class="content-backdrop fade"></div>
+
                 </div>
-                <!-- Content wrapper -->
+
+
+
             </div>
-            <!-- / Layout page -->
         </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
-
-
-
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-
-    <script src="/js/Admin-js/jquery.js"></script>
-    <script src="/js/Admin-js/popper.js"></script>
-    <script src="/js/Admin-js/bootstrap.js"></script>
-    <script src="/js/Admin-js/node-waves.js"></script>
-    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
-    <script src="/js/Admin-js/menu.js"></script>
-
-    <!-- endbuild -->
-
-    <script src="/js/Admin-js/apexcharts.js"></script>
-
-    <!-- Main JS -->
-    <script src="/js/Admin-js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="/js/Admin-js/dashboards-analytics.js"></script>
-
-
-    <!--Charts js-->
-    <script src="~/js/chart-js/chart.js"></script>
-
-    <!--script for charts-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        var productPrices = @Html.Raw(productPricesJson);
-        var flavors = @Html.Raw(flavorsJson);
-
-    </script>
-
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
-
 </html>
-
-
-
-@if (TempData["Message"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-
-        // Display the Toastr notification
-        toastr.success('@TempData["Message"]');
-    </script>
-
-}
-
-@if (TempData["Error"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-        // Display the Toastr notification
-        toastr.error('@TempData["Error"]');
-    </script>
-}
