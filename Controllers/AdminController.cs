@@ -600,6 +600,18 @@ namespace Hiraj_Foods.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult ViewCheckouts()
+        {
+            var user = unitOfWorks.Users.GetAll().ToList();
+
+            var Checkouts = unitOfWorks.Checkout.GetAll().ToList();
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            var model = new Tuple<List<User>, List<Checkout>, Admin>(user, Checkouts, Admin);
+            return View(model);
+        }
+
 
     }
 }

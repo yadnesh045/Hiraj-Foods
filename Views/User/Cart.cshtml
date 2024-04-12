@@ -1,5 +1,34 @@
 ﻿@model List<Hiraj_Foods.Models.Cart>
 
+
+
+
+
+<!--search area-->
+<div class="search-input">
+    <div class="search-close">
+        <i class="fas fa-times"></i>
+    </div>
+    <form>
+        <input type="text" name="text" placeholder="Search Heare">
+        <button class="search-btn" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
+<!-- search area -->
+
+
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+
+
 @if (Model.Count != 0)
 {
     <section class="pt-5 pb-5">
@@ -35,7 +64,7 @@
             </div>
             <div class="row mt-4 d-flex align-items-center">
                 <div class="col-sm-6 order-md-2 text-right">
-                    <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
+                    <a id="checkoutButton" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
                 </div>
                 <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
                     <a asp-area="" asp-controller="Yadnesh" asp-action="Home">
@@ -87,35 +116,66 @@ else
     }
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        updateTotalPrice();
-        document.querySelectorAll('.quantity-input').forEach(function (input) {
-            input.addEventListener('input', function () {
-                updateTotalPrice();
+    $(document).ready(function () {
+        // Add event listener to the checkout button
+        $("#checkoutButton").click(function () {
+            // Get total price
+            var totalPrice = parseFloat($("#totalAmount").text().replace('$', ''));
+
+            // Get product names and quantities
+            var productDetails = [];
+            $(".card-title").each(function () {
+                var productName = $(this).text();
+                var quantity = $(this).siblings('.input-group').find('.quantity-input').val();
+                productDetails.push({ productName: productName, quantity: quantity });
             });
-            input.addEventListener('change', function () {
-                validateQuantity(input);
+
+            // Use AJAX to send the total price and product details to the server
+            $.ajax({
+                type: "POST", // Use POST method
+                url: "/Yadnesh/SaveTotal", // URL of your controller method
+                data: { total: totalPrice, products: productDetails }, // Data to send
+                success: function (response) {
+                    // Handle success response
+                    console.log(response); // For example, log the response to console
+                    // Redirect to Checkout page
+                    window.location.href = "/Yadnesh/Checkout";
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    console.error(error); // Log the error to console
+                }
             });
         });
-    });
 
-    function updateTotalPrice() {
-        var totalPrice = 0;
-        var quantityInputs = document.querySelectorAll('.quantity-input');
-        quantityInputs.forEach(function (input) {
-            var price = parseFloat(input.getAttribute('data-price'));
-            var quantity = parseInt(input.value);
-            totalPrice += price * quantity;
+        // Add event listeners for quantity inputs
+        $('.quantity-input').on('input', function () {
+            updateTotalPrice();
+        }).on('change', function () {
+            validateQuantity($(this));
         });
-        document.getElementById('totalAmount').textContent = '$' + totalPrice.toFixed(2);
-    }
 
-    function validateQuantity(input) {
-        var quantity = parseInt(input.value);
-        if (quantity < 1) {
-            input.value = 1; // Reset quantity to 1 if less than 1
+        // Function to update total price
+        function updateTotalPrice() {
+            var totalPrice = 0;
+            $('.quantity-input').each(function () {
+                var price = parseFloat($(this).data('price'));
+                var quantity = parseInt($(this).val());
+                totalPrice += price * quantity;
+            });
+            $('#totalAmount').text('$' + totalPrice.toFixed(2));
         }
-        updateTotalPrice(); // Update total price after validating quantity
-    }
+
+        // Function to validate quantity
+        function validateQuantity(input) {
+            var quantity = parseInt(input.val());
+            if (quantity < 1) {
+                input.val(1); // Reset quantity to 1 if less than 1
+            }
+            updateTotalPrice(); // Update total price after validating quantity
+        }
+    });
 </script>
+

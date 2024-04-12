@@ -58,9 +58,9 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo me-1">
-                            <span style="color: var(--bs-primary)">
+                            <a asp-action="Logout" asp-controller="Admin" style="color: var(--bs-primary)">
                                 <img src="~/img/hiraj food.png" />
-                            </span>
+                            </a>
                         </span>
                     </a>
 
@@ -93,10 +93,9 @@
                                     <div data-i18n="Without menu">Add Products</div>
 
                                 </a>
-
                             </li>
                             <li class="menu-item">
-                                <a href="layouts-without-navbar.html" class="menu-link">
+                                <a asp-area="" asp-controller="Admin" asp-action="ViewProduct" class="menu-link">
                                     <div data-i18n="Without navbar">View Products</div>
                                 </a>
                             </li>
@@ -105,7 +104,7 @@
                     </li>
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+                            <i class="menu-icon tf-icons mdi mdi-album"></i>
 
 
                             <div data-i18n="Layouts">Banner </div>
@@ -128,9 +127,27 @@
                     </li>
 
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+
+                        <a asp-action="ViewUser" asp-controller="Admin" class="menu-link ">
+                            <i class="menu-icon tf-icons mdi mdi-clipboard-account"></i>
+                            <div data-i18n="Dashboards" asp->Users</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a asp-action="ViewCheckouts" asp-controller="Admin" class="menu-link ">
+                            <i class="menu-icon tf-icons mdi mdi-database"></i>
+                            <div data-i18n="Dashboards" asp->Checkouts</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a asp-action="ViewContact" asp-controller="Admin" class="menu-link ">
                             <i class="menu-icon tf-icons mdi mdi-phone"></i>
-                            <div data-i18n="Dashboards">Contact</div>
+                            <div data-i18n="Dashboards" asp->Contact</div>
+
                         </a>
                     </li>
 
@@ -148,6 +165,30 @@
                             <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
                             <div data-i18n="Dashboards">Feedback</div>
                         </a>
+                    </li>
+
+                    <!--Settings-->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
+
+                            <div data-i18n="Layouts">Settings </div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="MyProfile" class="menu-link">
+                                    <div data-i18n="Without menu">My Profile</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-area="" asp-controller="Admin" asp-action="ChangePassword" class="menu-link">
+                                    <div data-i18n="Without navbar">Change Password</div>
+                                </a>
+                            </li>
+
+                        </ul>
                     </li>
 
                     <!-- Pages -->
@@ -168,25 +209,6 @@
                                 </a>
                             </li>
 
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-lock-open-outline"></i>
-                            <div data-i18n="Authentications">Authentications</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                                    <div data-i18n="Basic">Login</div>
-                                </a>
-                            </li>
-
-                            <li class="menu-item">
-                                <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                                    <div data-i18n="Basic">Forgot Password</div>
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -247,7 +269,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -259,7 +281,7 @@
                                                     <div class="avatar avatar-online">
                                                         <!--Show the profile picture of current admin-->
 
-                                                        <img src="@Model.ImageUrl" class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="@Model.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -309,6 +331,7 @@
                     </div>
                 </nav>
 
+                <!-- / Navbar -->
                 <!-- / Navbar -->
                 <div class="content-wrapper">
                     <!-- Content -->

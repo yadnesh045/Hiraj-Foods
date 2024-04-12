@@ -12,10 +12,6 @@ namespace Hiraj_Foods.Repository
         public IContactRepository Contact {get;set;}
 
 		public IUserRepository Users {  get; set; } 
-
-
-
-
         public IEnquiry Enquiry { get; set; }
 
         public IFeedBackRepository Feedback { get; set; }
@@ -25,6 +21,8 @@ namespace Hiraj_Foods.Repository
         public ICartRepository Cart { get; set; }
 
         public ICheckoutRepository Checkout { get; set; }
+
+        public IPriceRepository Price { get; set; }
 
         public UnitOfWorks(ApplicationDbContext _db)
 
@@ -42,6 +40,8 @@ namespace Hiraj_Foods.Repository
             Banner = new BannerRepository(_db);
             Cart = new CartRepository(_db);
             Checkout = new CheckoutRepository(_db);
+
+            Price= new PriceRepository(_db);
 
         }
 

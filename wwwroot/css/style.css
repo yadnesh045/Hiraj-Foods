@@ -1956,6 +1956,12 @@ ontent .entry-meta, .shop-single .review .review-content .review-showing .conten
   height: 300px;
     width: 100%;
 }
+.page-header6 {
+    margin-top: 0px;
+    background: url(../images/bg-images/AboutusW.jpg);
+    height: 300px;
+    width: 100%;
+}
 
 @media(max-width: 572px){
   .page-header {
