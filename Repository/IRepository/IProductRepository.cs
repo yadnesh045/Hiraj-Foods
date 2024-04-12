@@ -11,5 +11,6 @@ namespace Hiraj_Foods.Repository.IRepository
         Product GetByFlavourName(string name);
         Product GetById(int id);
         void Update(Product obj);
+        
     }
 }

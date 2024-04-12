@@ -1,8 +1,12 @@
-﻿namespace Hiraj_Foods.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Hiraj_Foods.Models
 {
     public class Login
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+		[Required]
+		public string Email { get; set; }
+		[Required]
+		public string Password { get; set; }
     }
 }

@@ -404,3 +404,21 @@ form {
             left: 50%;
         }
 }
+
+/*.text-danger {
+    color: #F93E07;*/ /* Set the text color to red */
+    /*display: block;*/ /* Ensure error messages are displayed as block elements */
+    /*white-space: nowrap;*/ /* Prevent wrapping of error messages */
+    /*margin-top: 0.5rem;*/ /* Add some margin at the top for proper spacing */
+/*}
+
+.input-field {
+    position: relative;*/ /* Position relative for absolute positioning of error messages */
+/*}
+
+.text-danger {
+    position: absolute;*/ /* Position error messages absolutely */
+    /*bottom: -20px;*/ /* Adjust the vertical position as needed */
+    /*left: 0;*/ /* Align error messages to the left */
+    /*font-size: 0.8rem;*/ /* Adjust font size as needed */
+/*}*/

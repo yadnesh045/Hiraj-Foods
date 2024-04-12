@@ -52,10 +52,10 @@ namespace Hiraj_Foods.Controllers
                 unitOfWorks.Users.Add(usr.User);
                 unitOfWorks.Save();
 
-                return RedirectToAction("Home", "Yadnesh");
+					return RedirectToAction("Home", "Yadnesh");
 
-            }
-			return View();
+				}
+				return View();
 		}
 
 		[HttpPost]

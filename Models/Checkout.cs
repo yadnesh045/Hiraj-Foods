@@ -22,6 +22,8 @@ namespace Hiraj_Foods.Models
 
         public string paymentMethod { get; set; }
 
+        public decimal Total { get; set; }
+
         [ForeignKey("user")]
         public int UserId { get; set; }
         [NotMapped]
