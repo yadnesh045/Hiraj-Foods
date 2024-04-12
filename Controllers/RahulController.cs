@@ -38,7 +38,7 @@ namespace Hiraj_Foods.Controllers
 
             return View();
         }
-        private void SetLayoutModel()
+        public void SetLayoutModel()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);

@@ -31,6 +31,16 @@ namespace Hiraj_Foods.Controllers
         }
 
 
+        public void SetAdminData()
+        {
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            ViewData["Admin"] = Admin;
+        }
+
+
+
+
 
         public IActionResult Login()
         {
@@ -52,15 +62,14 @@ namespace Hiraj_Foods.Controllers
             var flavors = products.Select(p => p.ProductFlavour).ToList();
             ViewBag.Flavors = flavors;
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
 
             var feedback = unitOfWorks.Feedback.GetAll().ToList();
 
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
 
-            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>, Admin>(products, feedback, enquiry, Admin);
+            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
 
             return View(model);
         }
@@ -69,10 +78,8 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
-
-            return View(Admin);
+            SetAdminData();
+            return View();
         }
 
 
@@ -136,10 +143,10 @@ namespace Hiraj_Foods.Controllers
         {
             var products = unitOfWorks.Product.GetAll().ToList();
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<List<Product>, Admin>(products, Admin);
+
+            var model = new Tuple<List<Product>>(products);
 
             return View(model);
         }
@@ -150,10 +157,9 @@ namespace Hiraj_Foods.Controllers
         {
             var product = unitOfWorks.Product.GetById(id);
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<Product, Admin>(product, Admin);
+            var model = new Tuple<Product>(product);
 
             return View(model);
         }
@@ -256,11 +262,10 @@ namespace Hiraj_Foods.Controllers
         {
             var Enquires = unitOfWorks.Enquiry.GetAll().ToList();
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
 
-            var model = new Tuple<List<Enquiry>, Admin>(Enquires, Admin);
+            var model = new Tuple<List<Enquiry>>(Enquires);
 
             return View(model);
         }
@@ -292,10 +297,9 @@ namespace Hiraj_Foods.Controllers
             var Feedback = unitOfWorks.Feedback.GetAll().ToList();
 
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<List<FeedBack>, Admin>(Feedback, Admin);
+            var model = new Tuple<List<FeedBack>>(Feedback);
 
             return View(model);
         }
@@ -330,21 +334,18 @@ namespace Hiraj_Foods.Controllers
             var Banner = unitOfWorks.Banner.GetAll().ToList();
 
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<List<Banner>, Admin>(Banner, Admin);
+            var model = new Tuple<List<Banner>>(Banner);
             return View(model);
         }
 
         [HttpGet]
         public IActionResult AddBanner()
         {
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-
-            return View(Admin);
+            return View();
         }
 
         [HttpPost]
@@ -406,11 +407,10 @@ namespace Hiraj_Foods.Controllers
         {
             var contacts = unitOfWorks.Contact.GetAll().ToList();
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
 
-            var model = new Tuple<List<Contact>, Admin>(contacts, Admin);
+            var model = new Tuple<List<Contact>>(contacts);
             return View(model);
         }
 
@@ -459,15 +459,9 @@ namespace Hiraj_Foods.Controllers
         public IActionResult ChangePassword()
         {
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            if (AdminEmail == null)
-            {
-                return RedirectToAction("Login", "Admin");
-            }
+            SetAdminData();
 
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
-
-            return View(Admin);
+            return View();
         }
 
         public async Task<IActionResult> Logout()
@@ -508,13 +502,10 @@ namespace Hiraj_Foods.Controllers
         public IActionResult AccountSetting()
         {
             var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-
-            if (AdminEmail == null)
-            {
-                return RedirectToAction("Login", "Admin");
-            }
-
             var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            SetAdminData();
+
             return View(Admin);
         }
 
@@ -602,11 +593,11 @@ namespace Hiraj_Foods.Controllers
         public IActionResult ViewUser()
         {
             var user = unitOfWorks.Users.GetAll().ToList();
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            SetAdminData();
 
 
-            var model = new Tuple<List<User>, Admin>(user, Admin);
+            var model = new Tuple<List<User>>(user);
 
             return View(model);
         }
