@@ -46,13 +46,15 @@ namespace Hiraj_Foods.Controllers
         {
 
             var product = unitOfWorks.Product.GetById(id);
+
+            SetLayoutModel();
             return View(product);
         }
 
 
         public IActionResult MoreInfo(string name)
         {
-
+            SetLayoutModel();
             var product = unitOfWorks.Product.GetByFlavourName(name);
             return View(product);
         }
@@ -94,7 +96,7 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-        private void SetLayoutModel()
+        public void SetLayoutModel()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
