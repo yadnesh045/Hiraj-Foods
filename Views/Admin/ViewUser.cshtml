@@ -1,6 +1,7 @@
 ﻿@model Tuple<List<User>, Admin>
 
 @{
+    
     Layout = null;
 }
 @{
@@ -353,6 +354,7 @@
                                             <th>Email</th>
                                             <th>Password</th>
                                             <th>Phone</th>
+                                            <th>Actions</th>
 
                                         </tr>
                                     </thead>
@@ -365,6 +367,19 @@
                                                 <td>@a.Email</td>
                                                 <td>@a.Password</td>
                                                 <td>@a.Phone</td>
+
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                            <i class="mdi mdi-dots-vertical"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="EditUser" asp-route-id="@a.Id"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@a.Id"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
                                             </tr>
 
                                         }
@@ -418,6 +433,13 @@
         </div>
 
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/admin-js/bootstrap.js"></script>
+
+
 
 </body>
 </html>
