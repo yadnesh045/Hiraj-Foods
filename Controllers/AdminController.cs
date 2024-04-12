@@ -31,6 +31,7 @@ namespace Hiraj_Foods.Controllers
         }
 
 
+
         public IActionResult Login()
         {
             return View();
@@ -40,7 +41,7 @@ namespace Hiraj_Foods.Controllers
 
 
 
-        public IActionResult dashboard()
+        public async Task<IActionResult> dashboard()
         {
             var products = unitOfWorks.Product.GetAll().ToList();
 
@@ -119,8 +120,6 @@ namespace Hiraj_Foods.Controllers
                     }
                     product.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
                 }
-
-
 
                 unitOfWorks.Product.Add(product);
                 unitOfWorks.Save();
@@ -609,6 +608,18 @@ namespace Hiraj_Foods.Controllers
 
             var model = new Tuple<List<User>, Admin>(user, Admin);
 
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ViewCheckouts()
+        {
+            var user = unitOfWorks.Users.GetAll().ToList();
+
+            var Checkouts = unitOfWorks.Checkout.GetAll().ToList();
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            var model = new Tuple<List<User>, List<Checkout>, Admin>(user, Checkouts, Admin);
             return View(model);
         }
 

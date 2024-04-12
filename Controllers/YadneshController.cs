@@ -1,6 +1,9 @@
 ﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
+using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -8,24 +11,33 @@ namespace Hiraj_Foods.Controllers
     {
 
 		private readonly IUnitOfWorks unitOfWorks;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public YadneshController(IUnitOfWorks unitOfWorks)
+        public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
         {
 			this.unitOfWorks = unitOfWorks;
-		}
+            _httpContextAccessor = httpContextAccessor;
+
+        }
         public IActionResult Aboutus()
         {
+            SetLayoutModel();
+
             return View();
         }
 
         public IActionResult Quality_Values()
         {
+            SetLayoutModel();
+
             return View();
         }
 
 		public IActionResult Home()
 		{
-			var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
+            SetLayoutModel();
+
+            var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
 			var banners = unitOfWorks.Banner.GetAll().ToList();
 
 			var model = new Tuple<List<Product>, List<Banner>>(products, banners);
@@ -58,11 +70,10 @@ namespace Hiraj_Foods.Controllers
         [HttpPost]
         public IActionResult Checkout(Checkout checkout)
         {
-
             var userid = HttpContext.Session.GetInt32("UserId");
-
-
             var user = unitOfWorks.Users.GetById(userid);
+
+            var orderTotal = unitOfWorks.Price.GetTotalPriceForUser(user.Id);
 
 
             var Chec = new Checkout
@@ -73,7 +84,8 @@ namespace Hiraj_Foods.Controllers
                 Address1 = checkout.Address1,
                 Address2 = checkout.Address2,
                 paymentMethod = checkout.paymentMethod,
-                pincode = checkout.pincode
+                pincode = checkout.pincode,
+                Total = orderTotal.Price
             };
 
             unitOfWorks.Checkout.Add(Chec);
@@ -82,5 +94,50 @@ namespace Hiraj_Foods.Controllers
 
             return RedirectToAction("Home" , "Yadnesh");
         }
+
+
+        private void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
+            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+        }
+
+
+        [HttpPost]
+        public IActionResult SaveTotal(decimal total)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId.HasValue)
+            {
+                var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+
+       
+                if (existingTotal != null)
+                {
+                    existingTotal.Price += total;
+                }
+                else
+                {
+                    existingTotal = new TotalPrice
+                    {
+                        UserId = userId.Value,
+                        Price = total
+                    };
+                    unitOfWorks.Price.Add(existingTotal);
+                }
+
+                unitOfWorks.Save();
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("User ID is not available.");
+            }
+        }
+
+
     }
 }

@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <link href="~/css/checkout/checkout.css" rel="stylesheet" />
+    <link href="~/css/user-css/checkoutradiobutton.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -71,12 +72,12 @@
         <div class="form-step" style="text-align: center;">
             <h3>Select Payment Way</h3>
             <div class="input-group" style="margin-bottom: 20px;">
-                <input type="radio" id="cash-on-delivery" asp-for="paymentMethod" value="CashOnDelivery">
-                <label for="cash-on-delivery">Cash on Delivery</label>
+                <input type="radio" id="cash-on-delivery" asp-for="paymentMethod" value="CashOnDelivery" class="custom-radio">
+                <label for="cash-on-delivery" class="custom-radio-label">Cash on Delivery</label>
             </div>
             <div class="input-group" style="margin-bottom: 20px;">
-                <input type="radio" id="netbanking" asp-for="paymentMethod" value="Netbanking">
-                <label for="netbanking">Netbanking</label>
+                <input type="radio" id="netbanking" asp-for="paymentMethod" value="Netbanking" class="custom-radio">
+                <label for="netbanking" class="custom-radio-label">Netbanking</label>
             </div>
 
             <div class="btn-group" style="margin-top: 20px;">
@@ -84,7 +85,6 @@
                 <a class="btn btn-next" style="display: inline-block; padding: 10px 20px; border: none; border-radius: 20px; background-color: #007bff; color: #fff; text-decoration: none; transition: background-color 0.3s;">Next</a>
             </div>
         </div>
-
 
         <div class="form-step">
             <h3>Confirm Order</h3>
@@ -96,9 +96,7 @@
             <div class="message">
                 <p>Please review your order details and confirm your purchase.</p>
             </div>
-            <div class="add-experience">
-                <a class="add-exp-btn"></a>
-            </div>
+           
             <div class="btn-group">
                 <a class="btn btn-prev">Previous</a>
                 <button type="submit" class="btn btn-complete">Complete</button>
@@ -110,3 +108,4 @@
 </body>
 
 </html>
+

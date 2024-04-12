@@ -25,8 +25,9 @@ namespace Hiraj_Foods.Controllers
 
 
 
-		// for admin login
-		public IActionResult Login()
+        // for admin login
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Login()
 		{
 			return View();
 		}

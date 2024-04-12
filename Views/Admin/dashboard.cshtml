@@ -119,7 +119,7 @@
                     </li>
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons mdi mdi-glass-tulip"></i>
+                            <i class="menu-icon tf-icons mdi mdi-album"></i>
 
 
                             <div data-i18n="Layouts">Banner </div>
@@ -144,9 +144,20 @@
                       <li class="menu-item">
 
                         <a asp-action="ViewUser" asp-controller="Admin" class="menu-link ">
-                            <i class="menu-icon tf-icons mdi mdi-account"></i>
-                            <div data-i18n="Dashboards" asp->Users</div>
 
+                            <i class="menu-icon tf-icons mdi mdi-account"></i>
+
+                            <i class="menu-icon tf-icons mdi mdi-clipboard-account"></i>
+
+                            <div data-i18n="Dashboards" asp->Users</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a asp-action="ViewCheckouts" asp-controller="Admin" class="menu-link ">
+                            <i class="menu-icon tf-icons mdi mdi-database"></i>
+                            <div data-i18n="Dashboards" asp->Checkouts</div>
                         </a>
                     </li>
 
@@ -374,7 +385,6 @@
                                         <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
                                         <a asp-controller="Admin" asp-action="Enquiry" class="btn btn-sm btn-primary">View Enquiries</a>
 
-                                        <a href="javascript:;" class="btn btn-sm btn-primary">View Enquiries</a>
                                     </div>
                                 </div>
                             </div>
