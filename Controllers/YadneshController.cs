@@ -1,4 +1,5 @@
 ﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -10,24 +11,33 @@ namespace Hiraj_Foods.Controllers
     {
 
 		private readonly IUnitOfWorks unitOfWorks;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public YadneshController(IUnitOfWorks unitOfWorks)
+        public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
         {
 			this.unitOfWorks = unitOfWorks;
-		}
+            _httpContextAccessor = httpContextAccessor;
+
+        }
         public IActionResult Aboutus()
         {
+            SetLayoutModel();
+
             return View();
         }
 
         public IActionResult Quality_Values()
         {
+            SetLayoutModel();
+
             return View();
         }
 
 		public IActionResult Home()
 		{
-			var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
+            SetLayoutModel();
+
+            var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
 			var banners = unitOfWorks.Banner.GetAll().ToList();
 
 			var model = new Tuple<List<Product>, List<Banner>>(products, banners);
@@ -85,51 +95,13 @@ namespace Hiraj_Foods.Controllers
             return RedirectToAction("Home" , "Yadnesh");
         }
 
-        [HttpPost]
-        public IActionResult SaveTotal(decimal total, List<ProductDetail> products)
+
+        private void SetLayoutModel()
         {
-
-            var userId = HttpContext.Session.GetInt32("UserId");
-
-            var cartItems = unitOfWorks.Cart.GetAll().Where(c => c.UserId == userId);
-            foreach (var item in cartItems)
-            {
-                unitOfWorks.Cart.Remove(item);
-                unitOfWorks.Save();
-            }
-
-
-
-            
-
-            if (userId.HasValue)
-            {
-                var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
-
-                // If there is an existing total, add the new total to it
-                if (existingTotal != null)
-                {
-                    existingTotal.Price += total;
-                }
-                else
-                {
-                    existingTotal = new TotalPrice
-                    {
-                        UserId = userId.Value,
-                        Price = total
-                    };
-                    unitOfWorks.Price.Add(existingTotal);
-                }
-
-                unitOfWorks.Save();
-                return Ok();
-            }
-            else
-            {
-                return BadRequest("User ID is not available.");
-            }
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
+            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
         }
-
     }
-
 }
