@@ -19,6 +19,8 @@
         ICartRepository Cart { get; }
 
         ICheckoutRepository Checkout { get; }
+
+        IPriceRepository Price { get; }
         void Save();
     }
 }

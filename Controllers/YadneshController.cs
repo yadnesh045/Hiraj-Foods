@@ -1,6 +1,8 @@
 ﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -82,5 +84,52 @@ namespace Hiraj_Foods.Controllers
 
             return RedirectToAction("Home" , "Yadnesh");
         }
+
+        [HttpPost]
+        public IActionResult SaveTotal(decimal total, List<ProductDetail> products)
+        {
+
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            var cartItems = unitOfWorks.Cart.GetAll().Where(c => c.UserId == userId);
+            foreach (var item in cartItems)
+            {
+                unitOfWorks.Cart.Remove(item);
+                unitOfWorks.Save();
+            }
+
+
+
+            
+
+            if (userId.HasValue)
+            {
+                var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+
+                // If there is an existing total, add the new total to it
+                if (existingTotal != null)
+                {
+                    existingTotal.Price += total;
+                }
+                else
+                {
+                    existingTotal = new TotalPrice
+                    {
+                        UserId = userId.Value,
+                        Price = total
+                    };
+                    unitOfWorks.Price.Add(existingTotal);
+                }
+
+                unitOfWorks.Save();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("User ID is not available.");
+            }
+        }
+
     }
+
 }

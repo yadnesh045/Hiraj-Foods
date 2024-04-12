@@ -1,8 +1,16 @@
-﻿@model Hiraj_Foods.Models.Admin
+﻿@model Tuple<List<Hiraj_Foods.Models.User>, List<Hiraj_Foods.Models.Checkout>, Admin>
 
 @{
+
+    var user = Model.Item1;
+    var checkouts = Model.Item2;
+    var admin = Model.Item3;
+
+}
+@{
     Layout = null;
-}   
+}
+
 
 
 <!DOCTYPE html>
@@ -45,8 +53,12 @@
     <!-- Helpers -->
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
-</head>
 
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+</head>
 
 <body>
     <!-- Layout wrapper -->
@@ -269,7 +281,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="@Model.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="@Model.Item3.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
 
                                     </div>
                                 </a>
@@ -281,11 +293,11 @@
                                                     <div class="avatar avatar-online">
                                                         <!--Show the profile picture of current admin-->
 
-                                                        <img src="@Model.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="@Model.Item3.ImageUrl" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h6 class="mb-0">@Model.FirstName @Model.LastName</h6>
+                                                    <h6 class="mb-0">@Model.Item3.FirstName @Model.Item3.LastName</h6>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -332,120 +344,179 @@
                 </nav>
 
                 <!-- / Navbar -->
+
                 <!-- / Navbar -->
-                <div class="content-wrapper">
-                    <!-- Content -->
+                <!-- Content wrapper -->
+                <h3>Checkouts</h3>
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>UserName</th>
+                                        <th>Address</th>
+                                        <th>Payment - Method</th>
+                                        <th>Total</th>
 
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Add Product</h4>
-
-                        <!-- Basic Layout -->
-                        <div class="row">
-                            <div class="col-xl">
-                                <div class="card mb-4">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Add New Product Details</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <form method="post" asp-controller="Admin" asp-action="AddProduct" enctype="multipart/form-data">
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" name="ProductName" />
-                                                <label for="basic-default-fullname">Product Name</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" name="ProductFlavour" />
-                                                <label for="basic-default-company">Product Flavour</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" name="ProductPrice" />
-                                                <label for="basic-default-company">Product Price</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Weight" name="ProductWeight" />
-                                                <label for="basic-default-company">Product Weight</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" name="ProductNutrition" />
-                                                <label for="basic-default-company">Nutrition</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" name="ProductIngredient" />
-                                                <label for="basic-default-company">Ingredients</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" name="ProductDescription" />
-                                                <label for="basic-default-company">Product Description</label>
-                                            </div>
-
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="mb-3">
-                                                        <label for="formFile" class="form-label">Input Product Flavour Image</label>
-
-                                                        <input class="form-control" type="file" id="formFile" name="ProductFlavourImage" />
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="formFileMultiple" class="form-label">Input Product Image</label>
-
-                                                        <input class="form-control" type="file" id="formFile" name="ProductImage" />
-                                                    </div>
-                                                 
-                                                </div>
-                                            </div>
-
-                                         
-                                            <div class="form-floating form-floating-outline mb-4 mt-3">
-                                                <button type="submit" class="btn btn-primary">Send</button>
-
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Merged -->
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @foreach (var checkout in Model.Item2)
+                                    {
+                                        var user1 = Model.Item1.FirstOrDefault(u => u.Id == checkout.UserId);
+                                        <tr>
+                                            <td>@(user != null ? user1.FirstName : "Unknown")</td>
+                                            <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
+                                            <td>@checkout.paymentMethod</td>
+                                            <td>@checkout.Total</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="content-backdrop fade"></div>
                         </div>
                     </div>
-                    <!-- / Content -->
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl">
-                            <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
-                                <div class="text-body mb-2 mb-md-0">
-                                    ©
-                                    <script>
-                                        document.write(new Date().getFullYear());
-                                    </script>
-                                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-                                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
-                                </div>
-                                <div class="d-none d-lg-inline-block">
-                                    <a href="https://themeselection.com/license/" class="footer-link me-3" target="_blank">License</a>
-                                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-3">More Themes</a>
 
-                                    <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/"
-                                       target="_blank"
-                                       class="footer-link me-3">Documentation</a>
 
-                                    <a href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free/issues"
-                                       target="_blank"
-                                       class="footer-link">Support</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- / Footer -->
 
-                    <div class="content-backdrop fade"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
+                <!-- Content wrapper -->
             </div>
+            <!-- / Layout page -->
         </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
+
+
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="/js/Admin-js/jquery.js"></script>
+    <script src="/js/Admin-js/popper.js"></script>
+    <script src="/js/Admin-js/bootstrap.js"></script>
+    <script src="/js/Admin-js/node-waves.js"></script>
+    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+    <script src="/js/Admin-js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <script src="/js/Admin-js/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="/js/Admin-js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="/js/Admin-js/dashboards-analytics.js"></script>
+
+
+    <!--Charts js-->
+    <script src="~/js/chart-js/chart.js"></script>
+
+    <!--script for charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
+
 </html>
+
+
+
+@if (TempData["Message"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Message"]');
+    </script>
+
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
+}

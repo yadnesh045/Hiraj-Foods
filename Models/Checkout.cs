@@ -21,6 +21,7 @@ namespace Hiraj_Foods.Models
         public int pincode { get; set; }
 
         public string paymentMethod { get; set; }
+        public string Total { get; set; }
 
         [ForeignKey("user")]
         public int UserId { get; set; }

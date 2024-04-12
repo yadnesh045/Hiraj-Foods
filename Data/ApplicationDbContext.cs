@@ -22,7 +22,7 @@ namespace Hiraj_Foods.Data
         public DbSet<Cart> Cart { get; set; }
 
         public DbSet<Checkout> Checkout { get; set; }
-
+        public DbSet<TotalPrice> Price { get; set; }
 
 
         public DbSet<User> Users { get; set; }
