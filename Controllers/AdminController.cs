@@ -38,7 +38,7 @@ namespace Hiraj_Foods.Controllers
 
 
 
-     
+
 
         public IActionResult dashboard()
         {
@@ -150,8 +150,6 @@ namespace Hiraj_Foods.Controllers
         public IActionResult EditProduct(int id)
         {
             var product = unitOfWorks.Product.GetById(id);
-
-
 
             var AdminEmail = HttpContext.Session.GetString("AdminEmail");
             var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
@@ -543,7 +541,7 @@ namespace Hiraj_Foods.Controllers
                 AdminInDb.State = updateadmin.State;
                 AdminInDb.ZipCode = updateadmin.ZipCode;
 
-                string wwwRootPath = _webHostEnvironment.WebRootPath; 
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
 
                 if (updateadmin.ProfilePicture != null)
                 {
@@ -615,6 +613,57 @@ namespace Hiraj_Foods.Controllers
         }
 
 
+        //------------------------------------------------ User OPertaion By Admin -----------------------------------------------------
+
+        //----------------------------------------------Edit User --------------------------------------------------------------------
+
+        [HttpGet]
+        public IActionResult EditUser(int id)
+        {
+            var user = unitOfWorks.Users.GetById(id);
+
+            var UserEmail = HttpContext.Session.GetString("UserEmail");
+
+            var User = unitOfWorks.Admin.GetByEmail(UserEmail);
+
+            var model = new Tuple<User, Admin>(user, User);
+
+            return View(model);
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult EditUser(User usr)
+        {
+            if (ModelState.IsValid)
+            {
+                var userInDb = unitOfWorks.Users.GetById(usr.Id);
+                userInDb.FirstName = usr.FirstName;
+                userInDb.LastName = usr.LastName;
+                userInDb.Email = usr.Email;
+                userInDb.Password = usr.Password;
+                userInDb.Phone = usr.Phone;
+
+                unitOfWorks.Users.Update(userInDb);
+                unitOfWorks.Save();
+
+
+
+                return View("ViewUser");
+            }
+            return View(usr);
+
+        }
+
+        [HttpGet]
+        public IActionResult DeleteUser(int id)
+        {
+            var user=unitOfWorks.Users.GetById(id); 
+            unitOfWorks.Users.Remove(user); 
+            unitOfWorks.Save();
+
+            return View("ViewUser");  
+        }
     }
 }
 
