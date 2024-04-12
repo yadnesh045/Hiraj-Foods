@@ -1,7 +1,16 @@
-﻿@{
+﻿@using Hiraj_Foods.Models.View_Model
+
+@{
     var userEmail = Context.Session.GetString("UserEmail");
     var userId = Context.Session.GetInt32("UserId");
 }
+
+@{
+    var layoutModel = Context.Items["LayoutModel"] as LayoutModel;
+    var cartItemCount = layoutModel?.CartItemCount;
+}
+
+
 
 
 <!DOCTYPE html>
@@ -15,7 +24,9 @@
     <title>@ViewData["Title"] - Hiraj_Foods</title>
     <link rel="icon" href="~/favicon.ico">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 
@@ -181,18 +192,22 @@
                                 </div>
                                 <ul class="agri-ul">
 
-                                   
-                                  
+
+
                                     <li>
                                         <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
                                     </li>
 
                                     <li>
-                                    <li>
-                                        <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @ViewBag.CartItemCount) </span></a>
-                                    </li>
+                                        @*  <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @(!string.IsNullOrEmpty(userEmail) && userId.HasValue ? ViewBag.CartItemCount : 0)) </span></a>
+                                        </li> *@
+
+
+                                        <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @cartItemCount) </span></a>
 
                                     </li>
+
+
 
 
 
@@ -208,7 +223,7 @@
 
                                         <li>
 
-                                           <a asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
+                                            <a asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
 
                                         </li>
 

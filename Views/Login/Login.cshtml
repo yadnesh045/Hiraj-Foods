@@ -1,4 +1,4 @@
-﻿@model Hiraj_Foods.Models.View_Model.LoginData
+﻿@* @model Hiraj_Foods.Models.View_Model.LoginData *@
 
 
 @{
@@ -12,11 +12,12 @@
 <img class="Logo" src="~/img/hiraj food.png" />
 
 
-<form class="login" method="post">
-    <input asp-for="@Model.EnteredEmail" type="text" placeholder="Email">
-    <input asp-for="@Model.EnteredPassword" type="password" placeholder="Password">
+<form class="login" method="post" asp-controller="Login" asp-action="Login">
+    <input name="EnteredEmail" type="text" placeholder="Email">
+    <input name="EnteredPassword" type="password" placeholder="Password">
     <button type="submit">Login</button>
 </form>
+
 
 
 
@@ -28,23 +29,24 @@
 
     <script type="text/javascript">
         toastr.options = {
-            "toastClass": "toastr-custom", // Custom class for styling
-            "closeButton": true,
-            "progressBar": true,
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
             "positionClass": "toast-top-right",
-            "progressBarColor": "white"
-        };
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
 
         // Display the Toastr notification
-        toastr.success('@TempData["Error"]');
+        toastr.error('@TempData["Error"]');
     </script>
-
-    <style>
-        /* Custom style for Toastr notification */
-        .toastr-custom {
-            background-color: red !important; /* Change to your desired background color */
-            color: #000000 !important;
-            font-family: Cambria; /* Change to your desired text color */
-        }
-    </style>
 }

@@ -1,4 +1,5 @@
 ﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,24 +9,33 @@ namespace Hiraj_Foods.Controllers
     {
 
 		private readonly IUnitOfWorks unitOfWorks;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public YadneshController(IUnitOfWorks unitOfWorks)
+        public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
         {
 			this.unitOfWorks = unitOfWorks;
-		}
+            _httpContextAccessor = httpContextAccessor;
+
+        }
         public IActionResult Aboutus()
         {
+            SetLayoutModel();
+
             return View();
         }
 
         public IActionResult Quality_Values()
         {
+            SetLayoutModel();
+
             return View();
         }
 
 		public IActionResult Home()
 		{
-			var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
+            SetLayoutModel();
+
+            var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
 			var banners = unitOfWorks.Banner.GetAll().ToList();
 
 			var model = new Tuple<List<Product>, List<Banner>>(products, banners);
@@ -81,6 +91,15 @@ namespace Hiraj_Foods.Controllers
 
 
             return RedirectToAction("Home" , "Yadnesh");
+        }
+
+
+        private void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
+            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
         }
     }
 }
