@@ -7,5 +7,7 @@ namespace Hiraj_Foods.Repository.IRepository
         void Update(TotalPrice obj);
         TotalPrice GetTotalPriceForUser(int userId);
 
+
+
     }
 }

@@ -70,11 +70,10 @@ namespace Hiraj_Foods.Controllers
         [HttpPost]
         public IActionResult Checkout(Checkout checkout)
         {
-
             var userid = HttpContext.Session.GetInt32("UserId");
-
-
             var user = unitOfWorks.Users.GetById(userid);
+
+            var orderTotal = unitOfWorks.Price.GetTotalPriceForUser(user.Id);
 
 
             var Chec = new Checkout
@@ -85,7 +84,8 @@ namespace Hiraj_Foods.Controllers
                 Address1 = checkout.Address1,
                 Address2 = checkout.Address2,
                 paymentMethod = checkout.paymentMethod,
-                pincode = checkout.pincode
+                pincode = checkout.pincode,
+                Total = orderTotal.Price
             };
 
             unitOfWorks.Checkout.Add(Chec);
@@ -103,5 +103,41 @@ namespace Hiraj_Foods.Controllers
             var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
             _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
         }
+
+
+        [HttpPost]
+        public IActionResult SaveTotal(decimal total)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId.HasValue)
+            {
+                var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+
+       
+                if (existingTotal != null)
+                {
+                    existingTotal.Price += total;
+                }
+                else
+                {
+                    existingTotal = new TotalPrice
+                    {
+                        UserId = userId.Value,
+                        Price = total
+                    };
+                    unitOfWorks.Price.Add(existingTotal);
+                }
+
+                unitOfWorks.Save();
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("User ID is not available.");
+            }
+        }
+
+
     }
 }
