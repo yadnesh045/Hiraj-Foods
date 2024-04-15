@@ -6,8 +6,6 @@
         public string LastName { get; set; }
         public int CartItemCount { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
     }
 
 }
