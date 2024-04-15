@@ -40,43 +40,8 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-        public IActionResult Signup()
-        {
-            return View();
-        }
+      
 
-        [HttpPost]
-        public IActionResult UserReg(User_SignIn_Login usr)
-        {
-
-            if (usr.User != null)
-            {
-                unitOfWorks.Users.Add(usr.User);
-                unitOfWorks.Save();
-
-                return RedirectToAction("Home", "Yadnesh");
-
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult UserLogin(User_SignIn_Login log)
-        {
-            var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
-
-
-            if (existingUser != null && existingUser.Password == log.Login.Password)
-            {
-
-                return RedirectToAction("Home", "Yadnesh");
-            }
-            else
-            {
-                TempData["Error"] = "Invalid Crendentails";
-                return View("Signup");
-            }
-        }
 
 
         [HttpGet]
