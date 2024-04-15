@@ -134,5 +134,50 @@
 
 
 
+    // feedback chart
+
+    var ctx = document.getElementById('sentimentChart').getContext('2d');
+    var sentimentChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+            labels: ['Positive', 'Negative', 'Neutral'],
+            datasets: [{
+                data: [sentimentCounts.positive, sentimentCounts.negative, sentimentCounts.neutral],
+                backgroundColor: [
+                    'rgb(75, 192, 192)', // Green for positive
+                    'rgb(255, 99, 132)', // Red for negative
+                    'rgb(255, 205, 86)'  // Yellow for neutral
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                r: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            var label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.r !== undefined) {
+                                label += context.parsed.r;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
+
 
 });
