@@ -79,23 +79,41 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-
         [HttpPost]
-        public IActionResult Checkout(Checkout checkout)
+        public IActionResult Checkout(Checkout checkout, Product product)
         {
             var userid = HttpContext.Session.GetInt32("UserId");
-            var user = unitOfWorks.Users.GetById(userid);
 
+
+            var user = unitOfWorks.Users.GetById(userid);
 
             var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
             var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
 
-            var total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
+            var productInDb = unitOfWorks.Product.GetById(product.Id);
 
-          
 
-            var orderTotal = unitOfWorks.Price.GetTotalPriceForUser(user.Id);
-
+            decimal total;
+            if (cartItems.Any())
+            {
+                total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
+            }
+            else if (product != null)
+            {
+                if (!string.IsNullOrEmpty(productInDb.ProductPrice))
+                {
+                    total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
+                    productsAndQuantities = $"{productInDb.ProductName}:1";
+                }
+                else
+                {
+                    return BadRequest("Product price is not available");
+                }
+            }
+            else
+            {
+                return BadRequest("No product to checkout");
+            }
 
             var Chec = new Checkout
             {
@@ -113,10 +131,7 @@ namespace Hiraj_Foods.Controllers
 
             unitOfWorks.Checkout.Add(Chec);
 
-
-            var cartdata = unitOfWorks.Cart.GetByUserId(user.Id);
-
-            foreach (var item in cartdata)
+            foreach (var item in cartItems)
             {
                 unitOfWorks.Cart.Remove(item);
             }
@@ -143,9 +158,13 @@ namespace Hiraj_Foods.Controllers
                     CartItemCount = cartItems.Count(),
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    profilepic = Profilepic.user_Profile_Img
+                    profilepic = Profilepic?.user_Profile_Img // Use the null-conditional operator to avoid NullReferenceException
                 };
-
+                // If Profilepic is null, set a default image or leave it as null
+                if (Profilepic == null)
+                {
+                    layoutModel.profilepic = null; // Or set a default image path
+                }
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 
             }
@@ -162,7 +181,7 @@ namespace Hiraj_Foods.Controllers
 
             var userid = HttpContext.Session.GetInt32("UserId");
             var user = unitOfWorks.Users.GetById(userid);
-            
+
 
 
             // Split the products string into an array of product details

@@ -1,5 +1,7 @@
 ﻿@model Hiraj_Foods.Models.Product
 
+
+
 <link href="~/css/user-css/timeline.css" rel="stylesheet" />
 
 <div class="preloader">
@@ -77,7 +79,9 @@
                                 <!-- Add to Cart button -->
                                 <a asp-action="AddCart" asp-controller="User" asp-route-id=@Model.Id class="btn btn-warning">Add to Cart</a>
 
-                                <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning">Buy Now</a>
+
+
+                                <a asp-action="Checkout" asp-controller="Yadnesh" asp-route-id=@Model.Id class="btn btn-warning">Buy Now</a>
 
                             </div>
                         </div>
