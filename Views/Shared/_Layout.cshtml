@@ -1,6 +1,7 @@
 ﻿@using Hiraj_Foods.Models.View_Model
 
 @{
+
     var userEmail = Context.Session.GetString("UserEmail");
     var userId = Context.Session.GetInt32("UserId");
 }
@@ -8,7 +9,7 @@
 @{
 
     var layoutModel = Context.Items["LayoutModel"] as LayoutModel;
-    var username = layoutModel?.FirstName;
+    var firstname = layoutModel?.FirstName;
     var lastName = layoutModel?.LastName;
     var cartItemCount = layoutModel?.CartItemCount;
 }
@@ -202,6 +203,9 @@
 
                                     @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
                                     {
+
+
+
                                         <style>
 
                                             * {
@@ -368,7 +372,7 @@
                                         <li class="dropdown">
                                             <div class="profile" onclick="toggleDropdown()">
                                                 <div class="user">
-                                                    <h5 style="color:black">@username</h5>
+                                                    <h5 style="color:black">@firstname</h5>
                                                 </div>
                                                 <div class="img-box">
                                                     <img src="https://i.postimg.cc/BvNYhMHS/user-img.jpg" alt="some user image">
@@ -381,6 +385,7 @@
                                                 <li><a asp-area="" asp-controller="Login" asp-action="UserLogout">Logout</a></li>
                                             </ul>
                                         </li>
+
                                 </div>
 
 
@@ -394,7 +399,6 @@
                                         }
                                     }
                                 </script>
-
                                     }
                                     else
                                     {

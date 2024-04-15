@@ -639,6 +639,7 @@ namespace Hiraj_Foods.Controllers
             var model = new Tuple<User>(user);
 
             return View(model);
+            
         }
 
         [HttpPost]

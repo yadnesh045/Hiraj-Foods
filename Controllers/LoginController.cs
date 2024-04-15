@@ -108,13 +108,23 @@ namespace Hiraj_Foods.Controllers
         public IActionResult UserReg(User_SignIn_Login usr)
         {
 
-
             if (usr != null)
             {
                 unitOfWorks.Users.Add(usr.User);
                 unitOfWorks.Save();
 
-                return RedirectToAction("Home", "Yadnesh");
+                var existingUser = unitOfWorks.Users.GetById(usr.User.Id);
+
+
+
+                if (existingUser != null)
+                {
+  
+                    HttpContext.Session.SetInt32("UserId", existingUser.Id);
+                    HttpContext.Session.SetString("UserEmail", existingUser.Email);
+
+                    return RedirectToAction("Home", "Yadnesh");
+                }
             }
 
 

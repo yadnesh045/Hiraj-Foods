@@ -21,27 +21,32 @@ namespace Hiraj_Foods.Controllers
         }
         public IActionResult Aboutus()
         {
-            SetLayoutModel();
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                SetLayoutModel();
+            }
 
             return View();
         }
 
         public IActionResult Quality_Values()
         {
-
-            SetLayoutModel();
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                SetLayoutModel();
+            }
 
             return View();
         }
 
 		public IActionResult Home()
-		{
-            if (HttpContext.Session.GetInt32("UserId") != null)
+		 {
+          // SetLayoutModel();
+
+            if(HttpContext.Session.GetInt32("UserId")!=null)
             {
                 SetLayoutModel();
-
             }
-
             var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
 			var banners = unitOfWorks.Banner.GetAll().ToList();
 
@@ -106,17 +111,12 @@ namespace Hiraj_Foods.Controllers
         public void SetLayoutModel()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-
-            // want to also pass the first name and last name of the user to the layout
             var user = unitOfWorks.Users.GetById(userId);
-
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-
-
             var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), FirstName = user.FirstName, LastName = user.LastName };
-
             _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
         }
+
 
 
         [HttpPost]

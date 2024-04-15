@@ -73,92 +73,81 @@
             <!--Side Menu Partial View -->
             <!--Show the partial view of sidemenu-->
             <partial name="_SidePartialView" />
-            
-
-            <!-- / Side Menu Partial View Ends -->
 
 
-
-            <!-- Layout container -->
             <div class="layout-page">
+            <!-- Navbar Partial View -->
+            <!--Show the partial view of navbar partial view-->
+            <partial name="_NavbarPartialView" />
 
+            <!-- / Navbar Partial View -->
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row gy-4">
 
+                        <!-- Total Product Card card -->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-1">Total Products : @Model.Item1.Count()  </h4>
 
-                <!-- Navbar Partial View -->
-                <!--Show the partial view of navbar partial view-->
-                    <partial name="_NavbarPartialView" />
-
-                <!-- / Navbar Partial View -->
-
-
-
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row gy-4">
-
-                            <!-- Total Product Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Products : @Model.Item1.Count()  </h4>
-
-                                        <a asp-controller="Admin" asp-action="ViewProduct" class="btn btn-sm btn-primary">View Products</a>
-                                    </div>
+                                    <a asp-controller="Admin" asp-action="ViewProduct" class="btn btn-sm btn-primary">View Products</a>
                                 </div>
                             </div>
-                            <!-- Total Product Card card -->
-                            <!-- Total Feedback Card card -->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Feedback : @Model.Item2.Count() </h4>
+                        </div>
+                        <!-- Total Product Card card -->
+                        <!-- Total Feedback Card card -->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-1">Total Feedback : @Model.Item2.Count() </h4>
 
-                                        <a hasp-controller="Admin" asp-action="Feedback" class="btn btn-sm btn-primary">View FeedBack</a>
-                                    </div>
+                                    <a hasp-controller="Admin" asp-action="Feedback" class="btn btn-sm btn-primary">View FeedBack</a>
                                 </div>
                             </div>
-                            <!-- Total Feedback Card card -->
-                            <!-- Total Enquiry Card-->
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
-                                        <a asp-controller="Admin" asp-action="Enquiry" class="btn btn-sm btn-primary">View Enquiries</a>
+                        </div>
+                        <!-- Total Feedback Card card -->
+                        <!-- Total Enquiry Card-->
+                        <div class="col-md-12 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-1">Total Enquiry : @Model.Item3.Count() </h4>
+                                    <a asp-controller="Admin" asp-action="Enquiry" class="btn btn-sm btn-primary">View Enquiries</a>
 
-                                    </div>
                                 </div>
                             </div>
-                            <!-- Total Enquiry Card-->
+                        </div>
+                        <!-- Total Enquiry Card-->
 
 
-                            <div class="col-md-12 col-lg-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-1">Product Prices</h4>
-                                        <div class="chart-container" style="height:400px;">
-                                            <canvas id="productPricesChart"></canvas>
-                                        </div>
-
+                        <div class="col-md-12 col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-1">Product Prices</h4>
+                                    <div class="chart-container" style="height:400px;">
+                                        <canvas id="productPricesChart"></canvas>
                                     </div>
+
                                 </div>
                             </div>
+                        </div>
 
 
 
 
 
-                            <div class="col-md-12 col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        @* to show the total count of flavours *@
-                                        <h4 class="card-title mb-1" id="flavorsCount"> </h4>
-                                        <canvas id="flavorsChart">
-                                        </canvas>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    @* to show the total count of flavours *@
+                                    <h4 class="card-title mb-1" id="flavorsCount"> </h4>
+                                    <canvas id="flavorsChart">
+                                    </canvas>
 
-                                    </div>
                                 </div>
                             </div>
+                        </div>
 
 
                             <div class="col-md-12 col-lg-12">
@@ -194,15 +183,15 @@
                     <!-- Footer -->
                
 
-                    <div class="content-backdrop fade"></div>
-                </div>
-                <!-- Content wrapper -->
+                <div class="content-backdrop fade"></div>
             </div>
-            <!-- / Layout page -->
+            <!-- Content wrapper -->
         </div>
+        <!-- / Layout page -->
+    </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
 

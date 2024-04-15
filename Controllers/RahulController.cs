@@ -40,6 +40,9 @@ namespace Hiraj_Foods.Controllers
         }
         public void SetLayoutModel()
         {
+
+
+
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
             // want to also pass the first name and last name of the user to the layout
