@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hiraj_Foods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240412051042_AddinTotalToCheckout")]
-    partial class AddinTotalToCheckout
+    [Migration("20240412094246_rrrr")]
+    partial class rrrr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

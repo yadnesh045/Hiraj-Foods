@@ -6,7 +6,10 @@
 }
 
 @{
+
     var layoutModel = Context.Items["LayoutModel"] as LayoutModel;
+    var username = layoutModel?.FirstName;
+    var lastName = layoutModel?.LastName;
     var cartItemCount = layoutModel?.CartItemCount;
 }
 

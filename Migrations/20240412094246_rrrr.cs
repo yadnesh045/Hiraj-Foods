@@ -5,7 +5,7 @@
 namespace Hiraj_Foods.Migrations
 {
     /// <inheritdoc />
-    public partial class AddinTotalToCheckout : Migration
+    public partial class rrrr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
