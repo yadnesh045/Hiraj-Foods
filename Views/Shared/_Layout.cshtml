@@ -183,16 +183,17 @@
                                         <a asp-area="" asp-controller="Rahul" asp-action="Feedback">FeedBack</a>
 
                                     </li>
-                                    <li>
-                                        <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
-
-                                    </li>
+                                  
                                 </ul>
                                 <div class="logo px-4">
                                     <a asp-area="" asp-controller="Yadnesh" asp-action="Home"><img src="~/img/hiraj food.png" alt="logo"></a>
 
 
                                 </div>
+                                <li>
+                                    <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
+
+                                </li>
                                 <ul class="agri-ul">
 
 
@@ -200,21 +201,6 @@
                                     <li>
                                         <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
                                     </li>
-
-                                    <li>
-                                        @*  <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @(!string.IsNullOrEmpty(userEmail) && userId.HasValue ? ViewBag.CartItemCount : 0)) </span></a>
-                                        </li> *@
-
-
-                                        <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @cartItemCount) </span></a>
-
-                                    </li>
-
-
-
-
-
-
 
                                     @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
                                     {
@@ -395,7 +381,7 @@
                                             <ul id="dropdownMenu" class="dropdown-menu">
                                                 <li> <a asp-area="" asp-controller="User" asp-action="Profile">Profile</a></li>
                                                 <li><a href="#"><i class="ph-bold ph-gear-six"></i>&nbsp;Settings</a></li>
-                                                <li><a href="#"><i class="ph-bold ph-question"></i>&nbsp;Help</a></li>
+                                                <li> <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @cartItemCount) </span></a></li>
                                                 <li><a asp-area="" asp-controller="Login" asp-action="UserLogout">Logout</a></li>
                                             </ul>
                                         </li>
