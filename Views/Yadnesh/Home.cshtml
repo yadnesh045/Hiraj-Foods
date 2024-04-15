@@ -1,11 +1,11 @@
 ﻿@model Tuple<List<Hiraj_Foods.Models.Product> , List<Hiraj_Foods.Models.Banner>>
 @{
-	var firstProduct = Model.Item1.FirstOrDefault();
+    var firstProduct = Model.Item1.FirstOrDefault();
 }
 
 <body>
 
-@*     =============================Pre Loader========================== *@
+    @*     =============================Pre Loader========================== *@
     <div class="preloader">
         <div class="preloader-inner">
             <div class="preloader-icon">
@@ -14,613 +14,634 @@
             </div>
         </div>
     </div>
-@*     ====================================================== *@
+    @*     ====================================================== *@
 
 
-	<!--search area-->
-	<div class="search-input">
-		<div class="search-close">
-			<i class="fas fa-times"></i>
-		</div>
-		<form>
-			<input type="text" name="text" placeholder="Search Heare">
-			<button class="search-btn" type="submit">
-				<i class="fas fa-search"></i>
-			</button>
-		</form>
-	</div>
-	<!-- search area -->
+    <!--search area-->
+    <div class="search-input">
+        <div class="search-close">
+            <i class="fas fa-times"></i>
+        </div>
+        <form>
+            <input type="text" name="text" placeholder="Search Heare">
+            <button class="search-btn" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+    <!-- search area -->
     <!-- Banner Section Start Here -->
-	<section class="banner banner-2">
-		<div class="banner-slider">
-			<div class="swiper-wrapper">
-				@foreach (var banner1 in Model.Item2)
-				{
-					<div class="swiper-slide">
-						<div class="container">
-							<div class="banner-item">
-								<div class="banner-inner">
-									<div class="banner-thumb">
-										<img src="@banner1.Banner_Img" alt="banner-slider">
-									</div>
-									<div class="banner-content" style="margin-right:650px;">
-										<h3>@banner1.Flavour_title</h3>
-										<div class="banner-title" style="padding-left: 0px;">Healthish<br>Foods</div>
-										<div class="banner-desc" style="margin-left: 20px;">Best cereal food <br> for your child.</div>
-										<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="@banner1.Flavour_title" class="lab-btn"><span>More Info</span></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				}
-			</div>
-			<div class="banner-pagination"></div>
-		</div>
-	</section>
+    <section class="banner banner-2">
+        <div class="banner-slider">
+            <div class="swiper-wrapper">
+                @foreach (var banner1 in Model.Item2)
+                {
+                    <div class="swiper-slide">
+                        <div class="container">
+                            <div class="banner-item">
+                                <div class="banner-inner">
+                                    <div class="banner-thumb">
+                                        <img src="@banner1.Banner_Img" alt="banner-slider">
+                                    </div>
+                                    <div class="banner-content" style="margin-right:650px;">
+                                        <h3>@banner1.Flavour_title</h3>
+                                        <div class="banner-title" style="padding-left: 0px;">Healthish<br>Foods</div>
+                                        <div class="banner-desc" style="margin-left: 20px;">Best cereal food <br> for your child.</div>
+                                        <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="@banner1.Flavour_title" class="lab-btn"><span>More Info</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="banner-pagination"></div>
+        </div>
+    </section>
 
     <!-- Banner Section Ending Here -->
-
-
-
-	<!-- Feature Secton Start Here -->
-	<section class="about-us home-2 padding-tb">
-		<div class="shape-image">
-			<img src="~/images/about/shape/01.png" alt="abs-thumb" class="shape-1">
-			<!-- <img src="assets\images\about\shape\02.png" alt="abs-thumb" class="shape-2"> -->
-		</div>
+    <!-- Feature Secton Start Here -->
+    <section class="about-us home-2 padding-tb">
+        <div class="shape-image">
+            <img src="~/images/about/shape/01.png" alt="abs-thumb" class="shape-1">
+            <!-- <img src="assets\images\about\shape\02.png" alt="abs-thumb" class="shape-2"> -->
+        </div>
 
 
 
 
 
-		@if (firstProduct != null)
-		{
+        @if (firstProduct != null)
+        {
 
 
-			<div class="container">
-				<div class="about-wrapper">
-					<div class="row">
-						<div class="col-xl-8 col-12">
-							<div class="section-header text-center text-xl-left wow fadeInUp" data-wow-delay="0.3s">
-								<h3>ABOUT HIRAJ</h3>
-								<p>Best product, Best service</p>
-							</div>
-							<div class="section-wrapper">
-								<div class="row justify-content-center">
-									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-										<div class="about-item">
-											<div class="about-inner">
+            <div class="container">
+                <div class="about-wrapper">
+                    <div class="row">
+                        <div class="col-xl-8 col-12">
+                            <div class="section-header text-center text-xl-left wow fadeInUp" data-wow-delay="0.3s">
+                                <h3>ABOUT HIRAJ</h3>
+                                <p>Best product, Best service</p>
+                            </div>
+                            <div class="section-wrapper">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                                        <div class="about-item">
+                                            <div class="about-inner">
 
-												<div class="about-content" style="font-size: 15px;">
-													Our Brand gives us the opportunity to create positive change to grow our products & achieve our purpose of making sustainable living in common place.
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
-										<div class="about-item">
-											<div class="about-inner">
-												<div class="about-thumb">
+                                                <div class="about-content" style="font-size: 15px;">
+                                                    Our Brand gives us the opportunity to create positive change to grow our products & achieve our purpose of making sustainable living in common place.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
+                                        <div class="about-item">
+                                            <div class="about-inner">
+                                                <div class="about-thumb">
 
-													<img src="~/images/about/icon/02.png" alt="about">
-												</div>
-												<div class="about-content">
-													<h5>Best products</h5>
-													<p>variety of foods that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
-										<div class="about-item">
-											<div class="about-inner">
-												<h5>Who We Are</h5>
-												<div class="about-content" style="font-size: 15px;">
-													We are just another you with ambition to make our Hiraj product that people love.
+                                                    <img src="~/images/about/icon/02.png" alt="about">
+                                                </div>
+                                                <div class="about-content">
+                                                    <h5>Best products</h5>
+                                                    <p>variety of foods that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
+                                        <div class="about-item">
+                                            <div class="about-inner">
+                                                <h5>Who We Are</h5>
+                                                <div class="about-content" style="font-size: 15px;">
+                                                    We are just another you with ambition to make our Hiraj product that people love.
 
-													That make a difference in Hiraj nutritious foods, Affordable, Tasty foods, Hiraj is bound to make positive impact on lives of people who buy them.
+                                                    That make a difference in Hiraj nutritious foods, Affordable, Tasty foods, Hiraj is bound to make positive impact on lives of people who buy them.
 
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.7s">
-										<div class="about-item">
-											<div class="about-inner">
-												<div class="about-thumb">
-													<img src="~/images/about/icon/03.png" alt="about">
-												</div>
-												<div class="about-content">
-													<a href="#"><h5>Healthy and nutritious</h5></a>
-													<p>variety of Products that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="about-thumb-1 wow fadeInUp" data-wow-delay="0.4s" style="position: relative;">
-							<!-- New image -->
-							<img src="~/anurag-images/new (2).png" style="position: absolute; top: 0; left: 240px; z-index: 1;" />
-							<!-- Existing content -->
-							<img src="@firstProduct.ProductImageUrl" alt="about-thumb">
-							<center><h4>"@firstProduct.ProductFlavour"<br> Flavour</h4></center>
-						</div>
-						
-
-					</div>
-					
-				</div>
-			</div>
-			}
-			</section>
-		
-
-	<!-- Feature Secton ending Here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 wow fadeInUp" data-wow-delay="0.7s">
+                                        <div class="about-item">
+                                            <div class="about-inner">
+                                                <div class="about-thumb">
+                                                    <img src="~/images/about/icon/03.png" alt="about">
+                                                </div>
+                                                <div class="about-content">
+                                                    <a href="#"><h5>Healthy and nutritious</h5></a>
+                                                    <p>variety of Products that give you the nutrients you need to maintain your health, feel good, and have energy.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-thumb-1 wow fadeInUp" data-wow-delay="0.4s" style="position: relative;">
+                            <!-- New image -->
+                            <img src="~/anurag-images/new (2).png" style="position: absolute; top: 0; left: 240px; z-index: 1;" />
+                            <!-- Existing content -->
+                            <img src="@firstProduct.ProductImageUrl" alt="about-thumb">
+                            <center><h4>"@firstProduct.ProductFlavour"<br> Flavour</h4></center>
+                        </div>
 
 
+                    </div>
 
-	<!-- about section start here -->
-	<section class="feature-section padding-tb">
-		<div class="container">
-			<div class="section-header wow fadeInUp" data-wow-delay="0.3s">
-				<h3>Most Popular Product</h3>
-				<p>Healthy life with healthy food</p>
-			</div>
-			<div class="section-wrapper">
-				<div class="row justify-content-center">
-					<div class="col-xl-3 col-md-7 col-12 wow fadeInUp" data-wow-delay="0.4s">
-						<div class="feature-item-2">
-							<div class="feature-inner">
-								<div class="feature-thumb">
-									<img src="~/img/3.jpg" alt="feature">
-								</div>
-								<div class="feature-content">
-									<a href="#"><h5>Healthish Pomogranate</h5></a>
-									<p style="color:black;font-size: 15px;">
-										Food Type : malted ragi
-										rajgira, jaggery powder,<br>pomegranate powder
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-7 col-12 wow fadeInUp" data-wow-delay="0.5s">
-						<div class="feature-item-2">
-							<div class="feature-inner">
-								<div class="feature-thumb">
-									<img src="~/img/2.jpg" alt="feature">
-								</div>
-								<div class="feature-content">
-									<a href="#"><h5>Healthish Pineapple</h5></a>
-									<p style="color:black;font-size: 15px;">
-										Food Type : malted ragi,
-										rajgira,jaggery powder,<br>pineapple powder
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-7 col-12 wow fadeInUp" data-wow-delay="0.6s">
-						<div class="feature-item-2">
-							<div class="feature-inner">
-								<div class="feature-thumb">
-									<img src="~/img/1.jpg" alt="feature">
-								</div>
-								<div class="feature-content">
-									<a href="#"><h5>Healthish Kaju Badam</h5></a>
-									<p style="color:black;font-size: 15px;">Food Type : Melted Ragi, Rajgira, Jaggery Powder,<br> Kaju, Badam, Khatik</p>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- about section ending here -->
+                </div>
+            </div>
+        }
+    </section>
 
 
+    <!-- Feature Secton ending Here -->
+    <!-- about section start here -->
+    <section class="feature-section padding-tb">
+        <div class="container">
+            <div class="section-header wow fadeInUp" data-wow-delay="0.3s">
+                <h3>Most Popular Product</h3>
+                <p>Healthy life with healthy food</p>
+            </div>
+            <div class="section-wrapper">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-md-7 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="feature-item-2">
+                            <div class="feature-inner">
+                                <div class="feature-thumb">
+                                    <img src="~/img/3.jpg" alt="feature">
+                                </div>
+                                <div class="feature-content">
+                                    <a href="#"><h5>Healthish Pomogranate</h5></a>
+                                    <p style="color:black;font-size: 15px;">
+                                        Food Type : malted ragi
+                                        rajgira, jaggery powder,<br>pomegranate powder
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-7 col-12 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="feature-item-2">
+                            <div class="feature-inner">
+                                <div class="feature-thumb">
+                                    <img src="~/img/2.jpg" alt="feature">
+                                </div>
+                                <div class="feature-content">
+                                    <a href="#"><h5>Healthish Pineapple</h5></a>
+                                    <p style="color:black;font-size: 15px;">
+                                        Food Type : malted ragi,
+                                        rajgira,jaggery powder,<br>pineapple powder
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-7 col-12 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="feature-item-2">
+                            <div class="feature-inner">
+                                <div class="feature-thumb">
+                                    <img src="~/img/1.jpg" alt="feature">
+                                </div>
+                                <div class="feature-content">
+                                    <a href="#"><h5>Healthish Kaju Badam</h5></a>
+                                    <p style="color:black;font-size: 15px;">Food Type : Melted Ragi, Rajgira, Jaggery Powder,<br> Kaju, Badam, Khatik</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-	<!-- product section start here -->
-	<section class="product-section product-style2 padding-tb">
-		<div class="shape-image">
-			<img src="~/images/02.png" alt="abs-thumb" class="shape-1">
-			<img src="~/images/02.png" alt="abs-thumb" class="shape-2">
-		</div>
-		<div class="container">
-			<div class="section-header wow fadeInUp" data-wow-delay="0.3s">
-				<h3>Our Flavour Range</h3>
-				<p>Food for good mood....</p>
-			</div>
-			<div class="section-wrapper">
-				<div class="row justify-content-center">
-					@foreach (var product in Model.Item1)
-					{
-						<div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="product-item-2">
-								<div class="product-inner">
-									<div class="product-thumb rounded-circle">
-										<img src="@product.ProductFlavourImageUrl" class="aboutImage" alt="product">
-									</div>
-									<div class="product-content">
-										<a class="mau" href="@Url.Action("HomeInside", "Yadnesh", new { id = product.Id })">@product.ProductName</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- about section ending here -->
+    <!-- product section start here -->
+    <section class="product-section product-style2 padding-tb">
+        <div class="shape-image">
+            <img src="~/images/02.png" alt="abs-thumb" class="shape-1">
+            <img src="~/images/02.png" alt="abs-thumb" class="shape-2">
+        </div>
+        <div class="container">
+            <div class="section-header wow fadeInUp" data-wow-delay="0.3s">
+                <h3>Our Flavour Range</h3>
+                <p>Food for good mood....</p>
+            </div>
+            <div class="section-wrapper">
+                <div class="row justify-content-center">
+                    @foreach (var product in Model.Item1)
+                    {
+                        <div class="col-lg-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="product-item-2">
+                                <div class="product-inner">
+                                    <div class="product-thumb rounded-circle">
+                                        <img src="@product.ProductFlavourImageUrl" class="aboutImage" alt="product">
+                                    </div>
+                                    <div class="product-content">
+                                        <a class="mau" href="@Url.Action("HomeInside", "Yadnesh", new { id = product.Id })">@product.ProductName</a>
 
-									</div>
-								</div>
-							</div>
-						</div>
-					}
-				</div>
-			</div>
-		</div>
-	</section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
 
-	<!-- product section end here -->
+    <!-- product section end here -->
+    <!-- counter up section start here -->
+    <div class="counterup-section padding-tb bg_counter bg_img">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="section-wrapper">
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="counter-item">
+                            <div class="counter-inner">
+                                <div class="counter-thumb">
+                                    <img src="~/img/pyramid.png" alt="counter">
+                                </div>
+                                <div class="counter-content">
+                                    <h3 class="count-number">5050</h3>
+                                    <p class="count-title">Nutrition</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="counter-item">
+                            <div class="counter-inner">
+                                <div class="counter-thumb">
+                                    <img src="~/img/fruits.png" alt="counter">
+                                </div>
+                                <div class="counter-content">
+                                    <h3 class="count-number">6200</h3>
+                                    <p class="count-title">Flavour</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="counter-item">
+                            <div class="counter-inner">
+                                <div class="counter-thumb">
+                                    <img src="~/img/namaste.png" alt="counter">
+                                </div>
+                                <div class="counter-content">
+                                    <h3 class="count-number">8100</h3>
+                                    <p class="count-title">Happy Customer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="counter-item">
+                            <div class="counter-inner">
+                                <div class="counter-thumb">
+                                    <img src="~/img/feedback.png" alt="counter">
+                                </div>
+                                <div class="counter-content">
+                                    <h3 class="count-number">6300</h3>
+                                    <p class="count-title">Feedback</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- counter up section ending here -->
+    <!-- counter up section ending here -->
+    <!-- product section start here -->
+    <section class="product-section product-style3 padding-tb">
+        <div class="container-fluid">
+            <div class="section-header wow fadeInUp" data-wow-delay="0.3s">
+                <h3>Our Products Gallery</h3>
+                <p>Conveniently customize proactives into everaged interfaces without Globally</p>
+            </div>
+            <div class="section-wrapper">
+                <div class="row justify-content-center no-gutters">
+                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="product-item">
+                            <div class="product-inner">
+                                <div class="product-thumb">
+                                    <img src="~/img/pineapple.jpg" alt="product">
+                                </div>
+                                <div class="product-content">
+                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Pineapple" class="product-name">Pineapple</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="product-item">
+                            <div class="product-inner">
+                                <div class="product-thumb">
+                                    <img src="~/img/apple.jpg" alt="product">
+                                </div>
+                                <div class="product-content">
+                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Apple" class="product-name">Apple</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="product-item">
+                            <div class="product-inner">
+                                <div class="product-thumb">
+                                    <img src="~/img/chocolate.jpg" alt="product">
+                                </div>
+                                <div class="product-content">
+                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Chocolate" class="product-name">Chocolate</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="product-item">
+                            <div class="product-inner">
+                                <div class="product-thumb">
+                                    <img src="~/img/mango-badam.jpg" alt="product">
+                                </div>
+                                <div class="product-content">
+                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Kaju-Badam" class="product-name">Kaju Badam</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product section ending here -->
+    <!-- testimonial section start here -->
+    <section class="testimonial-section home-2 padding-tb">
+        <div class="container">
+            <div class="section-wrapper">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="testi-slider-2">
+                            <div class="section-header text-left">
+                                <h3>Our Happy Customers</h3>
+                            </div>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="testi-item style-2">
+                                        <div class="testi-inner">
+                                            <div class="testi-head">
+                                                <div class="testi-thumb">
+                                                    <img src="~/images/testimonial/01.jpg" alt="testimonial">
 
+                                                </div>
+                                                <div class="testi-clients">
+                                                    <a href="#"><h5>Satish Marwat</h5></a>
+                                                    <p>Food Expert</p>
+                                                    <div class="rating">
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="testi-body">
+                                                <p>As a food expert we like its natural flavors very much and they are providing a wide range of flavors like guava, chocolate, mango, pineaapple, pomegranate and kaju badam the most.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="testi-item style-2">
+                                        <div class="testi-inner">
+                                            <div class="testi-head">
+                                                <div class="testi-thumb">
+                                                    <img src="~/images/testimonial/02.jpg" alt="testimonial">
 
-	<!-- counter up section start here -->
-	<div class="counterup-section padding-tb bg_counter bg_img">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="section-wrapper">
-				<div class="row justify-content-center">
-					<div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.3s">
-						<div class="counter-item">
-							<div class="counter-inner">
-								<div class="counter-thumb">
-									<img src="~/img/pyramid.png" alt="counter">
-								</div>
-								<div class="counter-content">
-									<h3 class="count-number">5050</h3>
-									<p class="count-title">Nutrition</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-						<div class="counter-item">
-							<div class="counter-inner">
-								<div class="counter-thumb">
-									<img src="~/img/fruits.png" alt="counter">
-								</div>
-								<div class="counter-content">
-									<h3 class="count-number">6200</h3>
-									<p class="count-title">Flavour</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
-						<div class="counter-item">
-							<div class="counter-inner">
-								<div class="counter-thumb">
-									<img src="~/img/namaste.png" alt="counter">
-								</div>
-								<div class="counter-content">
-									<h3 class="count-number">8100</h3>
-									<p class="count-title">Happy Customer</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
-						<div class="counter-item">
-							<div class="counter-inner">
-								<div class="counter-thumb">
-									<img src="~/img/feedback.png" alt="counter">
-								</div>
-								<div class="counter-content">
-									<h3 class="count-number">6300</h3>
-									<p class="count-title">Feedback</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- counter up section ending here -->
-	<!-- counter up section ending here -->
+                                                </div>
+                                                <div class="testi-clients">
+                                                    <a href="#"><h5>Dipti Pawar</h5></a>
+                                                    <p>Parents</p>
+                                                    <div class="rating">
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="testi-body">
+                                                <p>Its an truely called an "<b>Healthish</b>" product, which in no time is favourite of our child, and is giving them more energy and joy in having an taste of it, its an most likely food of our child.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="testi-item style-2">
+                                        <div class="testi-inner">
+                                            <div class="testi-head">
+                                                <div class="testi-thumb">
+                                                    <img src="~/images/testimonial/03.jpg" alt="testimonial">
 
+                                                </div>
+                                                <div class="testi-clients">
+                                                    <a href="#"><h5>Savita Mane</h5></a>
+                                                    <p>Parents</p>
+                                                    <div class="rating">
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="testi-body">
+                                                <p>Our childs favourite flavor is Pomegranate and guava, which is most likely by him, every we fell very happy to server to our child, which makes every family an happy, truely nice product.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="testi-item style-2">
+                                        <div class="testi-inner">
+                                            <div class="testi-head">
+                                                <div class="testi-thumb">
+                                                    <img src="~/images/testimonial/03.jpg" alt="testimonial">
 
+                                                </div>
+                                                <div class="testi-clients">
+                                                    <a href="#"><h5>Samadhan Bachhav</h5></a>
+                                                    <p>Parents</p>
+                                                    <div class="rating">
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="testi-body">
+                                                <p>Every parents are not tension free, what and how to give their child an healthy food at this age, yes the answer is one <b>Healthis</b> the only brand liked by all the children at this age.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="testi-item style-2">
+                                        <div class="testi-inner">
+                                            <div class="testi-head">
+                                                <div class="testi-thumb">
+                                                    <img src="~/images/testimonial/03.jpg" alt="testimonial">
+                                                </div>
+                                                <div class="testi-clients">
+                                                    <a href="#"><h5>Rohini Gaikwad</h5></a>
+                                                    <p>Parents</p>
+                                                    <div class="rating">
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="testi-body">
+                                                <p>We tried its various flavors, amonst all we like the guava and the chocolate flavors very much, even our baby likes its flavor very much and enjoy the food.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="testi-item style-2">
+                                        <div class="testi-inner">
+                                            <div class="testi-head">
+                                                <div class="testi-thumb">
+                                                    <img src="~/images/testimonial/02.jpg" alt="testimonial">
 
+                                                </div>
+                                                <div class="testi-clients">
+                                                    <a href="#"><h5>Divyashree Kulkarni</h5></a>
+                                                    <p>Child Specialist</p>
+                                                    <div class="rating">
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="testi-body">
+                                                <p>A Classic foods with health as an main targeted to the children, which helps them to grow in an proper manner, which every child should needs.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-	<!-- product section start here -->
-	<section class="product-section product-style3 padding-tb">
-		<div class="container-fluid">
-			<div class="section-header wow fadeInUp" data-wow-delay="0.3s">
-				<h3>Our Products Gallery</h3>
-				<p>Conveniently customize proactives into everaged interfaces without Globally</p>
-			</div>
-			<div class="section-wrapper">
-				<div class="row justify-content-center no-gutters">
-					<div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-						<div class="product-item">
-							<div class="product-inner">
-								<div class="product-thumb">
-									<img src="~/img/pineapple.jpg" alt="product">
-								</div>
-								<div class="product-content">
-									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Pineapple" class="product-name">Pineapple</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
-						<div class="product-item">
-							<div class="product-inner">
-								<div class="product-thumb">
-									<img src="~/img/apple.jpg" alt="product">
-								</div>
-								<div class="product-content">
-									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Apple" class="product-name">Apple</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
-						<div class="product-item">
-							<div class="product-inner">
-								<div class="product-thumb">
-									<img src="~/img/chocolate.jpg" alt="product">
-								</div>
-								<div class="product-content">
-									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Chocolate" class="product-name">Chocolate</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.7s">
-						<div class="product-item">
-							<div class="product-inner">
-								<div class="product-thumb">
-									<img src="~/img/mango-badam.jpg" alt="product">
-								</div>
-								<div class="product-content">
-									<a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Kaju-Badam" class="product-name">Kaju Badam</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- product section ending here -->
-	<!-- testimonial section start here -->
-	<section class="testimonial-section home-2 padding-tb">
-		<div class="container">
-			<div class="section-wrapper">
-				<div class="row justify-content-center align-items-center">
-					<div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.3s">
-						<div class="testi-slider-2">
-							<div class="section-header text-left">
-								<h3>Our Happy Customers</h3>
-							</div>
-							<div class="swiper-wrapper">
-								<div class="swiper-slide">
-									<div class="testi-item style-2">
-										<div class="testi-inner">
-											<div class="testi-head">
-												<div class="testi-thumb">
-													<img src="~/images/testimonial/01.jpg" alt="testimonial">
+                            </div>
+                            <div class="testi-navigation d-flex flex-wrap">
+                                <div class="testi-nav testi-slider-prev">
+                                    <i class="fa-solid fa-chevron-left"></i>
 
-												</div>
-												<div class="testi-clients">
-													<a href="#"><h5>Satish Marwat</h5></a>
-													<p>Food Expert</p>
-													<div class="rating">
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-													</div>
-												</div>
-											</div>
-											<div class="testi-body">
-												<p>As a food expert we like its natural flavors very much and they are providing a wide range of flavors like guava, chocolate, mango, pineaapple, pomegranate and kaju badam the most.</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="testi-item style-2">
-										<div class="testi-inner">
-											<div class="testi-head">
-												<div class="testi-thumb">
-													<img src="~/images/testimonial/02.jpg" alt="testimonial">
+                                </div>
+                                <div class="testi-nav testi-slider-next">
+                                    <i class="fa-solid fa-chevron-right"></i>
 
-												</div>
-												<div class="testi-clients">
-													<a href="#"><h5>Dipti Pawar</h5></a>
-													<p>Parents</p>
-													<div class="rating">
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-													</div>
-												</div>
-											</div>
-											<div class="testi-body">
-												<p>Its an truely called an "<b>Healthish</b>" product, which in no time is favourite of our child, and is giving them more energy and joy in having an taste of it, its an most likely food of our child.</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="testi-item style-2">
-										<div class="testi-inner">
-											<div class="testi-head">
-												<div class="testi-thumb">
-													<img src="~/images/testimonial/03.jpg" alt="testimonial">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.4s" width="560" height="370">
+                        <!-- <div class="testi-thumb-part d-none d-lg-block"> -->
+                        <!-- <center><div class="testi-thumb"> -->
+                        <div class=" embed-responsive embed-responsive-4by3">
+                            <iframe width="560" src="https://www.youtube.com/embed/JWvek7bFen8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
 
-												</div>
-												<div class="testi-clients">
-													<a href="#"><h5>Savita Mane</h5></a>
-													<p>Parents</p>
-													<div class="rating">
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-													</div>
-												</div>
-											</div>
-											<div class="testi-body">
-												<p>Our childs favourite flavor is Pomegranate and guava, which is most likely by him, every we fell very happy to server to our child, which makes every family an happy, truely nice product.</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="testi-item style-2">
-										<div class="testi-inner">
-											<div class="testi-head">
-												<div class="testi-thumb">
-													<img src="~/images/testimonial/03.jpg" alt="testimonial">
-
-												</div>
-												<div class="testi-clients">
-													<a href="#"><h5>Samadhan Bachhav</h5></a>
-													<p>Parents</p>
-													<div class="rating">
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-													</div>
-												</div>
-											</div>
-											<div class="testi-body">
-												<p>Every parents are not tension free, what and how to give their child an healthy food at this age, yes the answer is one <b>Healthis</b> the only brand liked by all the children at this age.</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="testi-item style-2">
-										<div class="testi-inner">
-											<div class="testi-head">
-												<div class="testi-thumb">
-													<img src="~/images/testimonial/03.jpg" alt="testimonial">
-												</div>
-												<div class="testi-clients">
-													<a href="#"><h5>Rohini Gaikwad</h5></a>
-													<p>Parents</p>
-													<div class="rating">
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-													</div>
-												</div>
-											</div>
-											<div class="testi-body">
-												<p>We tried its various flavors, amonst all we like the guava and the chocolate flavors very much, even our baby likes its flavor very much and enjoy the food.</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="testi-item style-2">
-										<div class="testi-inner">
-											<div class="testi-head">
-												<div class="testi-thumb">
-													<img src="~/images/testimonial/02.jpg" alt="testimonial">
-
-												</div>
-												<div class="testi-clients">
-													<a href="#"><h5>Divyashree Kulkarni</h5></a>
-													<p>Child Specialist</p>
-													<div class="rating">
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-														<i class="far fa-star"></i>
-													</div>
-												</div>
-											</div>
-											<div class="testi-body">
-												<p>A Classic foods with health as an main targeted to the children, which helps them to grow in an proper manner, which every child should needs.</p>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-							<div class="testi-navigation d-flex flex-wrap">
-								<div class="testi-nav testi-slider-prev">
-									<i class="fa-solid fa-chevron-left"></i>
-									
-								</div>
-								<div class="testi-nav testi-slider-next">
-									<i class="fa-solid fa-chevron-right"></i>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.4s" width="560" height="370">
-						<!-- <div class="testi-thumb-part d-none d-lg-block"> -->
-						<!-- <center><div class="testi-thumb"> -->
-						<div class=" embed-responsive embed-responsive-4by3">
-							<iframe width="560" src="https://www.youtube.com/embed/JWvek7bFen8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						</div>
-
-						<!-- <img src="assets\img\hiraj1.png" alt="testi-about" style=""> -->
-						<!-- </div>
-						</center> -->
-						<!-- </div> -->
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-	</section>
-	<!-- testimonial section ending here -->
+                        <!-- <img src="assets\img\hiraj1.png" alt="testi-about" style=""> -->
+                        <!-- </div>
+                        </center> -->
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- testimonial section ending here -->
 
 </body>
 
 @if (TempData["Success"] != null)
 {
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-	<script type="text/javascript">
-		toastr.options = {
-			"closeButton": false,
-			"debug": false,
-			"newestOnTop": false,
-			"progressBar": false,
-			"positionClass": "toast-top-right",
-			"preventDuplicates": false,
-			"onclick": null,
-			"showDuration": "300",
-			"hideDuration": "1000",
-			"timeOut": "5000",
-			"extendedTimeOut": "1000",
-			"showEasing": "swing",
-			"hideEasing": "linear",
-			"showMethod": "fadeIn",
-			"hideMethod": "fadeOut"
-		}
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
 
 
-		// Display the Toastr notification
-		toastr.success('@TempData["Success"]');
-	</script>
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
 
 }
+
+
+@if (TempData["sucessLogin"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["sucessLogin"]');
+    </script>
+
+}
+
+
+
