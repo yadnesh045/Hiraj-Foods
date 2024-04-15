@@ -21,6 +21,8 @@
         ICheckoutRepository Checkout { get; }
 
         IPriceRepository Price { get; }
+
+        IUserProfileImgRepository UserImage { get; }
         void Save();
     }
 }

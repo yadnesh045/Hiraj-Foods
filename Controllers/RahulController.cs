@@ -45,17 +45,18 @@ namespace Hiraj_Foods.Controllers
 
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
-            // want to also pass the first name and last name of the user to the layout
-
             if (userId != 0)
             {
 
                 var user = unitOfWorks.Users.GetById(userId);
-
                 var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+                var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
 
-
-                var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), FirstName = user.FirstName, LastName = user.LastName };
+                var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), 
+                    FirstName = user.FirstName, 
+                    LastName = user.LastName, 
+                    profilepic= Profilepic.user_Profile_Img 
+                };
 
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 
