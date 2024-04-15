@@ -50,29 +50,26 @@ namespace Hiraj_Foods.Controllers
 
 
 
-
-        public async Task<IActionResult> dashboard()
+        public IActionResult dashboard()
         {
             var products = unitOfWorks.Product.GetAll().ToList();
 
             var productPrice = products.Select(p => p.ProductPrice).ToList();
             ViewBag.ProductPrices = productPrice;
 
-
             var flavors = products.Select(p => p.ProductFlavour).ToList();
             ViewBag.Flavors = flavors;
 
             SetAdminData();
 
-
             var feedback = unitOfWorks.Feedback.GetAll().ToList();
-
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
 
             var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
 
             return View(model);
         }
+
 
 
         [HttpGet]
