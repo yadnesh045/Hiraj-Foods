@@ -116,9 +116,6 @@ namespace Hiraj_Foods.Controllers
             var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), FirstName = user.FirstName, LastName = user.LastName };
 
             _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
-
-
-            
         }
 
 

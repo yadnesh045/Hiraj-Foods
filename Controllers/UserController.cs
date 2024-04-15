@@ -65,10 +65,8 @@ namespace Hiraj_Foods.Controllers
         {
             var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
 
-
             if (existingUser != null && existingUser.Password == log.Login.Password)
             {
-
                 return RedirectToAction("Home", "Yadnesh");
             }
             else
