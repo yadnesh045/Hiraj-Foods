@@ -4,6 +4,16 @@
     var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
     var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
     var productNamesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductNames);
+    var energyJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.EnergyValues);
+
+
+    var sentimentCountsJson = Newtonsoft.Json.JsonConvert.SerializeObject(new
+    {
+        positive = ViewBag.PositiveFeedbackCount,
+        negative = ViewBag.NegativeFeedbackCount,
+        neutral = ViewBag.NeutralFeedbackCount
+    });
+
 
     var products = Model.Item1;
     var feedback = Model.Item2;
@@ -149,18 +159,46 @@
                         </div>
 
 
+                            <div class="col-md-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-1">Energy Values per Product</h4>
+                                        <div class="chart-container" style="height:400px;">
+                                            <canvas id="energyChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 col-lg-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-1">Feedback Sentiment Analysis</h4>
+                                        <canvas id="sentimentChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
-
+                        </div>
                     </div>
-                </div>
 
 
 
 
 
 
+
+
+
+
+
+
+
+                    <!-- Footer -->
+               
 
                 <div class="content-backdrop fade"></div>
             </div>
@@ -208,6 +246,9 @@
         var productPrices = @Html.Raw(productPricesJson);
         var flavors = @Html.Raw(flavorsJson);
         var productNames = @Html.Raw(productNamesJson);
+        var energyValues = @Html.Raw(energyJson);
+
+        var sentimentCounts = @Html.Raw(sentimentCountsJson);
 
     </script>
 

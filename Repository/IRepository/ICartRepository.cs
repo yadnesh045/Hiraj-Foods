@@ -7,6 +7,7 @@ namespace Hiraj_Foods.Repository.IRepository
         Cart GetById(int id);
         IEnumerable<Cart> GetByUserId(int userId);
         Cart GetByUserIdAndProductId(int userId, int productId);
+        Cart GetByUserIdAndProductName(int id, string productName);
         void Update(Cart obj);
     }
 }

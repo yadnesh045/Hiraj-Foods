@@ -52,22 +52,66 @@ namespace Hiraj_Foods.Controllers
 
 
         public IActionResult dashboard()
-
         {
 
             var products = unitOfWorks.Product.GetAll().ToList();
             var productPrice = products.Select(p => p.ProductPrice).ToList();
             ViewBag.ProductPrices = productPrice;
+
             var productNames = products.Select(p => p.ProductName).ToList();
             ViewBag.ProductNames = productNames;
+
             var flavors = products.Select(p => p.ProductFlavour).ToList();
             ViewBag.Flavors = flavors;
-            SetAdminData();
-            var feedback = unitOfWorks.Feedback.GetAll().ToList();
+
+            // Extract Energy Values
+            var energyValues = products.Select(p =>
+            {
+                // Assuming the format "Energy - value, Proteins - value, ..."
+                var energyPart = p.ProductNutrition.Split(',').FirstOrDefault(s => s.Trim().StartsWith("Energy"));
+                return energyPart?.Split('-').ElementAtOrDefault(1)?.Trim();
+            }).ToList();
+
+            ViewBag.EnergyValues = energyValues;
+
+
+
+             var feedback = unitOfWorks.Feedback.GetAll().ToList();
+
+
+			// Classify feedback messages
+			int positiveCount = 0, negativeCount = 0, neutralCount = 0;
+			foreach (var feedbackItem in feedback)
+			{
+				var sentiment = ClassifySentiment(feedbackItem.Message);
+				switch (sentiment)
+				{
+					case "Positive":
+						positiveCount++;
+						break;
+					case "Negative":
+						negativeCount++;
+						break;
+					default:
+						neutralCount++;
+						break;
+				}
+			}
+
+
+			ViewBag.PositiveFeedbackCount = positiveCount;
+			ViewBag.NegativeFeedbackCount = negativeCount;
+			ViewBag.NeutralFeedbackCount = neutralCount;
+
+
+
+
+			SetAdminData();
+
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
 
             var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
-                
+
             return View(model);
         }
 
@@ -653,16 +697,63 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult DeleteUser(int id)
         {
-            var user=unitOfWorks.Users.GetById(id); 
+            var user = unitOfWorks.Users.GetById(id);
 
 
-            unitOfWorks.Users.Remove(user); 
+            unitOfWorks.Users.Remove(user);
             unitOfWorks.Save();
 
 
             TempData["Message"] = "User deleted successfully!";
             return RedirectToAction("ViewUser");
         }
+
+
+
+        private string ClassifySentiment(string message)
+        {
+            // Define positive and negative keywords
+            var positiveKeywords = new List<string> { "good", "great", "excellent", "awesome", "delicious", "fresh", "fantastic", "satisfied", "impressed", "happy" };
+            var negativeKeywords = new List<string> { "bad", "terrible", "awful", "poor", "disappointed", "overripe", "rotten", "artificial", "stale", "unimpressed" };
+
+            // Convert message to lowercase for case-insensitive matching
+            message = message.ToLower();
+
+            // Check if message contains any positive or negative keywords
+            if (positiveKeywords.Any(keyword => message.Contains(keyword)))
+            {
+                return "Positive";
+            }
+            else if (negativeKeywords.Any(keyword => message.Contains(keyword)))
+            {
+                return "Negative";
+            }
+            else
+            {
+                return "Neutral";
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
+
+
+
 

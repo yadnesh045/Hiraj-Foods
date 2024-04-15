@@ -70,7 +70,6 @@
 
 
             <!-- / Side Menu Partial View Ends -->
-
             <!-- Layout container -->
             <div class="layout-page">
 
@@ -79,79 +78,66 @@
                 <partial name="_NavbarPartialView" />
 
                 <!-- / Navbar Partial View -->
-
                 <!-- / Navbar -->
-                <!-- Content wrapper -->
-                <h3>Checkouts</h3>
-                    <div class="card">
-                    <div class="table-responsive text-nowrap">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>UserName</th>
-                                        <th>Address</th>
-                                        <th>Payment - Method</th>
-                                        <th>Total</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                    @foreach (var checkout in Model.Item2)
-                                    {
-                                        var user1 = Model.Item1.FirstOrDefault(u => u.Id == checkout.UserId);
+
+                <div class="content-wrapper">
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+                        <!-- Content wrapper -->
+                        <h3>Checkouts</h3>
+                        <div class="card">
+                            <div class="table-responsive">
+
+                                <table class="table table-hover">
+                                    <thead>
                                         <tr>
-                                            <td>@(user != null ? user1.FirstName : "Unknown")</td>
-                                            <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
-                                            <td>@checkout.paymentMethod</td>
-                                            <td>@checkout.Total</td>
+                                            <th>UserName</th>
+                                            <th>Address</th>
+                                            <th>Products and Quantity</th>
+                                            <th>Payment - Method</th>
+                                            <th>Total</th>
+                                            <th>Order Date</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                            <div class="content-backdrop fade"></div>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @foreach (var checkout in Model.Item2)
+                                        {
+                                            var user1 = Model.Item1.FirstOrDefault(u => u.Id == checkout.UserId);
+                                            <tr>
+                                                <td>@(user != null ? user1.FirstName : "Unknown")</td>
+                                                <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
+                                                <td>
+                                                    @checkout.ProductsAndQuantity
+                                                </td>
+                                                <td>@checkout.paymentMethod</td>
+                                                <td>@checkout.Total</td>
+                                              <th>@checkout.Date.ToString("dd-MM-yyyy hh:mm:ss tt")</th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="content-backdrop fade"></div>
+                            </div>
                         </div>
+
                     </div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
-                <!-- Content wrapper -->
-            </div>
-            <!-- / Layout page -->
-        </div>
 
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+
+            </div>
+            <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
 
