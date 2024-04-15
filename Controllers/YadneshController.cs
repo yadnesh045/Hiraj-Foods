@@ -112,6 +112,14 @@ namespace Hiraj_Foods.Controllers
             };
 
             unitOfWorks.Checkout.Add(Chec);
+
+
+            var cartdata = unitOfWorks.Cart.GetByUserId(user.Id);
+
+            foreach (var item in cartdata)
+            {
+                unitOfWorks.Cart.Remove(item);
+            }
             unitOfWorks.Save();
 
             TempData["Success"] = "Order Placed Successfully";
@@ -154,22 +162,13 @@ namespace Hiraj_Foods.Controllers
 
             var userid = HttpContext.Session.GetInt32("UserId");
             var user = unitOfWorks.Users.GetById(userid);
+            
+
 
             // Split the products string into an array of product details
             var productDetails = products.Split(", ");
 
             foreach (var detail in productDetails)
-
-            var user = unitOfWorks.Users.GetById(userId);
-
-            var cartdata = unitOfWorks.Cart.GetByUserId(user.Id);
-
-            foreach (var item in cartdata)
-            {
-                unitOfWorks.Cart.Remove(item);
-            }
-            if (userId.HasValue)
-
             {
                 // Split each detail into product name and quantity
                 var parts = detail.Split(":");
@@ -181,6 +180,8 @@ namespace Hiraj_Foods.Controllers
                 cartItem.Quantity = quantity;
                 unitOfWorks.Cart.Update(cartItem);
             }
+
+
             unitOfWorks.Save();
 
 

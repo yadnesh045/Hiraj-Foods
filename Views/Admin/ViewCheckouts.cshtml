@@ -107,7 +107,7 @@
                                         {
                                             var user1 = Model.Item1.FirstOrDefault(u => u.Id == checkout.UserId);
                                             <tr>
-                                                <td>@(user != null ? user1.FirstName : "Unknown")</td>
+                                                <td>@user1.FirstName</td>
                                                 <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
                                                 <td>
                                                     @checkout.ProductsAndQuantity
