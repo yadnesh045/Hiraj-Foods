@@ -52,22 +52,38 @@ namespace Hiraj_Foods.Controllers
 
 
         public IActionResult dashboard()
-
         {
 
             var products = unitOfWorks.Product.GetAll().ToList();
             var productPrice = products.Select(p => p.ProductPrice).ToList();
             ViewBag.ProductPrices = productPrice;
+
             var productNames = products.Select(p => p.ProductName).ToList();
             ViewBag.ProductNames = productNames;
+
             var flavors = products.Select(p => p.ProductFlavour).ToList();
             ViewBag.Flavors = flavors;
+
+            // Extract Energy Values
+            var energyValues = products.Select(p =>
+            {
+                // Assuming the format "Energy - value, Proteins - value, ..."
+                var energyPart = p.ProductNutrition.Split(',').FirstOrDefault(s => s.Trim().StartsWith("Energy"));
+                return energyPart?.Split('-').ElementAtOrDefault(1)?.Trim();
+            }).ToList();
+
+            ViewBag.EnergyValues = energyValues;
+
+
+
+
             SetAdminData();
+
             var feedback = unitOfWorks.Feedback.GetAll().ToList();
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
 
             var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
-                
+
             return View(model);
         }
 
@@ -652,10 +668,10 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult DeleteUser(int id)
         {
-            var user=unitOfWorks.Users.GetById(id); 
+            var user = unitOfWorks.Users.GetById(id);
 
 
-            unitOfWorks.Users.Remove(user); 
+            unitOfWorks.Users.Remove(user);
             unitOfWorks.Save();
 
 

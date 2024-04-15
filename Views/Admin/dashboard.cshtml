@@ -4,6 +4,7 @@
     var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
     var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
     var productNamesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductNames);
+    var energyJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.EnergyValues);
 
     var products = Model.Item1;
     var feedback = Model.Item2;
@@ -160,6 +161,17 @@
                             </div>
 
 
+                            <div class="col-md-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-1">Energy Values per Product</h4>
+                                        <div class="chart-container" style="height:400px;">
+                                            <canvas id="energyChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
 
 
@@ -180,22 +192,7 @@
 
 
                     <!-- Footer -->
-                    @*    <footer class="content-footer footer bg-footer-theme">
-                    <div class="container-xxl">
-                    <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
-                    <div class="text-body mb-2 mb-md-0">
-                    ©
-                    <script>
-                    document.write(new Date().getFullYear());
-                    </script>
-                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
-                    </div>
-
-                    </div>
-                    </div>
-                    </footer> *@
-                    <!-- / Footer -->
+               
 
                     <div class="content-backdrop fade"></div>
                 </div>
@@ -243,6 +240,7 @@
         var productPrices = @Html.Raw(productPricesJson);
         var flavors = @Html.Raw(flavorsJson);
         var productNames = @Html.Raw(productNamesJson);
+        var energyValues = @Html.Raw(energyJson);
 
     </script>
 
