@@ -22,15 +22,20 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Profile()
         {
 
+
+
             // get user email from session
             var userEmail = HttpContext.Session.GetString("UserEmail");
             SetLayoutModel();
 
             if (userEmail == null)
             {
+
                 return RedirectToAction("Login", "Signup");
 
             }
+
+            SetLayoutModel();
 
             // get the data of the user by email
             var user = unitOfWorks.Users.GetByEmail(userEmail);
@@ -38,6 +43,20 @@ namespace Hiraj_Foods.Controllers
 
             return View(user);
         }
+
+
+			if (existingUser != null && existingUser.Password == log.Login.Password)
+			{
+				TempData["sucess"] = "Login Successfull !";
+
+				return RedirectToAction("Home", "Yadnesh");
+			}
+			else
+			{
+				TempData["Error"] = "Invalid Crendentails";
+				return View("Signup");
+			}
+		}
 
 
 
@@ -120,12 +139,16 @@ namespace Hiraj_Foods.Controllers
 
         public void SetLayoutModel()
         {
+       
+
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var user=unitOfWorks.Users.GetById(userId); 
 
             // want to also pass the first name and last name of the user to the layout
             var user = unitOfWorks.Users.GetById(userId);
 
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() ,FirstName=user.FirstName, LastName=user.LastName };
 
 
             var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), FirstName = user.FirstName, LastName = user.LastName };
