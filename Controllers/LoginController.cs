@@ -79,7 +79,7 @@ namespace Hiraj_Foods.Controllers
 
                 else
                 {
-                    TempData["Error"] = "Invalid Credentials";
+                    TempData["Error"] = "Invalid Crendentails";
                     return View();
                 }
 
@@ -140,7 +140,7 @@ namespace Hiraj_Foods.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Invalid email or password.");
+                TempData["ErrorLogin"] = "Invalid Credentials";
                 return View("Signup");
             }
         }

@@ -40,9 +40,6 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-      
-
-
 
         [HttpGet]
         public IActionResult Cart()
