@@ -22,7 +22,12 @@ namespace Hiraj_Foods.Repository
             return _db.Users.Find(id);
         }
 
-        public void Update(User obj)
+		public User GetByPhone(string phone)
+		{
+			return _db.Users.FirstOrDefault(u => u.Phone == phone);
+		}
+
+		public void Update(User obj)
 		{
 			_db.Users.Update(obj);
 		}

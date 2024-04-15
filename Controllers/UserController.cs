@@ -21,14 +21,19 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult Profile()
         {
+
+
             // get user email from session
             var userEmail = HttpContext.Session.GetString("UserEmail");
 
             if (userEmail == null)
             {
+
                 return RedirectToAction("Login", "Signup");
 
             }
+
+            SetLayoutModel();
 
             // get the data of the user by email
             var user = unitOfWorks.Users.GetByEmail(userEmail);
@@ -46,9 +51,9 @@ namespace Hiraj_Foods.Controllers
 		[HttpPost]
         public IActionResult UserReg(User_SignIn_Login usr)
         {
-               
             if (usr.User!= null)
             {
+
                 unitOfWorks.Users.Add(usr.User);
                 unitOfWorks.Save();
 
@@ -66,7 +71,8 @@ namespace Hiraj_Foods.Controllers
 
 			if (existingUser != null && existingUser.Password == log.Login.Password)
 			{
-			
+				TempData["sucess"] = "Login Successfull !";
+
 				return RedirectToAction("Home", "Yadnesh");
 			}
 			else
@@ -154,11 +160,14 @@ namespace Hiraj_Foods.Controllers
 
 
 
-        private void SetLayoutModel()
+        public void SetLayoutModel()
         {
+       
+
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var user=unitOfWorks.Users.GetById(userId); 
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
+            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() ,FirstName=user.FirstName, LastName=user.LastName };
             _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
         }
 

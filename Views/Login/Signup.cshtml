@@ -2,76 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@if (TempData["UnSuccess"] != null)
-{
-	<h1>@TempData["UnSuccess"]</h1>
-	@* <script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-	<script type="text/javascript">
-		// Set Toastr options including custom background color
-		toastr.options = {
-			"closeButton": false,
-			"debug": false,
-			"newestOnTop": false,
-			"progressBar": false,
-			"positionClass": "toast-top-right",
-			"preventDuplicates": false,
-			"onclick": null,
-			"showDuration": "300",
-			"hideDuration": "1000",
-			"timeOut": "5000",
-			"extendedTimeOut": "1000",
-			"showEasing": "swing",
-			"hideEasing": "linear",
-			"showMethod": "fadeIn",
-			"hideMethod": "fadeOut"
-		}
-
-		// Display the Toastr notification
-		toastr.Unsuccess('@TempData["UnSuccess"]');
-	</script> *@
-}
-
-@if (TempData["ErrorMessage"] != null)
-{
-	<h1>@TempData["ErrorMessage"]</h1>
-
-	@* <script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-	<script type="text/javascript">
-		// Set Toastr options including custom background color
-		toastr.options = {
-			"closeButton": false,
-			"debug": false,
-			"newestOnTop": false,
-			"progressBar": false,
-			"positionClass": "toast-top-right",
-			"preventDuplicates": false,
-			"onclick": null,
-			"showDuration": "300",
-			"hideDuration": "1000",
-			"timeOut": "5000",
-			"extendedTimeOut": "1000",
-			"showEasing": "swing",
-			"hideEasing": "linear",
-			"showMethod": "fadeIn",
-			"hideMethod": "fadeOut"
-		}
-
-		// Display the Toastr notification
-		toastr.ErrorMessage('@TempData["ErrorMessage"]');
-	</script> *@
-
-}
-
-
-
-
-
 @{
 	Layout = null;
 }
@@ -125,6 +55,10 @@
 						</a>
 					</div>
 				</form>
+
+
+
+
 				<form method="post" asp-action="UserReg" asp-controller="Login" class="sign-up-form">
 					<h2 class="title">Sign up</h2>
 					<div class="input-field">
@@ -142,6 +76,7 @@
 						<i class="fas fa-envelope"></i>
 						<input type="text" asp-for="User.Email" placeholder="Email" />
 						<span asp-validation-for="User.Email" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
+						<span id="email-error" style="color: red;"></span>
 					</div>
 
 
@@ -198,7 +133,7 @@
 						shared experiences. Let's continue this journey together!
 					</p>
 					<button class="btn transparent" id="sign-in-btn">
-					Login
+						Login
 					</button>
 				</div>
 				<img src="~/img/login.png" class="image" alt="" />
@@ -251,6 +186,68 @@
 
 		// Display the Toastr notification
 		toastr.success('@TempData["Error"]');
+	</script>
+
+	<style>
+		/* Custom style for Toastr notification */
+		.toastr-custom {
+			background-color: red !important; /* Change to your desired background color */
+			color: #000000 !important;
+			font-family: Cambria; /* Change to your desired text color */
+		}
+	</style>
+}
+
+
+@if (TempData["repeatemail"] != null)
+{
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+	<script type="text/javascript">
+		// Set Toastr options including custom background color
+		toastr.options = {
+			"toastClass": "toastr-custom", // Custom class for styling
+			"closeButton": true,
+			"progressBar": true,
+			"positionClass": "toast-top-right",
+			"progressBarColor": "white"
+		};
+
+		// Display the Toastr notification
+		toastr.error('@TempData["repeatemail"]');
+	</script>
+
+	<style>
+		/* Custom style for Toastr notification */
+		.toastr-custom {
+			background-color: red !important; /* Change to your desired background color */
+			color: #000000 !important;
+			font-family: Cambria; /* Change to your desired text color */
+		}
+	</style>
+}
+
+
+@if (TempData["repeatephone"] != null)
+{
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+	<script type="text/javascript">
+		// Set Toastr options including custom background color
+		toastr.options = {
+			"toastClass": "toastr-custom", // Custom class for styling
+			"closeButton": true,
+			"progressBar": true,
+			"positionClass": "toast-top-right",
+			"progressBarColor": "white"
+		};
+
+		// Display the Toastr notification
+		toastr.error('@TempData["repeatephone"]');
 	</script>
 
 	<style>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Hiraj_Foods.Models;
 using Newtonsoft.Json;
+using Hiraj_Foods.Migrations;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -105,19 +106,49 @@ namespace Hiraj_Foods.Controllers
 		[HttpPost]
 		public IActionResult UserReg(User_SignIn_Login usr)
 		{
-
-
 			if (usr != null)
 			{
-				unitOfWorks.Users.Add(usr.User);
-				unitOfWorks.Save();
+				// Check if the Email is already exists
+				var existingEmailUser = unitOfWorks.Users.GetByEmail(usr.User.Email);
+				if (existingEmailUser != null)
+				{
+					TempData["repeatemail"] = "Email is Already Exists";
+					//return RedirectToAction("Signup", "Login");
+				}
 
-				return RedirectToAction("Home", "Yadnesh");
+				// Check if the phone number already exists
+				var existingPhoneUser = unitOfWorks.Users.GetByPhone(usr.User.Phone);
+				if (existingPhoneUser != null)
+				{
+					TempData["repeatephone"] = "Phone no. is Already Exists";
+					return RedirectToAction("Signup", "Login");
+				}
+
+				//if (!ModelState.IsValid)
+				//{
+				//	return RedirectToAction("Signup", "Login");
+				//}
+				else
+				{
+
+					unitOfWorks.Users.Add(usr.User);
+					unitOfWorks.Save();
+
+					var existinguser = unitOfWorks.Users.GetById(usr.User.Id);
+
+					if (existinguser != null)
+					{
+						HttpContext.Session.SetInt32("UserId", existinguser.Id);
+						HttpContext.Session.SetString("UserEmail", existinguser.Email);
+
+						return RedirectToAction("Home", "Yadnesh");
+					}
+				}
 			}
 
-
-			return View();
+			return RedirectToAction("Signup", "Login");
 		}
+
 
 
 
@@ -133,6 +164,8 @@ namespace Hiraj_Foods.Controllers
 				//set session for user -- store user id and email
 				HttpContext.Session.SetInt32("UserId", existingUser.Id);
 				HttpContext.Session.SetString("UserEmail", existingUser.Email);
+
+				TempData["sucess"] = "Login Successfull !";
 
 				return RedirectToAction("Home", "Yadnesh");
 			}

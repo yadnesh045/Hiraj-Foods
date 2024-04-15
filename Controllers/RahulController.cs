@@ -38,12 +38,20 @@ namespace Hiraj_Foods.Controllers
 
             return View();
         }
-        private void SetLayoutModel()
+        public void SetLayoutModel()
         {
+
+
+
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
-            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+            if (userId != 0)
+            {
+                var user = unitOfWorks.Users.GetById(userId);
+                var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+                var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), FirstName = user.FirstName, LastName = user.LastName };
+                _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+            }
         }
+
     }
 }

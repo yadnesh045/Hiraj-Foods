@@ -4,6 +4,7 @@ namespace Hiraj_Foods.Models
 {
     public class Login
     {
+
 		[Required]
 		public string Email { get; set; }
 		[Required]
