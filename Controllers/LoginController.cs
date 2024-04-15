@@ -112,7 +112,7 @@ namespace Hiraj_Foods.Controllers
 				unitOfWorks.Users.Add(usr.User);
 				unitOfWorks.Save();
 
-				return RedirectToAction("Home", "Yadnesh");
+				return View("Signup");
 			}
 
 
@@ -133,6 +133,8 @@ namespace Hiraj_Foods.Controllers
 				//set session for user -- store user id and email
 				HttpContext.Session.SetInt32("UserId", existingUser.Id);
 				HttpContext.Session.SetString("UserEmail", existingUser.Email);
+
+				TempData["sucess"] = "Login Successfull !";
 
 				return RedirectToAction("Home", "Yadnesh");
 			}

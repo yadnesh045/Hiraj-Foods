@@ -1,12 +1,15 @@
 ﻿@using Hiraj_Foods.Models.View_Model
 
 @{
+
     var userEmail = Context.Session.GetString("UserEmail");
     var userId = Context.Session.GetInt32("UserId");
 }
 
 @{
     var layoutModel = Context.Items["LayoutModel"] as LayoutModel;
+    var firstname = layoutModel?.FirstName;
+    var lastName = layoutModel?.LastName;
     var cartItemCount = layoutModel?.CartItemCount;
 }
 
@@ -25,7 +28,7 @@
     <link rel="icon" href="~/favicon.ico">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
@@ -180,7 +183,7 @@
                                         <a asp-area="" asp-controller="Rahul" asp-action="Feedback">FeedBack</a>
 
                                     </li>
-                                  
+
                                 </ul>
                                 <div class="logo px-4">
                                     <a asp-area="" asp-controller="Yadnesh" asp-action="Home"><img src="~/img/hiraj food.png" alt="logo"></a>
@@ -201,10 +204,10 @@
 
                                     @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
                                     {
-                                       
 
 
-                                                <style>
+
+                                        <style>
 
                                             * {
                                                 margin: 0;
@@ -213,7 +216,7 @@
                                                 font-family: 'Figtree', sans-serif;
                                             }
 
-       
+
                                             nav {
                                                 position: fixed;
                                                 top: 0;
@@ -356,20 +359,21 @@
                                                                 font-size: 1.2em;
                                                             }
 
-                                                            .main{
-                                                                margin-top:15px;
-                                                                margin-right:20px;
-                                                            }
-                                                            .h5{
-                                                                color:black
-                                                            }
-                                                </style>
+                                            .main {
+                                                margin-top: 15px;
+                                                margin-right: 20px;
+                                            }
 
-                                                <div class="main">
+                                            .h5 {
+                                                color: black
+                                            }
+                                        </style>
+
+                                        <div class="main">
                                         <li class="dropdown">
                                             <div class="profile" onclick="toggleDropdown()">
                                                 <div class="user">
-                                                    <h5 style="color:black">Katherine Cooper</h5>
+                                                    <h5 style="color:black">@firstname @lastName</h5>
                                                 </div>
                                                 <div class="img-box">
                                                     <img src="https://i.postimg.cc/BvNYhMHS/user-img.jpg" alt="some user image">
@@ -382,47 +386,38 @@
                                                 <li><a asp-area="" asp-controller="Login" asp-action="UserLogout">Logout</a></li>
                                             </ul>
                                         </li>
+
                                 </div>
 
 
-                                        <script>
-                                            function toggleDropdown() {
-                                                var dropdownMenu = document.getElementById("dropdownMenu");
-                                                if (dropdownMenu.style.display === "block") {
-                                                    dropdownMenu.style.display = "none";
-                                                } else {
-                                                    dropdownMenu.style.display = "block";
-                                                }
-                                            }
-                                        </script>
-
-
-
-
-
-
-
-
-
-
+                                <script>
+                                    function toggleDropdown() {
+                                        var dropdownMenu = document.getElementById("dropdownMenu");
+                                        if (dropdownMenu.style.display === "block") {
+                                            dropdownMenu.style.display = "none";
+                                        } else {
+                                            dropdownMenu.style.display = "block";
+                                        }
+                                    }
+                                </script>
                                     }
                                     else
                                     {
-                                        <li>
-                                            <a asp-area="" asp-controller="Login" asp-action="Signup">Login and Signup</a>
-                                        </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Login" asp-action="Signup">Login and Signup</a>
+                                </li>
                                     }
 
 
 
 
 
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </header>
     <!-- Include toastr CSS -->
