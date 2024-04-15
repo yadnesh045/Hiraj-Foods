@@ -12,6 +12,7 @@
     var firstname = layoutModel?.FirstName;
     var lastName = layoutModel?.LastName;
     var cartItemCount = layoutModel?.CartItemCount;
+    string profileimg = layoutModel?.profilepic;
 }
 
 
@@ -92,18 +93,28 @@
 
                         </li>
 
+                        @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
 
-                        <li>
-                            <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
-                        </li>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="User" asp-action="Cart">Cart <span id="cartItemCount">( @cartItemCount) </span></a>
 
-                        <li>       <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a></li>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
 
+                            </li>
+                        }
 
-                        <li>
-                            <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
-                        </li>
-
+                        else
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="Login" asp-action="Signup">Login and Signup</a>
+                            </li>
+                        }
 
                     </ul>
                 </div>
@@ -126,7 +137,8 @@
                                         info@hirajfoods.com
                                     </span>
                                 </li>
-                                </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                                 <li>
                                     <i class="fa-solid fa-phone"></i>
                                     <span>+91 70306 00089</span>
@@ -191,13 +203,11 @@
 
 
                                 </div>
-                                <li>
-                                    <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
-
-                                </li>
                                 <ul class="agri-ul">
+                                    <li>
+                                        <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
 
-
+                                    </li>
 
                                     <li>
                                         <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
@@ -205,9 +215,6 @@
 
                                     @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
                                     {
-
-
-
                                         <style>
 
                                             * {
@@ -360,35 +367,31 @@
                                                                 font-size: 1.2em;
                                                             }
 
-                                            .main {
-                                                margin-top: 15px;
-                                                margin-right: 20px;
-                                            }
 
                                             .h5 {
                                                 color: black
                                             }
                                         </style>
-
-                                        <div class="main">
-                                        <li class="dropdown">
+                        
+                                        <li>
                                             <div class="profile" onclick="toggleDropdown()">
                                                 <div class="user">
-                                                    <h5 style="color:black">@firstname</h5>
+                                                    <a style="color:black">@firstname</a>
                                                 </div>
                                                 <div class="img-box">
-                                                    <img src="https://i.postimg.cc/BvNYhMHS/user-img.jpg" alt="some user image">
+                                                    <img src="@profileimg" alt="some user image">
                                                 </div>
                                             </div>
                                             <ul id="dropdownMenu" class="dropdown-menu">
                                                 <li> <a asp-area="" asp-controller="User" asp-action="Profile">Profile</a></li>
-                                                <li><a href="#"><i class="ph-bold ph-gear-six"></i>&nbsp;Settings</a></li>
+
                                                 <li> <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @cartItemCount) </span></a></li>
                                                 <li><a asp-area="" asp-controller="Login" asp-action="UserLogout">Logout</a></li>
                                             </ul>
-                                        </li>
 
-                                </div>
+
+                                        </li>
+                              
 
 
                                 <script>
