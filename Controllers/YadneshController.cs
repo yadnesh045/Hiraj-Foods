@@ -92,7 +92,7 @@ namespace Hiraj_Foods.Controllers
 
             var total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
 
-          
+
 
             var orderTotal = unitOfWorks.Price.GetTotalPriceForUser(user.Id);
 
@@ -125,107 +125,110 @@ namespace Hiraj_Foods.Controllers
             TempData["Success"] = "Order Placed Successfully";
             return RedirectToAction("Home", "Yadnesh");
         }
+    
 
 
-        public void SetLayoutModel()
-        {
-            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
-            if (userId != 0)
+
+            public void SetLayoutModel()
             {
+                int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
-                var user = unitOfWorks.Users.GetById(userId);
-                var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-                var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
-
-                var layoutModel = new LayoutModel
+                if (userId != 0)
                 {
-                    CartItemCount = cartItems.Count(),
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    profilepic = Profilepic.user_Profile_Img
-                };
 
-                _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+                    var user = unitOfWorks.Users.GetById(userId);
+                    var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+                    var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
 
-            }
-        }
+                    var layoutModel = new LayoutModel
+                    {
+                        CartItemCount = cartItems.Count(),
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        profilepic = Profilepic.user_Profile_Img
+                    };
 
+                    _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 
-
-        [HttpPost]
-        public IActionResult SaveTotal(decimal total, string products)
-        {
-            var userId = HttpContext.Session.GetInt32("UserId");
-
-
-
-            var userid = HttpContext.Session.GetInt32("UserId");
-            var user = unitOfWorks.Users.GetById(userid);
-            
-
-
-            // Split the products string into an array of product details
-            var productDetails = products.Split(", ");
-
-            foreach (var detail in productDetails)
-            {
-                // Split each detail into product name and quantity
-                var parts = detail.Split(":");
-                var productName = parts[0];
-                var quantity = int.Parse(parts[1]);
-
-                // Find the product in the user's cart and update the quantity
-                var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
-                cartItem.Quantity = quantity;
-                unitOfWorks.Cart.Update(cartItem);
+                }
             }
 
 
-            unitOfWorks.Save();
 
-
-
-            if (userId.HasValue)
+            [HttpPost]
+            public IActionResult SaveTotal(decimal total, string products)
             {
-                //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
-                //if (existingTotal != null)
-                //{
-                //    existingTotal.Price += total;
-                //}
-                //else
-                //{
-                //    existingTotal = new TotalPrice
-                //    {
-                //        UserId = userId.Value,
-                //        Price = total
-                //    };
-                //    unitOfWorks.Price.Add(existingTotal);
-                //}
-                //unitOfWorks.Save();
-                //return Ok();
+                var userId = HttpContext.Session.GetInt32("UserId");
 
 
 
-                // Always create a new TotalPrice object and add it to the Price table
-                var newTotal = new TotalPrice
+                var userid = HttpContext.Session.GetInt32("UserId");
+                var user = unitOfWorks.Users.GetById(userid);
+
+
+
+                // Split the products string into an array of product details
+                var productDetails = products.Split(", ");
+
+                foreach (var detail in productDetails)
                 {
-                    UserId = userId.Value,
-                    Price = total
-                };
-                unitOfWorks.Price.Add(newTotal);
+                    // Split each detail into product name and quantity
+                    var parts = detail.Split(":");
+                    var productName = parts[0];
+                    var quantity = int.Parse(parts[1]);
+
+                    // Find the product in the user's cart and update the quantity
+                    var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
+                    cartItem.Quantity = quantity;
+                    unitOfWorks.Cart.Update(cartItem);
+                }
+
 
                 unitOfWorks.Save();
 
-                return Ok();
 
+
+                if (userId.HasValue)
+                {
+                    //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+                    //if (existingTotal != null)
+                    //{
+                    //    existingTotal.Price += total;
+                    //}
+                    //else
+                    //{
+                    //    existingTotal = new TotalPrice
+                    //    {
+                    //        UserId = userId.Value,
+                    //        Price = total
+                    //    };
+                    //    unitOfWorks.Price.Add(existingTotal);
+                    //}
+                    //unitOfWorks.Save();
+                    //return Ok();
+
+
+
+                    // Always create a new TotalPrice object and add it to the Price table
+                    var newTotal = new TotalPrice
+                    {
+                        UserId = userId.Value,
+                        Price = total
+                    };
+                    unitOfWorks.Price.Add(newTotal);
+
+                    unitOfWorks.Save();
+
+                    return Ok();
+
+                }
+                else
+                {
+                    return BadRequest("User ID is not available.");
+                }
             }
-            else
-            {
-                return BadRequest("User ID is not available.");
-            }
+
+
         }
-
-
     }
-}

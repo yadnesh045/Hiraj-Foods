@@ -1,4 +1,11 @@
-﻿@model Hiraj_Foods.Models.Product
+﻿
+
+@model Hiraj_Foods.Models.Product
+
+
+@{
+    var userid = Context.Session.GetInt32("UserId");
+}
 
 <link href="~/css/user-css/timeline.css" rel="stylesheet" />
 
@@ -74,11 +81,14 @@
                                     @Model.ProductDescription
                                 </p>
 
-                                <!-- Add to Cart button -->
+
                                 <a asp-action="AddCart" asp-controller="User" asp-route-id=@Model.Id class="btn btn-warning">Add to Cart</a>
 
-                                <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning">Buy Now</a>
-
+                                @if (userid != null)
+                                {
+ 
+                                    <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning">Buy Now</a>
+                                }
                             </div>
                         </div>
 
