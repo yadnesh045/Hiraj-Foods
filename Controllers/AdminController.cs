@@ -31,6 +31,16 @@ namespace Hiraj_Foods.Controllers
         }
 
 
+        public void SetAdminData()
+        {
+            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            ViewData["Admin"] = Admin;
+        }
+
+
+
+
 
         public IActionResult Login()
         {
@@ -41,38 +51,75 @@ namespace Hiraj_Foods.Controllers
 
 
 
-        public async Task<IActionResult> dashboard()
+        public IActionResult dashboard()
         {
-            var products = unitOfWorks.Product.GetAll().ToList();
+            SetAdminData();
 
+
+            var products = unitOfWorks.Product.GetAll().ToList();
             var productPrice = products.Select(p => p.ProductPrice).ToList();
             ViewBag.ProductPrices = productPrice;
 
+            var productNames = products.Select(p => p.ProductName).ToList();
+            ViewBag.ProductNames = productNames;
 
             var flavors = products.Select(p => p.ProductFlavour).ToList();
             ViewBag.Flavors = flavors;
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            // Extract Energy Values
+            var energyValues = products.Select(p =>
+            {
+                // Assuming the format "Energy - value, Proteins - value, ..."
+                var energyPart = p.ProductNutrition.Split(',').FirstOrDefault(s => s.Trim().StartsWith("Energy"));
+                return energyPart?.Split('-').ElementAtOrDefault(1)?.Trim();
+            }).ToList();
+
+            ViewBag.EnergyValues = energyValues;
 
 
-            var feedback = unitOfWorks.Feedback.GetAll().ToList();
+
+             var feedback = unitOfWorks.Feedback.GetAll().ToList();
+
+
+			// Classify feedback messages
+			int positiveCount = 0, negativeCount = 0, neutralCount = 0;
+			foreach (var feedbackItem in feedback)
+			{
+				var sentiment = ClassifySentiment(feedbackItem.Message);
+				switch (sentiment)
+				{
+					case "Positive":
+						positiveCount++;
+						break;
+					case "Negative":
+						negativeCount++;
+						break;
+					default:
+						neutralCount++;
+						break;
+				}
+			}
+
+
+			ViewBag.PositiveFeedbackCount = positiveCount;
+			ViewBag.NegativeFeedbackCount = negativeCount;
+			ViewBag.NeutralFeedbackCount = neutralCount;
+
 
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
 
-            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>, Admin>(products, feedback, enquiry, Admin);
+            var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
 
             return View(model);
         }
 
 
+
         [HttpGet]
         public IActionResult AddProduct()
         {
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
-
-            return View(Admin);
+            SetAdminData();
+            return View();
         }
 
 
@@ -136,10 +183,10 @@ namespace Hiraj_Foods.Controllers
         {
             var products = unitOfWorks.Product.GetAll().ToList();
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<List<Product>, Admin>(products, Admin);
+
+            var model = new Tuple<List<Product>>(products);
 
             return View(model);
         }
@@ -150,10 +197,9 @@ namespace Hiraj_Foods.Controllers
         {
             var product = unitOfWorks.Product.GetById(id);
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<Product, Admin>(product, Admin);
+            var model = new Tuple<Product>(product);
 
             return View(model);
         }
@@ -256,11 +302,10 @@ namespace Hiraj_Foods.Controllers
         {
             var Enquires = unitOfWorks.Enquiry.GetAll().ToList();
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
 
-            var model = new Tuple<List<Enquiry>, Admin>(Enquires, Admin);
+            var model = new Tuple<List<Enquiry>>(Enquires);
 
             return View(model);
         }
@@ -292,10 +337,9 @@ namespace Hiraj_Foods.Controllers
             var Feedback = unitOfWorks.Feedback.GetAll().ToList();
 
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<List<FeedBack>, Admin>(Feedback, Admin);
+            var model = new Tuple<List<FeedBack>>(Feedback);
 
             return View(model);
         }
@@ -321,30 +365,24 @@ namespace Hiraj_Foods.Controllers
             return RedirectToAction("Feedback", "Rahul");
         }
 
-
-
-
         [HttpGet]
         public IActionResult Banner()
         {
             var Banner = unitOfWorks.Banner.GetAll().ToList();
 
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-            var model = new Tuple<List<Banner>, Admin>(Banner, Admin);
+            var model = new Tuple<List<Banner>>(Banner);
             return View(model);
         }
 
         [HttpGet]
         public IActionResult AddBanner()
         {
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
-
-            return View(Admin);
+            return View();
         }
 
         [HttpPost]
@@ -384,9 +422,6 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-
-
-
         [HttpPost]
         public IActionResult Contact(Contact contact)
         {
@@ -406,11 +441,10 @@ namespace Hiraj_Foods.Controllers
         {
             var contacts = unitOfWorks.Contact.GetAll().ToList();
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+            SetAdminData();
 
 
-            var model = new Tuple<List<Contact>, Admin>(contacts, Admin);
+            var model = new Tuple<List<Contact>>(contacts);
             return View(model);
         }
 
@@ -459,15 +493,9 @@ namespace Hiraj_Foods.Controllers
         public IActionResult ChangePassword()
         {
 
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            if (AdminEmail == null)
-            {
-                return RedirectToAction("Login", "Admin");
-            }
+            SetAdminData();
 
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
-
-            return View(Admin);
+            return View();
         }
 
         public async Task<IActionResult> Logout()
@@ -508,17 +536,12 @@ namespace Hiraj_Foods.Controllers
         public IActionResult AccountSetting()
         {
             var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-
-            if (AdminEmail == null)
-            {
-                return RedirectToAction("Login", "Admin");
-            }
-
             var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            SetAdminData();
+
             return View(Admin);
         }
-
-
 
         [HttpPost]
         public IActionResult AccountSetting(UpdateAdmin updateadmin)
@@ -602,11 +625,11 @@ namespace Hiraj_Foods.Controllers
         public IActionResult ViewUser()
         {
             var user = unitOfWorks.Users.GetAll().ToList();
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
+
+            SetAdminData();
 
 
-            var model = new Tuple<List<User>, Admin>(user, Admin);
+            var model = new Tuple<List<User>>(user);
 
             return View(model);
         }
@@ -617,9 +640,12 @@ namespace Hiraj_Foods.Controllers
             var user = unitOfWorks.Users.GetAll().ToList();
 
             var Checkouts = unitOfWorks.Checkout.GetAll().ToList();
-            var AdminEmail = HttpContext.Session.GetString("AdminEmail");
-            var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
-            var model = new Tuple<List<User>, List<Checkout>, Admin>(user, Checkouts, Admin);
+
+
+            SetAdminData();
+
+
+            var model = new Tuple<List<User>, List<Checkout>>(user, Checkouts);
             return View(model);
         }
 
@@ -633,11 +659,10 @@ namespace Hiraj_Foods.Controllers
         {
             var user = unitOfWorks.Users.GetById(id);
 
-            var UserEmail = HttpContext.Session.GetString("UserEmail");
 
-            var User = unitOfWorks.Admin.GetByEmail(UserEmail);
+            SetAdminData();
 
-            var model = new Tuple<User, Admin>(user, User);
+            var model = new Tuple<User>(user);
 
             return View(model);
             
@@ -649,6 +674,8 @@ namespace Hiraj_Foods.Controllers
             if (ModelState.IsValid)
             {
                 var userInDb = unitOfWorks.Users.GetById(usr.Id);
+
+
                 userInDb.FirstName = usr.FirstName;
                 userInDb.LastName = usr.LastName;
                 userInDb.Email = usr.Email;
@@ -658,23 +685,73 @@ namespace Hiraj_Foods.Controllers
                 unitOfWorks.Users.Update(userInDb);
                 unitOfWorks.Save();
 
-
-
-                return View("ViewUser");
             }
-            return View(usr);
+
+            TempData["Message"] = "User Updated successfully!";
+            return RedirectToAction("ViewUser");
 
         }
 
         [HttpGet]
         public IActionResult DeleteUser(int id)
         {
-            var user=unitOfWorks.Users.GetById(id); 
-            unitOfWorks.Users.Remove(user); 
+            var user = unitOfWorks.Users.GetById(id);
+
+
+            unitOfWorks.Users.Remove(user);
             unitOfWorks.Save();
 
-            return View("ViewUser");  
+
+            TempData["Message"] = "User deleted successfully!";
+            return RedirectToAction("ViewUser");
         }
+
+
+
+        private string ClassifySentiment(string message)
+        {
+            // Define positive and negative keywords
+            var positiveKeywords = new List<string> { "good", "great", "excellent", "awesome", "delicious", "fresh", "fantastic", "satisfied", "impressed", "happy" };
+            var negativeKeywords = new List<string> { "bad", "terrible", "awful", "poor", "disappointed", "overripe", "rotten", "artificial", "stale", "unimpressed" };
+
+            // Convert message to lowercase for case-insensitive matching
+            message = message.ToLower();
+
+            // Check if message contains any positive or negative keywords
+            if (positiveKeywords.Any(keyword => message.Contains(keyword)))
+            {
+                return "Positive";
+            }
+            else if (negativeKeywords.Any(keyword => message.Contains(keyword)))
+            {
+                return "Negative";
+            }
+            else
+            {
+                return "Neutral";
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
+
+
+
 

@@ -1,178 +1,216 @@
 ﻿using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository.IRepository;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace Hiraj_Foods.Controllers
 {
-    public class UserController : Controller
-    {
-        private readonly IUnitOfWorks unitOfWorks;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+	public class UserController : Controller
+	{
+		private readonly IUnitOfWorks unitOfWorks;
+		private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
-        {
-            this.unitOfWorks = unitOfWorks;
-            _httpContextAccessor = httpContextAccessor;
-
+        public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment _webHostEnvironment)
+		{
+			this.unitOfWorks = unitOfWorks;
+			_httpContextAccessor = httpContextAccessor;
+            this._webHostEnvironment = _webHostEnvironment;
         }
 
-        public IActionResult Profile()
-        {
+		public IActionResult Profile()
+		{
+			var userEmail = HttpContext.Session.GetString("UserEmail");
+			SetLayoutModel();
 
+			if (userEmail == null)
+			{
+				return RedirectToAction("Login", "Signup");
+			}
 
-            // get user email from session
-            var userEmail = HttpContext.Session.GetString("UserEmail");
+			var user = unitOfWorks.Users.GetByEmail(userEmail);
+			var UserProfile = unitOfWorks.UserImage.GetByUserId(user.Id);
 
-            if (userEmail == null)
-            {
+            var model = new Tuple<User, UserProfileImg>(user, UserProfile);
 
-                return RedirectToAction("Login", "Signup");
-
-            }
-
-            SetLayoutModel();
-
-            // get the data of the user by email
-            var user = unitOfWorks.Users.GetByEmail(userEmail);
-
-
-            return View(user);
-        }
-
-
-        public IActionResult Signup()
-        {
-            return View();
-        }
-
-		[HttpPost]
-        public IActionResult UserReg(User_SignIn_Login usr)
-        {
-            if (usr.User!= null)
-            {
-
-                unitOfWorks.Users.Add(usr.User);
-                unitOfWorks.Save();
-
-					return RedirectToAction("Home", "Yadnesh");
-
-				}
-				return View();
+            return View(model);
 		}
 
-		[HttpPost]
-        public IActionResult UserLogin(User_SignIn_Login log)
-        {
-			var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
 
+		[HttpGet]
+		public IActionResult Cart()
+		{
+			int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+			var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+			SetLayoutModel();
+			return View(cartItems);
+		}
 
-			if (existingUser != null && existingUser.Password == log.Login.Password)
+		[HttpGet]
+		public IActionResult AddCart(int id)
+		{
+			int? userId = HttpContext.Session.GetInt32("UserId");
+			var product = unitOfWorks.Product.GetById(id);
+
+			if (userId is not null)
 			{
-				TempData["sucess"] = "Login Successfull !";
+				var user = unitOfWorks.Users.GetById(userId.Value);
+				var existingCartItem = unitOfWorks.Cart.GetByUserIdAndProductId(user.Id, product.Id);
 
-				return RedirectToAction("Home", "Yadnesh");
+				if (existingCartItem == null)
+				{
+					var cart = new Cart
+					{
+						UserId = user.Id,
+						ProductId = product.Id,
+						ProductName = product.ProductName,
+						ProductImageUrl = product.ProductImageUrl,
+						ProductDescription = product.ProductDescription,
+						ProductWeight = product.ProductWeight,
+						ProductPrice = product.ProductPrice
+					};
+
+					unitOfWorks.Cart.Add(cart);
+					unitOfWorks.Save();
+					TempData["Success"] = "Product added to cart.";
+				}
+				else
+				{
+					TempData["Info"] = "Product is already in your cart.";
+				}
+
+				return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
+			}
+
+			TempData["Error"] = "You need to be logged in to add the product to the cart.";
+			return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
+		}
+
+		[HttpGet]
+		public IActionResult DeleteFromCart(int id)
+		{
+			var cartitem = unitOfWorks.Cart.GetById(id);
+
+			if (cartitem is not null)
+			{
+				unitOfWorks.Cart.Remove(cartitem);
+				unitOfWorks.Save();
+				TempData["Success"] = "Item Removed From Cart";
 			}
 			else
 			{
-				TempData["Error"] = "Invalid Crendentails";
-				return View("Signup");
+				TempData["Error"] = "Item Not Removed";
 			}
+
+			return RedirectToAction("Cart", "User");
+		}
+
+		public void SetLayoutModel()
+		{
+			int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+			var user = unitOfWorks.Users.GetById(userId);
+			var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
+
+
+
+			var layoutModel = new LayoutModel
+			{
+				CartItemCount = cartItems.Count(),
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				profilepic = Profilepic.user_Profile_Img
+				
+			};
+
+
+
+			_httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 		}
 
 
-        [HttpGet]
-        public IActionResult Cart()
+
+
+        [HttpPost]
+        public IActionResult EditUser(User usr)
         {
-            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-	
-
-            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-
-            SetLayoutModel();
-
-            return View(cartItems);
-        }
-
-        [HttpGet]
-        public IActionResult AddCart(int id)
-        {
-            int? userId = HttpContext.Session.GetInt32("UserId");
-            var product = unitOfWorks.Product.GetById(id);
-
-            if (userId is not null)
+            if (ModelState.IsValid)
             {
-                var user = unitOfWorks.Users.GetById(userId);
-
-                // Check if the product is already present in the user's cart
-                var existingCartItem = unitOfWorks.Cart.GetByUserIdAndProductId(user.Id, product.Id);
-
-                if (existingCartItem == null)
-                {
-                    var cart = new Cart
-                    {
-                        UserId = user.Id,
-                        ProductId = product.Id,
-                        ProductName = product.ProductName,
-                        ProductImageUrl = product.ProductImageUrl,
-                        ProductDescription = product.ProductDescription,
-                        ProductWeight = product.ProductWeight,
-                        ProductPrice = product.ProductPrice
-                    };
-
-                    unitOfWorks.Cart.Add(cart);
-                    unitOfWorks.Save();
-                    TempData["Success"] = "Product added to cart.";
-                }
-                else
-                {
-                    TempData["Info"] = "Product is already in your cart.";
-                }
-
-                return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
-            }
-            TempData["Error"] = "You need to be logged in to add the product to the cart.";
-            return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
-        }
+                var userInDb = unitOfWorks.Users.GetById(usr.Id);
 
 
-        [HttpGet]
-        public IActionResult DeleteFromCart(int id)
-        {
-            var cartitem = unitOfWorks.Cart.GetById(id);
+                userInDb.FirstName = usr.FirstName;
+                userInDb.LastName = usr.LastName;
+                userInDb.Email = usr.Email;
+                userInDb.Password = usr.Password;
+                userInDb.Phone = usr.Phone;
 
-            if(cartitem is not null)
-            {
-                unitOfWorks.Cart.Remove(cartitem);
+                unitOfWorks.Users.Update(userInDb);
                 unitOfWorks.Save();
 
-
-                TempData["Success"] = "Item Removed From Cart";
-                return RedirectToAction("Cart", "User");
             }
 
-            TempData["Error"] = "Item Not Removed";
-            return RedirectToAction("Cart", "User");
+            TempData["Message"] = "Profile Updated successfully!";
+            return RedirectToAction("Profile");
+
         }
 
 
-
-
-        public void SetLayoutModel()
+        [HttpPost]
+        public IActionResult EditUserPhoto(UserProfileImg usr, IFormFile File)
         {
-       
-
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-            var user=unitOfWorks.Users.GetById(userId); 
-            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() ,FirstName=user.FirstName, LastName=user.LastName };
-            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
-        }
+            var user = unitOfWorks.Users.GetById(userId);
 
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (File != null)
+                {
+                    // Delete old image if exists
+                    var oldProfileImg = unitOfWorks.UserImage.GetByUserId(userId);
+                    if (oldProfileImg != null)
+                    {
+                        string oldImagePath = Path.Combine(wwwRootPath, oldProfileImg.user_Profile_Img.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+
+
+                        unitOfWorks.UserImage.Delete(oldProfileImg.Id);
+                    }
+
+                    // Save new image
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(File.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"UserProfilePic");
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        File.CopyTo(fileStream);
+                    }
+
+                    var newProfileImg = new UserProfileImg
+                    {
+                        UserId = user.Id,
+                        user_Profile_Img = @"\UserProfilePic\" + filename
+                    };
+                    unitOfWorks.UserImage.Update(newProfileImg);
+                    unitOfWorks.Save();
+
+                    TempData["Message"] = "Profile updated successfully!";
+                    return RedirectToAction("Profile");
+                }
+            }
+
+            TempData["Error"] = "Profile not updated!";
+            return RedirectToAction("Profile");
+        }
 
     }
 
-}
 
+}

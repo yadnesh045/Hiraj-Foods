@@ -1,9 +1,6 @@
 ﻿@model List<Hiraj_Foods.Models.Cart>
 
 
-
-
-
 <!--search area-->
 <div class="search-input">
     <div class="search-close">
@@ -42,7 +39,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">@item.ProductName</h5>
                                 <p class="card-text">@item.ProductDescription</p>
-                                <p class="card-text">Price: $@item.ProductPrice</p>
+                                <p class="card-text">Price: Rs.@item.ProductPrice</p>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="quantity-label">Quantity</span>
@@ -117,65 +114,5 @@ else
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Add event listener to the checkout button
-        $("#checkoutButton").click(function () {
-            // Get total price
-            var totalPrice = parseFloat($("#totalAmount").text().replace('$', ''));
 
-            // Get product names and quantities
-            var productDetails = [];
-            $(".card-title").each(function () {
-                var productName = $(this).text();
-                var quantity = $(this).siblings('.input-group').find('.quantity-input').val();
-                productDetails.push({ productName: productName, quantity: quantity });
-            });
-
-            // Use AJAX to send the total price and product details to the server
-            $.ajax({
-                type: "POST", // Use POST method
-                url: "/Yadnesh/SaveTotal", // URL of your controller method
-                data: { total: totalPrice, products: productDetails }, // Data to send
-                success: function (response) {
-                    // Handle success response
-                    console.log(response); // For example, log the response to console
-                    // Redirect to Checkout page
-                    window.location.href = "/Yadnesh/Checkout";
-                },
-                error: function (xhr, status, error) {
-                    // Handle error
-                    console.error(error); // Log the error to console
-                }
-            });
-        });
-
-        // Add event listeners for quantity inputs
-        $('.quantity-input').on('input', function () {
-            updateTotalPrice();
-        }).on('change', function () {
-            validateQuantity($(this));
-        });
-
-        // Function to update total price
-        function updateTotalPrice() {
-            var totalPrice = 0;
-            $('.quantity-input').each(function () {
-                var price = parseFloat($(this).data('price'));
-                var quantity = parseInt($(this).val());
-                totalPrice += price * quantity;
-            });
-            $('#totalAmount').text('$' + totalPrice.toFixed(2));
-        }
-
-        // Function to validate quantity
-        function validateQuantity(input) {
-            var quantity = parseInt(input.val());
-            if (quantity < 1) {
-                input.val(1); // Reset quantity to 1 if less than 1
-            }
-            updateTotalPrice(); // Update total price after validating quantity
-        }
-    });
-</script>
-
+<script src="~/js/user-js/addtocart.js"></script>

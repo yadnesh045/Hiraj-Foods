@@ -1,63 +1,263 @@
-﻿@model Hiraj_Foods.Models.User
+﻿@model Tuple<Hiraj_Foods.Models.User , Hiraj_Foods.Models.UserProfileImg>
+
+
+
 
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+      data-assets-path="../assets/" data-template="vertical-menu-template-free">
+
 <head>
-    <title>Feedback</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <!-- google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="assets\img\hiraj2.png">
+    <title>User-Profile</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" src="~/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet" />
 
 
-    <link href="~/css/all.min.css" rel="stylesheet" />
-    <link href="~/css/animate.css" rel="stylesheet" />
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/icofont.min.css" rel="stylesheet" />
-    <link href="~/css/lightcase.css" rel="stylesheet" />
-    <link href="~/css/style.css" rel="stylesheet" />
-    <link href="~/css/swiper.min.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/materialdesignicons.css" rel="stylesheet" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link href="/css/Admin-Css/node-waves.css" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
+    <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+    <!-- Vendors CSS -->
+    <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="/js/Admin-js/helpers.js"></script>
+    <script src="/js/Admin-js/config.js"></script>
+
+
+    <!--For Sweet Alert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
 
 </head>
 
 <body>
 
-    <!-- preloader start here -->
-    <div class="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-icon">
-                <span></span>
-                <span></span>
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="card mb-4">
+                <h4 class="card-header">Profile Details</h4>
+                <div class="card-body">
+                    <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-4">
+                        <img  src="@Model.Item2.user_Profile_Img" 
+                                
+                             style="max-width:30%"
+                             alt="user-avatar"
+                             class="d-block w-100 max-width-sm-120 h-auto rounded mb-3 mb-sm-0"
+                             id="uploadedAvatar" />
+
+                        <form method="post" asp-area="" asp-controller="User" asp-action="EditUserPhoto" enctype="multipart/form-data">
+                            <div class="button-wrapper">
+                                <label for="upload" class="btn btn-warning me-2 mb-3" tabindex="0">
+                                    <span class="d-none d-sm-block">Upload new photo</span>
+                                    <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                                    <input for="formFile" type="file" name="file" id="upload" hidden class="account-file-input" />
+                                </label>
+                                <button type="submit" class="btn btn-outline-danger account-image-reset mb-3">
+                                    <i class="mdi mdi-reload d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Upload</span>
+                                </button>
+                                <div class="text-muted small">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <form method="post" asp-area="" asp-controller="User" asp-action="EditUser">
+                        <div class="card-body pt-2 mt-1">
+                            <div class="row mt-2 gy-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating form-floating-outline">
+                                        <input class="form-control" type="text" id="firstName" name="FirstName" value="@Model.Item1.FirstName" autofocus />
+                                        <label for="firstName">First Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating form-floating-outline">
+                                        <input class="form-control" type="text" name="LastName" id="lastName" value="@Model.Item1.LastName" />
+                                        <label for="lastName">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating form-floating-outline">
+                                        <input class="form-control" type="email" id="email" name="Email" value="@Model.Item1.Email" placeholder="john.doe@example.com" />
+                                        <label for="email">E-mail</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-merge">
+                                        <div class="form-floating form-floating-outline">
+                                            <input type="text" id="phoneNumber" name="Phone" class="form-control" value="@Model.Item1.Phone" />
+                                            <label for="phoneNumber">Phone Number</label>
+                                        </div>
+                                        <span class="input-group-text">IN (+91)</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" hidden>
+                                    <div class="input-group input-group-merge">
+                                        <div class="form-floating form-floating-outline">
+                                            <input type="text" id="userId" name="Id" class="form-control" value="@Model.Item1.Id" />
+                                            <label for="userId">ID</label>
+                                        </div>
+                                        <span class="input-group-text">IN (+91)</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="password" class="form-control" id="password" name="Password" value="@Model.Item1.Password" />
+                                        <label for="password">Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-warning me-2">Save changes</button>
+                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <!-- preloader ending here -->
-    <!--search area-->
-    <div class="search-input">
-        <div class="search-close">
-            <i class="fas fa-times"></i>
-        </div>
-        <form>
-            <input type="text" name="text" placeholder="Search Heare">
-            <button class="search-btn" type="submit">
-                <i class="fas fa-search"></i>
-            </button>
-        </form>
-    </div>
-            <div>
-                <center><h4>User Profile</h4></center><br>
 
-      
-
+                <!-- /Account -->
 
             </div>
-
-
         </div>
     </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+    <!--Content Over-->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="/js/Admin-js/jquery.js"></script>
+    <script src="/js/Admin-js/popper.js"></script>
+    <script src="/js/Admin-js/bootstrap.js"></script>
+    <script src="/js/Admin-js/node-waves.js"></script>
+    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+    <script src="/js/Admin-js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <script src="/js/Admin-js/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="/js/Admin-js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="/js/Admin-js/dashboards-analytics.js"></script>
+
+
+    <!--Charts js-->
+    <script src="~/js/chart-js/chart.js"></script>
+
+    <!--script for charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
+
 </html>
+
+
+
+@if (TempData["Message"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Message"]');
+    </script>
+
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
+}
+
+

@@ -10,6 +10,13 @@ namespace Hiraj_Foods.Models
         [Key]
         public int id { get; set; }
 
+
+
+        public string ProductsAndQuantity { get; set; }
+
+
+
+
         public string Country { get; set; }
 
         public string City { get; set; }
@@ -20,9 +27,15 @@ namespace Hiraj_Foods.Models
 
         public int pincode { get; set; }
 
+        public decimal Total { get; set; }  
         public string paymentMethod { get; set; }
 
-        public decimal Total { get; set; }
+
+
+        public DateTime Date { get; set; }
+
+
+
 
         [ForeignKey("user")]
         public int UserId { get; set; }

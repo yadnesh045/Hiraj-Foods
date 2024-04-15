@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hiraj_Foods.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411082520_Initial9")]
-    partial class Initial9
+    [Migration("20240415072609_uu")]
+    partial class uu
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,6 +177,9 @@ namespace Hiraj_Foods.Migrations
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -351,6 +354,25 @@ namespace Hiraj_Foods.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Hiraj_Foods.Models.TotalPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Price");
+                });
+
             modelBuilder.Entity("Hiraj_Foods.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -382,6 +404,26 @@ namespace Hiraj_Foods.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Hiraj_Foods.Models.UserProfileImg", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("user_Profile_Img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserProfileImage");
                 });
 #pragma warning restore 612, 618
         }
