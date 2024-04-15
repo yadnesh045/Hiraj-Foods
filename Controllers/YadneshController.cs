@@ -1,4 +1,5 @@
-﻿using Hiraj_Foods.Models;
+﻿using Hiraj_Foods.Migrations;
+using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
@@ -67,7 +68,7 @@ namespace Hiraj_Foods.Controllers
         public IActionResult MoreInfo(string name)
         {
             SetLayoutModel();
-            var product = unitOfWorks.Product.GetByFlavourName(name);
+            var product = unitOfWorks.Product.GetName(name);
             return View(product);
         }
 
@@ -85,10 +86,15 @@ namespace Hiraj_Foods.Controllers
             var userid = HttpContext.Session.GetInt32("UserId");
             var user = unitOfWorks.Users.GetById(userid);
 
+
             var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
             var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
 
             var total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
+
+          
+
+            var orderTotal = unitOfWorks.Price.GetTotalPriceForUser(user.Id);
 
 
             var Chec = new Checkout
@@ -116,10 +122,25 @@ namespace Hiraj_Foods.Controllers
         public void SetLayoutModel()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-            var user = unitOfWorks.Users.GetById(userId);
-            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), FirstName = user.FirstName, LastName = user.LastName };
-            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+
+            if (userId != 0)
+            {
+
+                var user = unitOfWorks.Users.GetById(userId);
+                var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+                var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
+
+                var layoutModel = new LayoutModel
+                {
+                    CartItemCount = cartItems.Count(),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    profilepic = Profilepic.user_Profile_Img
+                };
+
+                _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+
+            }
         }
 
 
@@ -130,6 +151,7 @@ namespace Hiraj_Foods.Controllers
             var userId = HttpContext.Session.GetInt32("UserId");
 
 
+
             var userid = HttpContext.Session.GetInt32("UserId");
             var user = unitOfWorks.Users.GetById(userid);
 
@@ -137,6 +159,17 @@ namespace Hiraj_Foods.Controllers
             var productDetails = products.Split(", ");
 
             foreach (var detail in productDetails)
+
+            var user = unitOfWorks.Users.GetById(userId);
+
+            var cartdata = unitOfWorks.Cart.GetByUserId(user.Id);
+
+            foreach (var item in cartdata)
+            {
+                unitOfWorks.Cart.Remove(item);
+            }
+            if (userId.HasValue)
+
             {
                 // Split each detail into product name and quantity
                 var parts = detail.Split(":");

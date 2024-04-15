@@ -1,6 +1,7 @@
 ﻿using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository.IRepository;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -11,12 +12,14 @@ namespace Hiraj_Foods.Controllers
 	{
 		private readonly IUnitOfWorks unitOfWorks;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
+        public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment _webHostEnvironment)
 		{
 			this.unitOfWorks = unitOfWorks;
 			_httpContextAccessor = httpContextAccessor;
-		}
+            this._webHostEnvironment = _webHostEnvironment;
+        }
 
 		public IActionResult Profile()
 		{
@@ -29,7 +32,11 @@ namespace Hiraj_Foods.Controllers
 			}
 
 			var user = unitOfWorks.Users.GetByEmail(userEmail);
-			return View(user);
+			var UserProfile = unitOfWorks.UserImage.GetByUserId(user.Id);
+
+            var model = new Tuple<User, UserProfileImg>(user, UserProfile);
+
+            return View(model);
 		}
 
 
@@ -106,15 +113,104 @@ namespace Hiraj_Foods.Controllers
 			int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 			var user = unitOfWorks.Users.GetById(userId);
 			var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
+
+
 
 			var layoutModel = new LayoutModel
 			{
 				CartItemCount = cartItems.Count(),
 				FirstName = user.FirstName,
-				LastName = user.LastName
+				LastName = user.LastName,
+				profilepic = Profilepic.user_Profile_Img
+				
 			};
+
+
 
 			_httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 		}
-	}
+
+
+
+
+        [HttpPost]
+        public IActionResult EditUser(User usr)
+        {
+            if (ModelState.IsValid)
+            {
+                var userInDb = unitOfWorks.Users.GetById(usr.Id);
+
+
+                userInDb.FirstName = usr.FirstName;
+                userInDb.LastName = usr.LastName;
+                userInDb.Email = usr.Email;
+                userInDb.Password = usr.Password;
+                userInDb.Phone = usr.Phone;
+
+                unitOfWorks.Users.Update(userInDb);
+                unitOfWorks.Save();
+
+            }
+
+            TempData["Message"] = "Profile Updated successfully!";
+            return RedirectToAction("Profile");
+
+        }
+
+
+        [HttpPost]
+        public IActionResult EditUserPhoto(UserProfileImg usr, IFormFile File)
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var user = unitOfWorks.Users.GetById(userId);
+
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (File != null)
+                {
+                    // Delete old image if exists
+                    var oldProfileImg = unitOfWorks.UserImage.GetByUserId(userId);
+                    if (oldProfileImg != null)
+                    {
+                        string oldImagePath = Path.Combine(wwwRootPath, oldProfileImg.user_Profile_Img.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+
+
+                        unitOfWorks.UserImage.Delete(oldProfileImg.Id);
+                    }
+
+                    // Save new image
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(File.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"UserProfilePic");
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        File.CopyTo(fileStream);
+                    }
+
+                    var newProfileImg = new UserProfileImg
+                    {
+                        UserId = user.Id,
+                        user_Profile_Img = @"\UserProfilePic\" + filename
+                    };
+                    unitOfWorks.UserImage.Update(newProfileImg);
+                    unitOfWorks.Save();
+
+                    TempData["Message"] = "Profile updated successfully!";
+                    return RedirectToAction("Profile");
+                }
+            }
+
+            TempData["Error"] = "Profile not updated!";
+            return RedirectToAction("Profile");
+        }
+
+    }
+
+
 }

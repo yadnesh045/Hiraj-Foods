@@ -24,24 +24,23 @@ namespace Hiraj_Foods.Repository
 
         public IPriceRepository Price { get; set; }
 
+        public IUserProfileImgRepository UserImage { get; set; }
+
         public UnitOfWorks(ApplicationDbContext _db)
 
         {
             this._db = _db;
             Admin = new AdminRepository(_db);
             Product = new ProductRepository(_db);
-            Contact = new ContactRepository(_db); 
-
-            Users = new UserRepository(_db);    
-
-
+            Contact = new ContactRepository(_db);
+            Users = new UserRepository(_db); 
             Enquiry = new EnquiryRepository(_db);
             Feedback = new FeedbackRepository(_db);
             Banner = new BannerRepository(_db);
             Cart = new CartRepository(_db);
             Checkout = new CheckoutRepository(_db);
-
-            Price= new PriceRepository(_db);
+            UserImage = new UserProfileImgRepository(_db);
+            Price = new PriceRepository(_db);
 
         }
 
@@ -49,5 +48,9 @@ namespace Hiraj_Foods.Repository
         {
             _db.SaveChanges();
         }
+
+
+
+
 }
 }

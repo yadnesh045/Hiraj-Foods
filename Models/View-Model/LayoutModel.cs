@@ -6,6 +6,8 @@
         public string LastName { get; set; }
         public int CartItemCount { get; set; }
 
+        public string profilepic { get; set; }
+
     }
 
 }
