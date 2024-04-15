@@ -21,8 +21,10 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult Profile()
         {
+
             // get user email from session
             var userEmail = HttpContext.Session.GetString("UserEmail");
+            SetLayoutModel();
 
             if (userEmail == null)
             {
@@ -43,45 +45,45 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-		[HttpPost]
+        [HttpPost]
         public IActionResult UserReg(User_SignIn_Login usr)
         {
-               
-            if (usr.User!= null)
+
+            if (usr.User != null)
             {
                 unitOfWorks.Users.Add(usr.User);
                 unitOfWorks.Save();
 
-					return RedirectToAction("Home", "Yadnesh");
+                return RedirectToAction("Home", "Yadnesh");
 
-				}
-				return View();
-		}
+            }
+            return View();
+        }
 
-		[HttpPost]
+        [HttpPost]
         public IActionResult UserLogin(User_SignIn_Login log)
         {
-			var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
+            var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
 
 
-			if (existingUser != null && existingUser.Password == log.Login.Password)
-			{
-			
-				return RedirectToAction("Home", "Yadnesh");
-			}
-			else
-			{
-				TempData["Error"] = "Invalid Crendentails";
-				return View("Signup");
-			}
-		}
+            if (existingUser != null && existingUser.Password == log.Login.Password)
+            {
+
+                return RedirectToAction("Home", "Yadnesh");
+            }
+            else
+            {
+                TempData["Error"] = "Invalid Crendentails";
+                return View("Signup");
+            }
+        }
 
 
         [HttpGet]
         public IActionResult Cart()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-	
+
 
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
 
@@ -137,7 +139,7 @@ namespace Hiraj_Foods.Controllers
         {
             var cartitem = unitOfWorks.Cart.GetById(id);
 
-            if(cartitem is not null)
+            if (cartitem is not null)
             {
                 unitOfWorks.Cart.Remove(cartitem);
                 unitOfWorks.Save();
@@ -154,12 +156,22 @@ namespace Hiraj_Foods.Controllers
 
 
 
-        private void SetLayoutModel()
+        public void SetLayoutModel()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            // want to also pass the first name and last name of the user to the layout
+            var user = unitOfWorks.Users.GetById(userId);
+
             var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count() };
+
+
+            var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), FirstName = user.FirstName, LastName = user.LastName };
+
             _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+
+
+           
         }
 
 

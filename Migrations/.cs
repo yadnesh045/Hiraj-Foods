@@ -5,7 +5,7 @@
 namespace Hiraj_Foods.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial10 : Migration
+    public partial class initial11 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

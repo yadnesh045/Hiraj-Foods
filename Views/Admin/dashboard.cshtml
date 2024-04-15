@@ -3,6 +3,7 @@
 @{
     var productPricesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductPrices);
     var flavorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Flavors);
+    var productNamesJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductNames);
 
     var products = Model.Item1;
     var feedback = Model.Item2;
@@ -238,8 +239,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+
         var productPrices = @Html.Raw(productPricesJson);
         var flavors = @Html.Raw(flavorsJson);
+        var productNames = @Html.Raw(productNamesJson);
 
     </script>
 

@@ -10,7 +10,7 @@
     var productPricesChart = new Chart(ctx1, {
         type: 'bar',
         data: {
-            labels: productPrices.map((price, index) => 'Product ' + (index + 1)),
+            labels: productNames, // Use actual product names
             datasets: [{
                 label: 'Product Prices',
                 data: productPrices,
@@ -27,7 +27,7 @@
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Price ($)'
+                        text: 'Price (₹)'
                     }
                 },
                 x: {
