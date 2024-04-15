@@ -10,12 +10,12 @@ namespace Hiraj_Foods.Controllers
     public class YadneshController : Controller
     {
 
-		private readonly IUnitOfWorks unitOfWorks;
+        private readonly IUnitOfWorks unitOfWorks;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
         {
-			this.unitOfWorks = unitOfWorks;
+            this.unitOfWorks = unitOfWorks;
             _httpContextAccessor = httpContextAccessor;
 
         }
@@ -39,22 +39,22 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-		public IActionResult Home()
-		 {
-          // SetLayoutModel();
+        public IActionResult Home()
+        {
+            // SetLayoutModel();
 
-            if(HttpContext.Session.GetInt32("UserId")!=null)
+            if (HttpContext.Session.GetInt32("UserId") != null)
             {
                 SetLayoutModel();
             }
             var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
-			var banners = unitOfWorks.Banner.GetAll().ToList();
+            var banners = unitOfWorks.Banner.GetAll().ToList();
 
-			var model = new Tuple<List<Product>, List<Banner>>(products, banners);
-			return View(model);
-		}
+            var model = new Tuple<List<Product>, List<Banner>>(products, banners);
+            return View(model);
+        }
 
-		public IActionResult HomeInside(int id)
+        public IActionResult HomeInside(int id)
         {
 
             var product = unitOfWorks.Product.GetById(id);
@@ -85,7 +85,10 @@ namespace Hiraj_Foods.Controllers
             var userid = HttpContext.Session.GetInt32("UserId");
             var user = unitOfWorks.Users.GetById(userid);
 
-            var orderTotal = unitOfWorks.Price.GetTotalPriceForUser(user.Id);
+            var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
+            var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
+
+            var total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
 
 
             var Chec = new Checkout
@@ -96,15 +99,17 @@ namespace Hiraj_Foods.Controllers
                 Address1 = checkout.Address1,
                 Address2 = checkout.Address2,
                 paymentMethod = checkout.paymentMethod,
+                ProductsAndQuantity = productsAndQuantities,
                 pincode = checkout.pincode,
-                Total = orderTotal.Price
+                Total = total,
+                Date = DateTime.Now
             };
 
             unitOfWorks.Checkout.Add(Chec);
             unitOfWorks.Save();
 
-
-            return RedirectToAction("Home" , "Yadnesh");
+            TempData["Success"] = "Order Placed Successfully";
+            return RedirectToAction("Home", "Yadnesh");
         }
 
 
@@ -120,31 +125,66 @@ namespace Hiraj_Foods.Controllers
 
 
         [HttpPost]
-        public IActionResult SaveTotal(decimal total)
+        public IActionResult SaveTotal(decimal total, string products)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
+
+
+            var userid = HttpContext.Session.GetInt32("UserId");
+            var user = unitOfWorks.Users.GetById(userid);
+
+            // Split the products string into an array of product details
+            var productDetails = products.Split(", ");
+
+            foreach (var detail in productDetails)
+            {
+                // Split each detail into product name and quantity
+                var parts = detail.Split(":");
+                var productName = parts[0];
+                var quantity = int.Parse(parts[1]);
+
+                // Find the product in the user's cart and update the quantity
+                var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
+                cartItem.Quantity = quantity;
+                unitOfWorks.Cart.Update(cartItem);
+            }
+            unitOfWorks.Save();
+
+
+
             if (userId.HasValue)
             {
-                var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+                //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+                //if (existingTotal != null)
+                //{
+                //    existingTotal.Price += total;
+                //}
+                //else
+                //{
+                //    existingTotal = new TotalPrice
+                //    {
+                //        UserId = userId.Value,
+                //        Price = total
+                //    };
+                //    unitOfWorks.Price.Add(existingTotal);
+                //}
+                //unitOfWorks.Save();
+                //return Ok();
 
-       
-                if (existingTotal != null)
+
+
+                // Always create a new TotalPrice object and add it to the Price table
+                var newTotal = new TotalPrice
                 {
-                    existingTotal.Price += total;
-                }
-                else
-                {
-                    existingTotal = new TotalPrice
-                    {
-                        UserId = userId.Value,
-                        Price = total
-                    };
-                    unitOfWorks.Price.Add(existingTotal);
-                }
+                    UserId = userId.Value,
+                    Price = total
+                };
+                unitOfWorks.Price.Add(newTotal);
 
                 unitOfWorks.Save();
 
                 return Ok();
+
             }
             else
             {

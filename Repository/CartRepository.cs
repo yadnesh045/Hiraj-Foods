@@ -33,6 +33,11 @@ namespace Hiraj_Foods.Repository
             return _db.Cart.FirstOrDefault(c => c.UserId == userId && c.ProductId == productId);
         }
 
+        public Cart GetByUserIdAndProductName(int id, string productName)
+        {
+            return _db.Cart.FirstOrDefault(c => c.UserId == id && c.ProductName == productName);    
+        }
+
         public void Update(Cart obj)
         {
             _db.Cart.Update(obj);

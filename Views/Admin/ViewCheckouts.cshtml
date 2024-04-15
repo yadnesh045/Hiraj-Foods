@@ -96,9 +96,10 @@
                                         <tr>
                                             <th>UserName</th>
                                             <th>Address</th>
+                                            <th>Products and Quantity</th>
                                             <th>Payment - Method</th>
                                             <th>Total</th>
-
+                                            <th>Order Date</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
@@ -108,8 +109,12 @@
                                             <tr>
                                                 <td>@(user != null ? user1.FirstName : "Unknown")</td>
                                                 <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
+                                                <td>
+                                                    @checkout.ProductsAndQuantity
+                                                </td>
                                                 <td>@checkout.paymentMethod</td>
                                                 <td>@checkout.Total</td>
+                                              <th>@checkout.Date.ToString("dd-MM-yyyy hh:mm:ss tt")</th>
                                             </tr>
                                         }
                                     </tbody>
@@ -123,33 +128,6 @@
 
 
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             </div>

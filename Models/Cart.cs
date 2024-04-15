@@ -29,6 +29,9 @@ namespace Hiraj_Foods.Models
 
         public string ProductDescription { get; set; }
 
+        public int Quantity { get; set; }
+
+
 
         public string ProductWeight { get; set; }
 
