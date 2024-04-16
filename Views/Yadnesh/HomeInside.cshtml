@@ -95,9 +95,17 @@
 
                                 @if (userid != null)
                                 {
- 
-                                    <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning">Buy Now</a>
+                                    <a id="buyNowBtn" asp-action="Checkout" asp-controller="Yadnesh" asp-route-id=@Model.Id class="btn btn-warning">Buy Now</a>
                                 }
+                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#buyNowBtn').click(function () {
+                                            var productPrice = '@Model.ProductPrice'; // Ensure to enclose the Razor variable in single quotes
+                                            HttpContext.Session.SetInt32("productPrice", productPrice);
+                                        });
+                                    });
+                                </script>
 
 
                                 

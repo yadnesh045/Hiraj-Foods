@@ -132,10 +132,18 @@ namespace Hiraj_Foods.Controllers
 
             unitOfWorks.Checkout.Add(Chec);
 
-            foreach (var item in cartItems)
+
+            if (productInDb == null)
             {
-                unitOfWorks.Cart.Remove(item);
+                foreach (var item in cartItems)
+                {
+                    unitOfWorks.Cart.Remove(item);
+                }
             }
+
+
+            ViewBag.Price = total;
+
             unitOfWorks.Save();
 
             TempData["Success"] = "Order Placed Successfully";
