@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace Hiraj_Foods.Controllers
 {
-
+    
     [Authorize]
     public class AdminController : Controller
     {
@@ -439,9 +439,10 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult ViewContact()
         {
+            SetAdminData();
             var contacts = unitOfWorks.Contact.GetAll().ToList();
 
-            SetAdminData();
+          
 
 
             var model = new Tuple<List<Contact>>(contacts);
