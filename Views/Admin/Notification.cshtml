@@ -1,4 +1,14 @@
-﻿
+﻿@{
+
+
+
+    var contactJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Contact);
+    var enquiryJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Enquiry);
+    var feedbackJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Feedback);
+
+    
+}
+
 
 @{
     Layout = null;
@@ -15,7 +25,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Admin-DashBoard</title>
+    <title>Notification</title>
 
     <meta name="description" content="" />
 
@@ -45,9 +55,15 @@
     <!-- Helpers -->
     <script src="/js/Admin-js/helpers.js"></script>
     <script src="/js/Admin-js/config.js"></script>
-</head>
 
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+</head>
 <body>
+
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -71,50 +87,82 @@
                 <div class="content-wrapper">
                     <!-- Content -->
 
-                    <div class="col-md-12 col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                @* to show the total count of flavours *@
-                                <h4 class="card-title mb-1" id="flavorsCount"> </h4>
-                                <canvas id="Notification">
-                                </canvas>
+                    <div class="container-xxl flex-grow-1 container-p-y">
 
+                        <div class="row gy-4">
+
+
+
+
+
+                            <div class="col-md-12 col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-1">Notification </h4>
+                                        <div class="chart-container" style="height:500px; width:500px;">
+                                            <canvas id="Notification"></canvas>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
+
+
+
                         </div>
+
                     </div>
+
+                    <div class="content-backdrop fade"></div>
+
                 </div>
+            </div>
+            <div class="layout-overlay layout-menu-toggle"></div>
+        </div>
+    </div>
 
 
 
+    <script src="/js/Admin-js/jquery.js"></script>
+    <script src="/js/Admin-js/popper.js"></script>
+    <script src="/js/Admin-js/bootstrap.js"></script>
+    <script src="/js/Admin-js/node-waves.js"></script>
+    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+    <script src="/js/Admin-js/menu.js"></script>
 
-                <script src="/js/Admin-js/jquery.js"></script>
-                <script src="/js/Admin-js/popper.js"></script>
-                <script src="/js/Admin-js/bootstrap.js"></script>
-                <script src="/js/Admin-js/node-waves.js"></script>
-                <script src="/js/Admin-js/perfect-scrollbar.js"></script>
-                <script src="/js/Admin-js/menu.js"></script>
+    <!-- endbuild -->
 
-                <!-- endbuild -->
+    <script src="/js/Admin-js/apexcharts.js"></script>
 
-                <script src="/js/Admin-js/apexcharts.js"></script>
+    <!-- Main JS -->
+    <script src="/js/Admin-js/main.js"></script>
 
-                <!-- Main JS -->
-                <script src="/js/Admin-js/main.js"></script>
-
-                <!-- Page JS -->
-                <script src="/js/Admin-js/dashboards-analytics.js"></script>
+    <!-- Page JS -->
+    <script src="/js/Admin-js/dashboards-analytics.js"></script>
 
 
-                <!--Charts js-->
-                <script src="~/js/chart-js/chart.js"></script>
-
-                <!--script for charts-->
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--Charts js-->
+    <script src="~/js/chart-js/notificationchart.js"></script>
+    <script>
 
 
 
-                <!-- Place this tag in your head or just before your close body tag. -->
-                <script async defer src="https://buttons.github.io/buttons.js"></script>
+       
+        var contact = @Html.Raw(contactJson);
+        var enquiry = @Html.Raw(enquiryJson);
+        var feedback = @Html.Raw(feedbackJson);
+
+    </script>
+
+
+
+    <!--script for charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>

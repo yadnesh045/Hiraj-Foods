@@ -95,8 +95,8 @@
 
                                 @if (userid != null)
                                 {
- 
-                                    <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning">Buy Now</a>
+
+                                    <a asp-action="Checkout" asp-controller="Yadnesh" asp-route-id=@Model.Id class="btn btn-warning">Buy Now</a>
                                 }
 
 
