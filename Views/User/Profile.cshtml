@@ -61,12 +61,14 @@
                 <h4 class="card-header">Profile Details</h4>
                 <div class="card-body">
                     <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-4">
-                        <img  src="@Model.Item2.user_Profile_Img" 
-                                
-                             style="max-width:30%"
-                             alt="user-avatar"
-                             class="d-block w-100 max-width-sm-120 h-auto rounded mb-3 mb-sm-0"
-                             id="uploadedAvatar" />
+                        @if (Model?.Item2?.user_Profile_Img != null)
+                        {
+                            <img src="@Model.Item2.user_Profile_Img"
+                                 style="max-width:30%"
+                                 alt="user-avatar"
+                                 class="d-block w-100 max-width-sm-120 h-auto rounded mb-3 mb-sm-0"
+                                 id="uploadedAvatar" />
+                        }
 
                         <form method="post" asp-area="" asp-controller="User" asp-action="EditUserPhoto" enctype="multipart/form-data">
                             <div class="button-wrapper">
@@ -142,10 +144,9 @@
         </div>
     </div>
 
-                <!-- /Account -->
-
-            </div>
-        </div>
+    <!-- /Account -->
+    </div>
+    </div>
     </div>
 
 

@@ -6,6 +6,8 @@ namespace Hiraj_Foods.Repository.IRepository
 	{
 		User GetByEmail(string email);
         User GetById(int? id);
+
+		User GetByPhone(string phone);
         void Update(User obj);
 
 	}

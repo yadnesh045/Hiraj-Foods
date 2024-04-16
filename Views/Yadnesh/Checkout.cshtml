@@ -59,10 +59,11 @@
             </div>
 
             <div class="input-group">
-                <label asp-for="pincode">PIn-Code</label>
-                <input asp-for="pincode" class="form-control" />
+                <label asp-for="pincode">Pin-Code</label>
+                <input asp-for="pincode" class="form-control" type="number" placeholder="Enter 3 to 6 Digit Pin-Code" pattern="\d{3,6}" min="000" required />
                 <span asp-validation-for="pincode" class="text-danger"></span>
             </div>
+
 
             <div class="">
                 <a class="btn btn-next">Next</a>
@@ -72,13 +73,26 @@
         <div class="form-step" style="text-align: center;">
             <h3>Select Payment Way</h3>
             <div class="input-group" style="margin-bottom: 20px;">
-                <input type="radio" id="cash-on-delivery" asp-for="paymentMethod" value="CashOnDelivery" class="custom-radio">
+                <input type="radio" id="cash-on-delivery" asp-for="paymentMethod" value="CashOnDelivery" class="custom-radio" checked>
                 <label for="cash-on-delivery" class="custom-radio-label">Cash on Delivery</label>
             </div>
             <div class="input-group" style="margin-bottom: 20px;">
                 <input type="radio" id="netbanking" asp-for="paymentMethod" value="Netbanking" class="custom-radio">
                 <label for="netbanking" class="custom-radio-label">Netbanking</label>
             </div>
+
+            <!-- Dropdown for selecting bank -->
+            <div id="bankDropdown" style="display: none; margin-bottom: 20px;">
+                <ul style="list-style-type: none; padding: 0;">
+                    <li style="display: inline-block; margin-right: 10px;">
+                        <a asp-action="Index" asp-controller="MyOrder" class="btn btn-warning" target="_blank">Pay With RazorPay</a>
+                    </li>
+                    <li style="display: inline-block;">
+                        <a asp-action="Strippayment" asp-controller="User" class="btn btn-warning" target="_blank">Pay With StripePay</a>
+                    </li>
+                </ul>
+            </div>
+
 
             <div class="btn-group" style="margin-top: 20px;">
                 <a class="btn btn-prev" style="display: inline-block; padding: 10px 20px; border: none; border-radius: 20px; background-color: #007bff; color: #fff; text-decoration: none; transition: background-color 0.3s;">Previous</a>
@@ -103,6 +117,34 @@
             </div>
         </div>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cashOnDeliveryRadio = document.getElementById('cash-on-delivery');
+            const netbankingRadio = document.getElementById('netbanking');
+            const bankDropdown = document.getElementById('bankDropdown');
+
+            cashOnDeliveryRadio.addEventListener('change', function () {
+                if (cashOnDeliveryRadio.checked) {
+                    bankDropdown.style.display = 'none';
+                }
+            });
+
+            netbankingRadio.addEventListener('change', function () {
+                if (netbankingRadio.checked) {
+                    bankDropdown.style.display = 'block';
+                } else {
+                    bankDropdown.style.display = 'none';
+                }
+            });
+
+            // Check initial state of the radio buttons
+            if (netbankingRadio.checked) {
+                bankDropdown.style.display = 'block';
+            } else {
+                bankDropdown.style.display = 'none';
+            }
+        });
+    </script>
 
     <script src="~/css/checkout/checkout.js"></script>
 </body>

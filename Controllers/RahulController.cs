@@ -1,4 +1,5 @@
-﻿using Hiraj_Foods.Models.View_Model;
+﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -25,11 +26,46 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public IActionResult Contact(Contact contact)
+        {
+            if (ModelState.IsValid)
+            {
+
+                unitOfWorks.Contact.Update(contact);
+                unitOfWorks.Save();
+            }
+
+            TempData["Contact"] = "Contact Sent to Hiraj Foods";
+            return RedirectToAction("Contact", "Rahul");
+        }
+
         public IActionResult Feedback()
         {
             SetLayoutModel();
 
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Feedback(FeedBack Enq)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                unitOfWorks.Feedback.Add(Enq);
+                unitOfWorks.Save();
+            }
+            else
+            {
+                Console.WriteLine("-----------------------------------------------");
+                return RedirectToAction("Feedback", "Rahul");
+            }
+
+            TempData["Feedback"] = "Feedback Sent to Hiraj Foods";
+            return RedirectToAction("Feedback", "Rahul");
         }
 
         public IActionResult Enquiry()
@@ -38,10 +74,31 @@ namespace Hiraj_Foods.Controllers
 
             return View();
         }
-        public void SetLayoutModel()
+
+        [HttpPost]
+        public IActionResult Enquiry(Enquiry Enq)
         {
 
+            if (ModelState.IsValid)
+            {
 
+                unitOfWorks.Enquiry.Add(Enq);
+                unitOfWorks.Save();
+            }
+            else
+            {
+                Console.WriteLine("-----------------------------------------------");
+                return RedirectToAction("Enquiry", "Rahul");
+            }
+
+            TempData["Enquiry"] = "Enquiry Sent to Hiraj Foods";
+            return RedirectToAction("Enquiry", "Rahul");
+        }
+
+
+
+        public void SetLayoutModel()
+        {
 
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
@@ -52,11 +109,18 @@ namespace Hiraj_Foods.Controllers
                 var cartItems = unitOfWorks.Cart.GetByUserId(userId);
                 var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
 
-                var layoutModel = new LayoutModel { CartItemCount = cartItems.Count(), 
-                    FirstName = user.FirstName, 
-                    LastName = user.LastName, 
-                    profilepic= Profilepic.user_Profile_Img 
+                var layoutModel = new LayoutModel
+                {
+                    CartItemCount = cartItems.Count(),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    profilepic = Profilepic?.user_Profile_Img // Use the null-conditional operator to avoid NullReferenceException
                 };
+                // If Profilepic is null, set a default image or leave it as null
+                if (Profilepic == null)
+                {
+                    layoutModel.profilepic = null; // Or set a default image path
+                }
 
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 

@@ -4,7 +4,15 @@ using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Linq;
+using Stripe;
+
+using Stripe.Checkout;
+
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Razorpay.Api;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -13,12 +21,14 @@ namespace Hiraj_Foods.Controllers
 		private readonly IUnitOfWorks unitOfWorks;
 		private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly StripeSettings _stripeSettings;
 
-        public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment _webHostEnvironment)
+        public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment _webHostEnvironment, IOptions<StripeSettings> stripeSettings)
 		{
 			this.unitOfWorks = unitOfWorks;
 			_httpContextAccessor = httpContextAccessor;
             this._webHostEnvironment = _webHostEnvironment;
+            _stripeSettings = stripeSettings.Value;
         }
 
 		public IActionResult Profile()
@@ -49,7 +59,16 @@ namespace Hiraj_Foods.Controllers
 			return View(cartItems);
 		}
 
-		[HttpGet]
+        [HttpGet]
+        public IActionResult Payment()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            SetLayoutModel();
+            return View(cartItems);
+        }
+
+        [HttpGet]
 		public IActionResult AddCart(int id)
 		{
 			int? userId = HttpContext.Session.GetInt32("UserId");
@@ -117,18 +136,22 @@ namespace Hiraj_Foods.Controllers
 
 
 
-			var layoutModel = new LayoutModel
-			{
-				CartItemCount = cartItems.Count(),
-				FirstName = user.FirstName,
-				LastName = user.LastName,
-				profilepic = Profilepic.user_Profile_Img
-				
-			};
+            var layoutModel = new LayoutModel
+            {
+                CartItemCount = cartItems.Count(),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                profilepic = Profilepic?.user_Profile_Img // Use the null-conditional operator to avoid NullReferenceException
+            };
+            // If Profilepic is null, set a default image or leave it as null
+            if (Profilepic == null)
+            {
+                layoutModel.profilepic = null; // Or set a default image path
+            }
 
 
 
-			_httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+            _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 		}
 
 
@@ -210,7 +233,53 @@ namespace Hiraj_Foods.Controllers
             return RedirectToAction("Profile");
         }
 
+        [HttpGet]
+        public IActionResult Strippayment()
+        {
+            int amount = 200;
+            var currency = "usd"; // Currency code
+            var successUrl = "https://localhost:7122/Home/success";
+            var cancelUrl = "https://localhost:7122/Home/cancel";
+            StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
+
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string>
+                {
+                    "card"
+                },
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            Currency = currency,
+                            UnitAmount = Convert.ToInt32(amount) * 100,  // Amount in smallest currency unit (e.g., cents)
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = "Product Name",
+                                Description = "Product Description"
+                            }
+                        },
+                        Quantity = 1
+                    }
+                },
+                Mode = "payment",
+                SuccessUrl = successUrl,
+                CancelUrl = cancelUrl
+            };
+
+            var service = new SessionService();
+            var session = service.Create(options);
+
+
+            return Redirect(session.Url);
+        }
+
     }
+
+  
 
 
 }

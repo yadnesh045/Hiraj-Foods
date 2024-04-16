@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace Hiraj_Foods.Controllers
 {
-
+    
     [Authorize]
     public class AdminController : Controller
     {
@@ -439,9 +439,10 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult ViewContact()
         {
+            SetAdminData();
             var contacts = unitOfWorks.Contact.GetAll().ToList();
 
-            SetAdminData();
+          
 
 
             var model = new Tuple<List<Contact>>(contacts);
@@ -639,7 +640,9 @@ namespace Hiraj_Foods.Controllers
         {
             var user = unitOfWorks.Users.GetAll().ToList();
 
-            var Checkouts = unitOfWorks.Checkout.GetAll().ToList();
+            // Order checkouts by CreatedDate in descending order
+            var Checkouts = unitOfWorks.Checkout.GetAll().OrderByDescending(c => c.Date).ToList();
+
 
 
             SetAdminData();
@@ -735,7 +738,12 @@ namespace Hiraj_Foods.Controllers
 
 
 
-
+        [HttpGet]
+        public IActionResult Notification()
+        {
+            SetAdminData();
+            return View();
+        }
 
 
 
