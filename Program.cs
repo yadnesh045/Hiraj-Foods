@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Hiraj_Foods.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Hiraj_Foods.Models.View_Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
        });
 
 
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
+var key = builder.Configuration.GetValue<string>("StripeSettings:SecretKey");
 
 
 builder.Services.AddHttpContextAccessor();

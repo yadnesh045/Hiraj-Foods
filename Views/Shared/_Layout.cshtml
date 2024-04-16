@@ -169,6 +169,9 @@
                                         <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
                                     </li>
 
+                                  
+
+
                                     @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
                                     {
                                         <style>
@@ -224,6 +227,8 @@
                                                 gap: 12px;
                                                 cursor: pointer;
                                                 text-align: end;
+                                               @*  margin-left:120px; *@
+                                                margin-top:-10px;
                                             }
 
                                                 .profile h3 {
@@ -335,6 +340,7 @@
                                                     <img src="@profileimg" alt="some user image" />
                                                 </div>
                                             </div>
+                                            
                                             <ul id="dropdownMenu" class="dropdown-menu">
                                                 <li><a asp-area="" asp-controller="User" asp-action="Profile">Profile</a></li>
 
