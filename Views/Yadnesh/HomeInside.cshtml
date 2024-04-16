@@ -7,6 +7,8 @@
     var userid = Context.Session.GetInt32("UserId");
 }
 
+
+
 <link href="~/css/user-css/timeline.css" rel="stylesheet" />
 
 <div class="preloader">
@@ -96,6 +98,10 @@
  
                                     <a asp-action="Checkout" asp-controller="Yadnesh" class="btn btn-warning">Buy Now</a>
                                 }
+
+
+                                <a asp-action="Checkout" asp-controller="Yadnesh" asp-route-id=@Model.Id class="btn btn-warning">Buy Now</a>
+
                             </div>
                         </div>
 

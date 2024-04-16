@@ -59,10 +59,11 @@
             </div>
 
             <div class="input-group">
-                <label asp-for="pincode">PIn-Code</label>
-                <input asp-for="pincode" class="form-control" />
+                <label asp-for="pincode">Pin-Code</label>
+                <input asp-for="pincode" class="form-control" type="number" placeholder="Enter 3 to 6 Digit Pin-Code" pattern="\d{3,6}" min="000" required />
                 <span asp-validation-for="pincode" class="text-danger"></span>
             </div>
+
 
             <div class="">
                 <a class="btn btn-next">Next</a>

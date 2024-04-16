@@ -35,6 +35,7 @@ namespace Hiraj_Foods.Models
         public DateTime Date { get; set; }
 
 
+        public string? PaymentStatus { get; set; }
 
 
         [ForeignKey("user")]
