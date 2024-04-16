@@ -735,7 +735,12 @@ namespace Hiraj_Foods.Controllers
 
 
 
-
+        [HttpGet]
+        public IActionResult Notification()
+        {
+            SetAdminData();
+            return View();
+        }
 
 
 

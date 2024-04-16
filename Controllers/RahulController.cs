@@ -1,4 +1,5 @@
-﻿using Hiraj_Foods.Models.View_Model;
+﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,20 @@ namespace Hiraj_Foods.Controllers
             SetLayoutModel();
 
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(Contact contact)
+        {
+            if (ModelState.IsValid)
+            {
+
+                unitOfWorks.Contact.Update(contact);
+                unitOfWorks.Save();
+            }
+
+            // If model state is not valid or an error occurred, return the same view with validation errors
+            return RedirectToAction("Contact", "Rahul");
         }
 
         public IActionResult Feedback()

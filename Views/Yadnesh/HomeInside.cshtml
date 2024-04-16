@@ -80,6 +80,13 @@
                                 </label><p style="margin-left: 120px;margin-top: -31px;">
                                     @Model.ProductDescription
                                 </p>
+                                <label>
+                                    <b>
+                                        Price :
+                                    </b>
+                                </label><p style="margin-left: 120px;margin-top: -31px;">
+                                    @Model.ProductPrice
+                                </p>
 
 
                                 <a asp-action="AddCart" asp-controller="User" asp-route-id=@Model.Id class="btn btn-warning">Add to Cart</a>
