@@ -25,6 +25,20 @@ namespace Hiraj_Foods.Controllers
 
             return View();
         }
+        [HttpPost]
+        public IActionResult Contact(Contact contact)
+        {
+            if (ModelState.IsValid)
+            {
+                TempData["Contact"] = "Your Info Successfully Sent.";
+                unitOfWorks.Contact.Update(contact);
+                unitOfWorks.Save();
+            }
+
+            // If model state is not valid or an error occurred, return the same view with validation errors
+            return RedirectToAction("Contact", "Rahul");
+        }
+
 
         [HttpPost]
         public IActionResult Contact(Contact contact)
@@ -47,16 +61,57 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Feedback(FeedBack Enq)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                unitOfWorks.Feedback.Add(Enq);
+                unitOfWorks.Save();
+            }
+            else
+            {
+                Console.WriteLine("-----------------------------------------------");
+                return RedirectToAction("Feedback", "Rahul");
+            }
+
+            TempData["Feedback"] = "Feedback Sent to Hiraj Foods";
+            return RedirectToAction("Feedback", "Rahul");
+        }
+
         public IActionResult Enquiry()
         {
             SetLayoutModel();
 
             return View();
         }
-        public void SetLayoutModel()
+
+        [HttpPost]
+        public IActionResult Enquiry(Enquiry Enq)
         {
 
+            if (ModelState.IsValid)
+            {
 
+                unitOfWorks.Enquiry.Add(Enq);
+                unitOfWorks.Save();
+            }
+            else
+            {
+                Console.WriteLine("-----------------------------------------------");
+                return RedirectToAction("Enquiry", "Rahul");
+            }
+
+            TempData["Enquiry"] = "Enquiry Sent to Hiraj Foods";
+            return RedirectToAction("Enquiry", "Rahul");
+        }
+
+
+
+        public void SetLayoutModel()
+        {
 
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
