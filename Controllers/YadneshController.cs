@@ -163,12 +163,12 @@ namespace Hiraj_Foods.Controllers
             {
                 int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
-                if (userId != 0)
-                {
+            if (userId != 0)
+            {
 
-                    var user = unitOfWorks.Users.GetById(userId);
-                    var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-                    var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
+                var user = unitOfWorks.Users.GetById(userId);
+                var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+                var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
 
                 var layoutModel = new LayoutModel
                 {
@@ -184,8 +184,8 @@ namespace Hiraj_Foods.Controllers
                 }
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 
-                }
             }
+        }
 
 
 
@@ -204,59 +204,59 @@ namespace Hiraj_Foods.Controllers
 
 
 
-                // Split the products string into an array of product details
-                var productDetails = products.Split(", ");
+            // Split the products string into an array of product details
+            var productDetails = products.Split(", ");
 
-                foreach (var detail in productDetails)
+            foreach (var detail in productDetails)
+            {
+                // Split each detail into product name and quantity
+                var parts = detail.Split(":");
+                var productName = parts[0];
+                var quantity = int.Parse(parts[1]);
+
+                // Find the product in the user's cart and update the quantity
+                var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
+                cartItem.Quantity = quantity;
+                unitOfWorks.Cart.Update(cartItem);
+            }
+
+
+            unitOfWorks.Save();
+
+
+
+            if (userId.HasValue)
+            {
+                //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+                //if (existingTotal != null)
+                //{
+                //    existingTotal.Price += total;
+                //}
+                //else
+                //{
+                //    existingTotal = new TotalPrice
+                //    {
+                //        UserId = userId.Value,
+                //        Price = total
+                //    };
+                //    unitOfWorks.Price.Add(existingTotal);
+                //}
+                //unitOfWorks.Save();
+                //return Ok();
+
+
+
+                // Always create a new TotalPrice object and add it to the Price table
+                var newTotal = new TotalPrice
                 {
-                    // Split each detail into product name and quantity
-                    var parts = detail.Split(":");
-                    var productName = parts[0];
-                    var quantity = int.Parse(parts[1]);
-
-                    // Find the product in the user's cart and update the quantity
-                    var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
-                    cartItem.Quantity = quantity;
-                    unitOfWorks.Cart.Update(cartItem);
-                }
-
+                    UserId = userId.Value,
+                    Price = total
+                };
+                unitOfWorks.Price.Add(newTotal);
 
                 unitOfWorks.Save();
 
-
-
-                if (userId.HasValue)
-                {
-                    //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
-                    //if (existingTotal != null)
-                    //{
-                    //    existingTotal.Price += total;
-                    //}
-                    //else
-                    //{
-                    //    existingTotal = new TotalPrice
-                    //    {
-                    //        UserId = userId.Value,
-                    //        Price = total
-                    //    };
-                    //    unitOfWorks.Price.Add(existingTotal);
-                    //}
-                    //unitOfWorks.Save();
-                    //return Ok();
-
-
-
-                    // Always create a new TotalPrice object and add it to the Price table
-                    var newTotal = new TotalPrice
-                    {
-                        UserId = userId.Value,
-                        Price = total
-                    };
-                    unitOfWorks.Price.Add(newTotal);
-
-                    unitOfWorks.Save();
-
-                    return Ok();
+                return Ok();
 
                 }
                 else
