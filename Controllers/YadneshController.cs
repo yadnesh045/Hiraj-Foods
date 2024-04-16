@@ -149,21 +149,21 @@ namespace Hiraj_Foods.Controllers
             TempData["Success"] = "Order Placed Successfully";
             return RedirectToAction("Home", "Yadnesh");
         }
-    
 
 
 
 
-            public void SetLayoutModel()
+
+        public void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            if (userId != 0)
             {
-                int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
-                if (userId != 0)
-                {
-
-                    var user = unitOfWorks.Users.GetById(userId);
-                    var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-                    var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
+                var user = unitOfWorks.Users.GetById(userId);
+                var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+                var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
 
                 var layoutModel = new LayoutModel
                 {
@@ -179,15 +179,15 @@ namespace Hiraj_Foods.Controllers
                 }
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 
-                }
             }
+        }
 
 
 
-            [HttpPost]
-            public IActionResult SaveTotal(decimal total, string products)
-            {
-                var userId = HttpContext.Session.GetInt32("UserId");
+        [HttpPost]
+        public IActionResult SaveTotal(decimal total, string products)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
 
 
 
@@ -196,67 +196,67 @@ namespace Hiraj_Foods.Controllers
 
 
 
-                // Split the products string into an array of product details
-                var productDetails = products.Split(", ");
+            // Split the products string into an array of product details
+            var productDetails = products.Split(", ");
 
-                foreach (var detail in productDetails)
-                {
-                    // Split each detail into product name and quantity
-                    var parts = detail.Split(":");
-                    var productName = parts[0];
-                    var quantity = int.Parse(parts[1]);
+            foreach (var detail in productDetails)
+            {
+                // Split each detail into product name and quantity
+                var parts = detail.Split(":");
+                var productName = parts[0];
+                var quantity = int.Parse(parts[1]);
 
-                    // Find the product in the user's cart and update the quantity
-                    var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
-                    cartItem.Quantity = quantity;
-                    unitOfWorks.Cart.Update(cartItem);
-                }
-
-
-                unitOfWorks.Save();
-
-
-
-                if (userId.HasValue)
-                {
-                    //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
-                    //if (existingTotal != null)
-                    //{
-                    //    existingTotal.Price += total;
-                    //}
-                    //else
-                    //{
-                    //    existingTotal = new TotalPrice
-                    //    {
-                    //        UserId = userId.Value,
-                    //        Price = total
-                    //    };
-                    //    unitOfWorks.Price.Add(existingTotal);
-                    //}
-                    //unitOfWorks.Save();
-                    //return Ok();
-
-
-
-                    // Always create a new TotalPrice object and add it to the Price table
-                    var newTotal = new TotalPrice
-                    {
-                        UserId = userId.Value,
-                        Price = total
-                    };
-                    unitOfWorks.Price.Add(newTotal);
-
-                    unitOfWorks.Save();
-
-                    return Ok();
-
-                }
-                else
-                {
-                    return BadRequest("User ID is not available.");
-                }
+                // Find the product in the user's cart and update the quantity
+                var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
+                cartItem.Quantity = quantity;
+                unitOfWorks.Cart.Update(cartItem);
             }
 
 
+            unitOfWorks.Save();
+
+
+
+            if (userId.HasValue)
+            {
+                //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+                //if (existingTotal != null)
+                //{
+                //    existingTotal.Price += total;
+                //}
+                //else
+                //{
+                //    existingTotal = new TotalPrice
+                //    {
+                //        UserId = userId.Value,
+                //        Price = total
+                //    };
+                //    unitOfWorks.Price.Add(existingTotal);
+                //}
+                //unitOfWorks.Save();
+                //return Ok();
+
+
+
+                // Always create a new TotalPrice object and add it to the Price table
+                var newTotal = new TotalPrice
+                {
+                    UserId = userId.Value,
+                    Price = total
+                };
+                unitOfWorks.Price.Add(newTotal);
+
+                unitOfWorks.Save();
+
+                return Ok();
+
+            }
+            else
+            {
+                return BadRequest("User ID is not available.");
+            }
         }
+
+
     }
+}
