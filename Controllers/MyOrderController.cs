@@ -11,7 +11,7 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Index()
         {
 
-            var productPrice = HttpContext.Session.GetString("productPrice");
+            var productPrice = HttpContext.Session.GetInt32("productPrice");
             ViewBag.ProductPrice = productPrice;
 
             return View();
@@ -55,6 +55,12 @@ namespace Hiraj_Foods.Controllers
             EntityOrder orderDtl = new EntityOrder();
             orderDtl.TrancationId = razorpay_payment_id;
             orderDtl.OrderId = razorpay_order_id;
+
+
+            ViewBag.Flag = true;
+
+
+
             return View("PaymentSucess", orderDtl);
         }
 

@@ -230,7 +230,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    productInDb.ProductFlavourImageUrl = Path.Combine("Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
+                    productInDb.ProductFlavourImageUrl = Path.Combine("/Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
 
                 }
 
@@ -243,7 +243,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    productInDb.ProductImageUrl = Path.Combine("Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
+                    productInDb.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
                 }
 
                 unitOfWorks.Product.Update(productInDb);

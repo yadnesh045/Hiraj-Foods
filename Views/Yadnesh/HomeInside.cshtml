@@ -101,11 +101,23 @@
                                 <script>
                                     $(document).ready(function () {
                                         $('#buyNowBtn').click(function () {
-                                            var productPrice = '@Model.ProductPrice'; // Ensure to enclose the Razor variable in single quotes
-                                            HttpContext.Session.SetInt32("productPrice", productPrice);
+                                            var productPrice = @Model.ProductPrice;
+
+                                            $.ajax({
+                                                url: '@Url.Action("SetProductPrice", "User")',
+                                                type: 'POST',
+                                                data: { price: productPrice },
+                                                success: function (response) {
+                                                    console.log('Session variable set successfully');
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    console.error('Error setting session variable:', error);
+                                                }
+                                            });
                                         });
                                     });
                                 </script>
+
 
 
                                 

@@ -6,6 +6,7 @@ using Hiraj_Foods.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Hiraj_Foods.Controllers
 {
     public class YadneshController : Controller
@@ -188,7 +189,10 @@ namespace Hiraj_Foods.Controllers
             public IActionResult SaveTotal(decimal total, string products)
             {
                 var userId = HttpContext.Session.GetInt32("UserId");
+            int intValue = (int)total;
 
+
+            HttpContext.Session.SetInt32("productPrice", intValue);
 
 
             var userid = HttpContext.Session.GetInt32("UserId");
@@ -257,6 +261,16 @@ namespace Hiraj_Foods.Controllers
                 }
             }
 
-
+        [HttpPost]
+        public IActionResult SetProductPriceFormCart(decimal total)
+        {
+            int intValue = (int)total;
+            HttpContext.Session.SetInt32("productPrice", intValue);
+            return Ok();
         }
+        
+
+
+
+    }
     }
