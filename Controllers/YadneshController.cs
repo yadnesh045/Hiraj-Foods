@@ -83,55 +83,57 @@ namespace Hiraj_Foods.Controllers
         [HttpPost]
         public IActionResult Checkout(Checkout checkout, Product product)
         {
-            var userid = HttpContext.Session.GetInt32("UserId");
-
-
-            var user = unitOfWorks.Users.GetById(userid);
-
-            var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
-            var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
-
-            var productInDb = unitOfWorks.Product.GetById(product.Id);
-
-
-            decimal total;
-            if (cartItems.Any())
+            if (ModelState.IsValid)
             {
-                total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
-            }
-            else if (product != null)
-            {
-                if (!string.IsNullOrEmpty(productInDb.ProductPrice))
+                var userid = HttpContext.Session.GetInt32("UserId");
+
+
+                var user = unitOfWorks.Users.GetById(userid);
+
+                var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
+                var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
+
+                var productInDb = unitOfWorks.Product.GetById(product.Id);
+
+
+                decimal total;
+                if (cartItems.Any())
                 {
-                    total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
-                    productsAndQuantities = $"{productInDb.ProductName}:1";
+                    total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
+                }
+                else if (product != null)
+                {
+                    if (!string.IsNullOrEmpty(productInDb.ProductPrice))
+                    {
+                        total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
+                        productsAndQuantities = $"{productInDb.ProductName}:1";
+                    }
+                    else
+                    {
+                        return BadRequest("Product price is not available");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Product price is not available");
+                    return BadRequest("No product to checkout");
                 }
-            }
-            else
-            {
-                return BadRequest("No product to checkout");
-            }
 
-            var Chec = new Checkout
-            {
-                UserId = user.Id,
-                Country = checkout.Country,
-                City = checkout.City,
-                Address1 = checkout.Address1,
-                Address2 = checkout.Address2,
-                paymentMethod = checkout.paymentMethod,
-                ProductsAndQuantity = productsAndQuantities,
-                pincode = checkout.pincode,
-                Total = total,
-                Date = DateTime.Now,
-                PaymentStatus = "Pending"
-            };
+                var Chec = new Checkout
+                {
+                    UserId = user.Id,
+                    Country = checkout.Country,
+                    City = checkout.City,
+                    Address1 = checkout.Address1,
+                    Address2 = checkout.Address2,
+                    paymentMethod = checkout.paymentMethod,
+                    ProductsAndQuantity = productsAndQuantities,
+                    pincode = checkout.pincode,
+                    Total = total,
+                    Date = DateTime.Now,
+                    PaymentStatus = "Pending"
+                };
 
-            unitOfWorks.Checkout.Add(Chec);
+                unitOfWorks.Checkout.Add(Chec);
 
 
             if (productInDb == null)
@@ -147,15 +149,17 @@ namespace Hiraj_Foods.Controllers
 
             unitOfWorks.Save();
 
-            TempData["Success"] = "Order Placed Successfully";
-            return RedirectToAction("Home", "Yadnesh");
+                TempData["Success"] = "Order Placed Successfully";
+                return RedirectToAction("Home", "Yadnesh");
+            }
+            return View("Checkout");
         }
-    
 
 
 
 
-            public void SetLayoutModel()
+
+        public void SetLayoutModel()
             {
                 int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
