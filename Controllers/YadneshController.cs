@@ -126,7 +126,8 @@ namespace Hiraj_Foods.Controllers
                 ProductsAndQuantity = productsAndQuantities,
                 pincode = checkout.pincode,
                 Total = total,
-                Date = DateTime.Now
+                Date = DateTime.Now,
+                PaymentStatus = "Pending"
             };
 
             unitOfWorks.Checkout.Add(Chec);

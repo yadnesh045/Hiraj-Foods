@@ -639,7 +639,9 @@ namespace Hiraj_Foods.Controllers
         {
             var user = unitOfWorks.Users.GetAll().ToList();
 
-            var Checkouts = unitOfWorks.Checkout.GetAll().ToList();
+            // Order checkouts by CreatedDate in descending order
+            var Checkouts = unitOfWorks.Checkout.GetAll().OrderByDescending(c => c.Date).ToList();
+
 
 
             SetAdminData();
