@@ -16,7 +16,7 @@
 
 	<style>
 		.text-danger {
-			color: #ffb11f; /* Set the text color to red */
+			color: red; /* Set the text color to red */
 			display: inline-block; /* Display error message in one line */
 			margin-left: 5px; /* Add some space between the input field and error message */
 		}
@@ -65,12 +65,12 @@
 					<div class="input-field">
 						<i class="fas fa-user"></i>
 						<input type="text" asp-for="User.FirstName" placeholder="First Name" />
-						<span asp-validation-for="User.FirstName" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
+						<span asp-validation-for="User.FirstName" class="text-danger" style="color: red; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
 					</div>
 					<div class="input-field">
 						<i class="fas fa-user"></i>
 						<input type="text" asp-for="User.LastName" placeholder="Last Name" />
-						<span asp-validation-for="User.LastName" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
+						<span asp-validation-for="User.LastName" class="text-danger" style="color: red; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
 					</div>
 
 					<div class="input-field">
@@ -81,11 +81,22 @@
 					</div>
 
 
+
+
+
 					<div class="input-field">
 						<i class="fas fa-lock"></i>
 						<input type="password" asp-for="User.Password" placeholder="Password" />
 						<span asp-validation-for="User.Password" class="text-danger" style="color: #F93E07; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
-					</div>
+					</div> 
+
+
+
+
+
+
+
+
 					<div class="input-field">
 						<i class="fas fa-phone"></i>
 						<input type="text" asp-for="User.Phone" placeholder="Phone" />

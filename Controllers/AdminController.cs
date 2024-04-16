@@ -34,6 +34,7 @@ namespace Hiraj_Foods.Controllers
         public void SetAdminData()
         {
             var AdminEmail = HttpContext.Session.GetString("AdminEmail");
+            var AdminId = HttpContext.Session.GetInt32("AdminId");
             var Admin = unitOfWorks.Admin.GetByEmail(AdminEmail);
             ViewData["Admin"] = Admin;
         }
@@ -189,6 +190,7 @@ namespace Hiraj_Foods.Controllers
             var model = new Tuple<List<Product>>(products);
 
             return View(model);
+
         }
 
 
@@ -394,6 +396,7 @@ namespace Hiraj_Foods.Controllers
 
                 if (File != null)
                 {
+                    SetAdminData();
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(File.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"BannerImages");
                     using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))

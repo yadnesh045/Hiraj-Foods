@@ -16,16 +16,17 @@ namespace Hiraj_Foods.Models
 
 
 
-
+        [Required]
         public string Country { get; set; }
 
-        public string City { get; set; }
-
-        public string Address1 { get; set; }
-
-        public string Address2 { get; set; }
-
-        public int pincode { get; set; }
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string Address1 { get; set; }
+		[Required]
+		public string Address2 { get; set; }
+		[Required]
+		public int pincode { get; set; }
 
         public decimal Total { get; set; }  
         public string paymentMethod { get; set; }
