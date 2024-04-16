@@ -25,19 +25,6 @@ namespace Hiraj_Foods.Controllers
 
             return View();
         }
-        [HttpPost]
-        public IActionResult Contact(Contact contact)
-        {
-            if (ModelState.IsValid)
-            {
-                TempData["Contact"] = "Your Info Successfully Sent.";
-                unitOfWorks.Contact.Update(contact);
-                unitOfWorks.Save();
-            }
-
-            // If model state is not valid or an error occurred, return the same view with validation errors
-            return RedirectToAction("Contact", "Rahul");
-        }
 
 
         [HttpPost]
@@ -50,7 +37,7 @@ namespace Hiraj_Foods.Controllers
                 unitOfWorks.Save();
             }
 
-            // If model state is not valid or an error occurred, return the same view with validation errors
+            TempData["Contact"] = "Contact Sent to Hiraj Foods";
             return RedirectToAction("Contact", "Rahul");
         }
 
