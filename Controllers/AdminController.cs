@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace Hiraj_Foods.Controllers
 {
-    
+
     [Authorize]
     public class AdminController : Controller
     {
@@ -78,32 +78,32 @@ namespace Hiraj_Foods.Controllers
 
 
 
-             var feedback = unitOfWorks.Feedback.GetAll().ToList();
+            var feedback = unitOfWorks.Feedback.GetAll().ToList();
 
 
-			// Classify feedback messages
-			int positiveCount = 0, negativeCount = 0, neutralCount = 0;
-			foreach (var feedbackItem in feedback)
-			{
-				var sentiment = ClassifySentiment(feedbackItem.Message);
-				switch (sentiment)
-				{
-					case "Positive":
-						positiveCount++;
-						break;
-					case "Negative":
-						negativeCount++;
-						break;
-					default:
-						neutralCount++;
-						break;
-				}
-			}
+            // Classify feedback messages
+            int positiveCount = 0, negativeCount = 0, neutralCount = 0;
+            foreach (var feedbackItem in feedback)
+            {
+                var sentiment = ClassifySentiment(feedbackItem.Message);
+                switch (sentiment)
+                {
+                    case "Positive":
+                        positiveCount++;
+                        break;
+                    case "Negative":
+                        negativeCount++;
+                        break;
+                    default:
+                        neutralCount++;
+                        break;
+                }
+            }
 
 
-			ViewBag.PositiveFeedbackCount = positiveCount;
-			ViewBag.NegativeFeedbackCount = negativeCount;
-			ViewBag.NeutralFeedbackCount = neutralCount;
+            ViewBag.PositiveFeedbackCount = positiveCount;
+            ViewBag.NegativeFeedbackCount = negativeCount;
+            ViewBag.NeutralFeedbackCount = neutralCount;
 
 
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
@@ -230,7 +230,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    productInDb.ProductFlavourImageUrl = Path.Combine("Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
+                    productInDb.ProductFlavourImageUrl = Path.Combine("/Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
 
                 }
 
@@ -243,16 +243,21 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    productInDb.ProductImageUrl = Path.Combine("Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
+                    productInDb.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
                 }
 
                 unitOfWorks.Product.Update(productInDb);
                 unitOfWorks.Save();
+                TempData["Message"] = "Product Updated successfully!";
+                return RedirectToAction("ViewProduct");
+            }
+            else
+            {
 
+                TempData["Error"] = "Product Not Updated !!!";
+                return RedirectToAction("ViewProduct");
             }
 
-            TempData["Message"] = "Product Updated successfully!";
-            return RedirectToAction("ViewProduct");
 
         }
 
@@ -668,7 +673,7 @@ namespace Hiraj_Foods.Controllers
             var model = new Tuple<User>(user);
 
             return View(model);
-            
+
         }
 
         [HttpPost]
@@ -741,8 +746,8 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult Notification()
         {
-            
-           
+
+
 
             var feedback = unitOfWorks.Feedback.GetAll().Count();
             var contact = unitOfWorks.Contact.GetAll().Count();
