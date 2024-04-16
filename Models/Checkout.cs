@@ -28,14 +28,17 @@ namespace Hiraj_Foods.Models
 		[Required]
 		public int pincode { get; set; }
 
-        public decimal Total { get; set; }  
+
+        [ValidateNever]
+        public decimal Total { get; set; }
+        [ValidateNever]
         public string paymentMethod { get; set; }
 
 
-
+        [ValidateNever]
         public DateTime Date { get; set; }
 
-
+        [ValidateNever]
         public string? PaymentStatus { get; set; }
 
 
