@@ -440,9 +440,9 @@ namespace Hiraj_Foods.Controllers
         public IActionResult ViewContact()
         {
             SetAdminData();
-            var contacts = unitOfWorks.Contact.GetAll().ToList();
+            var contacts = unitOfWorks.Contact.GetAll().OrderByDescending(c => c.Id).ToList();
 
-          
+
 
 
             var model = new Tuple<List<Contact>>(contacts);
@@ -741,7 +741,21 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult Notification()
         {
+            
+           
+
+            var feedback = unitOfWorks.Feedback.GetAll().Count();
+            var contact = unitOfWorks.Contact.GetAll().Count();
+            var enquiry = unitOfWorks.Enquiry.GetAll().Count();
+
+
+
+            ViewBag.Contact = contact;
+            ViewBag.Enquiry = enquiry;
+            ViewBag.Feedback = feedback;
+
             SetAdminData();
+
             return View();
         }
 
