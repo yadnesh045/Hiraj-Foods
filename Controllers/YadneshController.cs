@@ -94,7 +94,8 @@ namespace Hiraj_Foods.Controllers
 
 
             decimal total;
-            if (cartItems.Any())
+
+            if (productInDb == null && cartItems.Any())
             {
                 total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
             }
@@ -104,6 +105,7 @@ namespace Hiraj_Foods.Controllers
                 {
                     total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
                     productsAndQuantities = $"{productInDb.ProductName}:1";
+
                 }
                 else
                 {
@@ -113,6 +115,18 @@ namespace Hiraj_Foods.Controllers
             else
             {
                 return BadRequest("No product to checkout");
+            }
+
+
+
+            var paymentSatus = "";
+            if (checkout.paymentMethod == "CashOnDelivery")
+            {
+                paymentSatus = "Pending";
+            }
+            else
+            {
+                paymentSatus = "Paid";
             }
 
             var Chec = new Checkout
@@ -127,7 +141,7 @@ namespace Hiraj_Foods.Controllers
                 pincode = checkout.pincode,
                 Total = total,
                 Date = DateTime.Now,
-                PaymentStatus = "Pending"
+                PaymentStatus = paymentSatus
             };
 
             unitOfWorks.Checkout.Add(Chec);
