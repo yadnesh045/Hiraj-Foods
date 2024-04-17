@@ -83,7 +83,7 @@ namespace Hiraj_Foods.Controllers
         [HttpPost]
         public IActionResult Checkout(Checkout checkout, Product product)
         {
-            if (ModelState.IsValid)
+            if (checkout != null)
             {
                 var userid = HttpContext.Session.GetInt32("UserId");
 

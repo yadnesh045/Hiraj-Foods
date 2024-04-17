@@ -11,8 +11,8 @@ namespace Hiraj_Foods.Models
         public int id { get; set; }
 
 
-
-        public string ProductsAndQuantity { get; set; }
+        [ValidateNever]
+        public string? ProductsAndQuantity { get; set; }
 
 
 
