@@ -4,7 +4,7 @@
     var ctx = document.getElementById('Notification').getContext('2d');
     var Notification = new Chart(ctx, {
         type: 'doughnut',
-        data = {
+        data: {
             labels: ["Contact", "Enquiry", "Feedback"],
             datasets: [{
                 label: 'Data',
@@ -23,5 +23,5 @@
         }
 
     });
-   
+    debugger;
 });

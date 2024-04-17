@@ -1,0 +1,212 @@
+﻿@model Tuple<Checkout,List<User>>
+
+@{
+    Layout = null;
+}
+@{
+    var checkout = Model.Item1;
+    var user = Model.Item2;
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+      data-assets-path="../assets/" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Admin-DashBoard</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" src="~/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet" />
+
+
+    <link href="/css/Admin-Css/materialdesignicons.css" rel="stylesheet" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link href="/css/Admin-Css/node-waves.css" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
+    <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+    <!-- Vendors CSS -->
+    <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="/js/Admin-js/helpers.js"></script>
+    <script src="/js/Admin-js/config.js"></script>
+</head>
+
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <!--Side Menu Partial View -->
+            <!--Show the partial view of sidemenu-->
+            <partial name="_SidePartialView" />
+
+
+            <!-- / Side Menu Partial View Ends -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <!-- Navbar Partial View -->
+                <!--Show the partial view of navbar partial view-->
+                <partial name="_NavbarPartialView" />
+
+                <!-- / Navbar Partial View -->
+
+                <div class="content-wrapper">
+                    <!-- Content -->
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Edit Checkout</h4>
+
+                        <!-- Basic Layout -->
+                        <div class="row">
+                            <div class="col-xl">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Edit Product Details</h5>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <form method="post" asp-controller="Admin" asp-action="EditCheckout" enctype="multipart/form-data">
+                                            <input type="hidden" name="Id" value="@Model.Item1.id" />
+                                            <input type="hidden" name="City" value="@Model.Item1.City" />
+                                            <input type="hidden" name="Country" value="@Model.Item1.Country" />
+                                            <input type="hidden" name="UserId" value="@Model.Item1.UserId" />
+                                            <div class="form-floating form-floating-outline mb-4">
+                                               @{
+                                                    var user1 = Model.Item2.FirstOrDefault(u => u.Id == checkout.UserId);
+                                                   }
+
+                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Customer Name" name="UserId" value="@user1.FirstName" readonly />
+                                                <label for="basic-default-fullname"></label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Address" name="Address1" value="@Model.Item1.Address1" readonly />
+                                                <label for="basic-default-company">Customer Address 1</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Address" name="Address2" value="@Model.Item1.Address2" readonly />
+                                                <label for="basic-default-company">Customer Address 2</label>
+                                            </div>
+
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="ProductsAndQuantity" name="ProductsAndQuantity" value="@Model.Item1.ProductsAndQuantity" readonly />
+                                                <label for="basic-default-company">Customer ProductsAndQuantity</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Payment Method" name="paymentMethod" value="@Model.Item1.paymentMethod" readonly />
+                                                <label for="basic-default-company">Customer Payment Method</label>
+                                            </div>
+
+
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Total" name="Total" value="@Model.Item1.Total" readonly />
+                                                <label for="basic-default-company">Total</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Order Date" name="Date" value="@Model.Item1.Date" readonly />
+                                                <label for="basic-default-company">Order Date</label>
+                                            </div>
+                                           
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <select class="form-control" id="paymentStatusDropdown" name="PaymentStatus">
+                                                    <option value="">Select Payment Status</option>
+                                                    <option value="Paid">Paid</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Failed">Failed</option>
+                                                </select>
+                                                <label for="paymentStatusDropdown">Customer Payment Status</label>
+                                            </div>
+
+                                            <script type="text/javascript">
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                    var paymentStatus = '@Model.Item1.PaymentStatus'; // Get the status from your model
+                                                    var dropdown = document.getElementById('paymentStatusDropdown');
+
+                                                    // Set the selected option based on the model value
+                                                    if (paymentStatus) {
+                                                        dropdown.value = paymentStatus;
+                                                    }
+                                                });
+                                            </script>
+
+
+
+
+                                            <div class="form-floating form-floating-outline mb-4 mt-3">
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Merged -->
+                        </div>
+                    </div>
+                    <!-- / Content -->
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div class="footer-container d-flex align-items-center justify-content-between py-3 flex-md-row flex-column">
+                                <div class="text-body mb-2 mb-md-0">
+                                    ©
+                                    <script>
+                                        document.write(new Date().getFullYear());
+                                    </script>
+                                    , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
+                                    <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
+                                </div>
+                                <div class="d-none d-lg-inline-block">
+                                    <a href="https://themeselection.com/license/" class="footer-link me-3" target="_blank">License</a>
+                                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-3">More Themes</a>
+
+                                    <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/"
+                                       target="_blank"
+                                       class="footer-link me-3">Documentation</a>
+
+                                    <a href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free/issues"
+                                       target="_blank"
+                                       class="footer-link">Support</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- / Footer -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
