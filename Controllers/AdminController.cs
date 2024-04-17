@@ -769,8 +769,6 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-
-
         [HttpGet]
         public IActionResult EditCheckout(int id)
         {
