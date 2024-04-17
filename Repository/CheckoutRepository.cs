@@ -13,6 +13,11 @@ namespace Hiraj_Foods.Repository
             _db = db;
         }
 
+        public Checkout GetById(int id)
+        {
+            return _db.Checkout.Find(id);
+        }
+
         public void Update(Checkout obj)
         {
             _db.Checkout.Update(obj);

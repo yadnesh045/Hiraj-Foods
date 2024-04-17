@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -767,7 +768,41 @@ namespace Hiraj_Foods.Controllers
 
 
 
+        [HttpGet]
+        public IActionResult EditCheckout(int id)
+        {
 
+            var user = unitOfWorks.Users.GetAll().ToList();
+
+            var checkout = unitOfWorks.Checkout.GetById(id);
+
+            SetAdminData();
+
+            var model = new Tuple<Checkout,List<User>>(checkout,user);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditCheckout(Checkout checkout)
+        {
+            if (ModelState.IsValid)
+            {
+                var checkoutInDb = unitOfWorks.Checkout.GetById(checkout.id);
+
+                checkoutInDb.PaymentStatus = checkout.PaymentStatus;
+
+
+                unitOfWorks.Checkout.Update(checkoutInDb);
+                unitOfWorks.Save();
+                TempData["Message"] = "Checkout Updated successfully!";
+                return RedirectToAction("ViewCheckouts");
+            }
+            else
+            {
+                TempData["Error"] = "Checkout Not Updated !!!";
+                return RedirectToAction("ViewCheckouts");
+            }
+        }
 
 
 
