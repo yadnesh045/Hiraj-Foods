@@ -804,13 +804,6 @@ namespace Hiraj_Foods.Controllers
             }
         }
 
-
-
-
-
-
-
-
     }
 }
 

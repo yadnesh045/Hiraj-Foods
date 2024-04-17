@@ -1,6 +1,8 @@
-﻿@using Hiraj_Foods.Models.View_Model @{
+﻿@using Hiraj_Foods.Models.View_Model 
+@{
     var userEmail = Context.Session.GetString("UserEmail"); var userId = Context.Session.GetInt32("UserId");
-} @{
+} 
+@{
     var layoutModel = Context.Items["LayoutModel"] as LayoutModel; var firstname =
         layoutModel?.FirstName; var lastName = layoutModel?.LastName; var cartItemCount = layoutModel?.CartItemCount; string profileimg = layoutModel?.profilepic;
 }
@@ -169,7 +171,7 @@
                                         <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
                                     </li>
 
-                                  
+
 
 
                                     @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
@@ -227,8 +229,7 @@
                                                 gap: 12px;
                                                 cursor: pointer;
                                                 text-align: end;
-                                               @*  margin-left:120px; *@
-                                                margin-top:-10px;
+                                            @* margin-left:120px; *@ margin-top:-10px;
                                             }
 
                                                 .profile h3 {
@@ -340,7 +341,7 @@
                                                     <img src="@profileimg" alt="some user image" />
                                                 </div>
                                             </div>
-                                            
+
                                             <ul id="dropdownMenu" class="dropdown-menu">
                                                 <li><a asp-area="" asp-controller="User" asp-action="Profile">Profile</a></li>
 
