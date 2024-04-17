@@ -93,6 +93,8 @@ namespace Hiraj_Foods.Controllers
                 var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
                 var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
 
+
+
                 var productInDb = unitOfWorks.Product.GetById(product.Id);
 
 
@@ -158,12 +160,17 @@ namespace Hiraj_Foods.Controllers
                 }
             }
 
-
             ViewBag.Price = total;
-
-            unitOfWorks.Save();
-
                 TempData["Success"] = "Order Placed Successfully";
+                var order = new Orders
+                {
+                    UserId = user.Id,
+                    Products = productsAndQuantities,
+                    date = DateTime.Now,
+                    Total = total,
+                };
+                unitOfWorks.Uorders.Add(order);
+                unitOfWorks.Save();
                 return RedirectToAction("Home", "Yadnesh");
             }
             return View("Checkout");

@@ -285,5 +285,22 @@ namespace Hiraj_Foods.Controllers
         }
 
 
+
+
+        [HttpGet]
+        public IActionResult Orders()
+        {
+            SetLayoutModel();
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            // Fetch orders and order them by date in descending order
+            var orders = unitOfWorks.Uorders.GetAllByUserId(userId)
+                                            .OrderByDescending(o => o.date)
+                                            .ToList();
+
+            return View(orders);
+        }
+
+
     }
-    }
+}

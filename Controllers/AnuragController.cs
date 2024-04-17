@@ -14,6 +14,13 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
+        public IActionResult Test()
+        {
+            return View();
+        }
+
+
+
 
 
     }

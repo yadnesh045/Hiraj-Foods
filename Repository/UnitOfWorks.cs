@@ -26,6 +26,8 @@ namespace Hiraj_Foods.Repository
 
         public IUserProfileImgRepository UserImage { get; set; }
 
+        public IOrdersRepository Uorders { get; set; }
+
         public UnitOfWorks(ApplicationDbContext _db)
 
         {
@@ -41,6 +43,7 @@ namespace Hiraj_Foods.Repository
             Checkout = new CheckoutRepository(_db);
             UserImage = new UserProfileImgRepository(_db);
             Price = new PriceRepository(_db);
+            Uorders = new OrdersRepository(_db);
 
         }
 

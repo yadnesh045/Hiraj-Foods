@@ -23,6 +23,8 @@
         IPriceRepository Price { get; }
 
         IUserProfileImgRepository UserImage { get; }
+
+        IOrdersRepository Uorders { get; }
         void Save();
     }
 }
