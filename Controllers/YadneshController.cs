@@ -96,42 +96,56 @@ namespace Hiraj_Foods.Controllers
                 var productInDb = unitOfWorks.Product.GetById(product.Id);
 
 
-                decimal total;
-                if (cartItems.Any())
+            decimal total;
+
+            if (productInDb == null && cartItems.Any())
+            {
+                total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
+            }
+            else if (product != null)
+            {
+                if (!string.IsNullOrEmpty(productInDb.ProductPrice))
                 {
-                    total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
-                }
-                else if (product != null)
-                {
-                    if (!string.IsNullOrEmpty(productInDb.ProductPrice))
-                    {
-                        total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
-                        productsAndQuantities = $"{productInDb.ProductName}:1";
-                    }
-                    else
-                    {
-                        return BadRequest("Product price is not available");
-                    }
+                    total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
+                    productsAndQuantities = $"{productInDb.ProductName}:1";
+
                 }
                 else
                 {
-                    return BadRequest("No product to checkout");
+                    return BadRequest("Product price is not available");
                 }
+            }
+            else
+            {
+                return BadRequest("No product to checkout");
+            }
 
-                var Chec = new Checkout
-                {
-                    UserId = user.Id,
-                    Country = checkout.Country,
-                    City = checkout.City,
-                    Address1 = checkout.Address1,
-                    Address2 = checkout.Address2,
-                    paymentMethod = checkout.paymentMethod,
-                    ProductsAndQuantity = productsAndQuantities,
-                    pincode = checkout.pincode,
-                    Total = total,
-                    Date = DateTime.Now,
-                    PaymentStatus = "Pending"
-                };
+
+
+            var paymentSatus = "";
+            if (checkout.paymentMethod == "CashOnDelivery")
+            {
+                paymentSatus = "Pending";
+            }
+            else
+            {
+                paymentSatus = "Paid";
+            }
+
+            var Chec = new Checkout
+            {
+                UserId = user.Id,
+                Country = checkout.Country,
+                City = checkout.City,
+                Address1 = checkout.Address1,
+                Address2 = checkout.Address2,
+                paymentMethod = checkout.paymentMethod,
+                ProductsAndQuantity = productsAndQuantities,
+                pincode = checkout.pincode,
+                Total = total,
+                Date = DateTime.Now,
+                PaymentStatus = paymentSatus
+            };
 
                 unitOfWorks.Checkout.Add(Chec);
 

@@ -98,8 +98,10 @@
                                             <th>Address</th>
                                             <th>Products and Quantity</th>
                                             <th>Payment - Method</th>
+                                            <th>Payment - Status</th>
                                             <th>Total</th>
                                             <th>Order Date</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
@@ -109,12 +111,25 @@
                                             <tr>
                                                 <td>@user1.FirstName</td>
                                                 <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
-                                                <td>
-                                                    @checkout.ProductsAndQuantity
-                                                </td>
+                                                <td>@checkout.ProductsAndQuantity</td>
                                                 <td>@checkout.paymentMethod</td>
+
+                                                @if (checkout.PaymentStatus == "Pending")
+                                                {
+                                                    <td><span class="badge rounded-pill bg-label-warning me-1">Pending</span></td>
+                                                }
+                                                else if (checkout.PaymentStatus == "Paid")
+                                                {
+                                                    <td><span class="badge rounded-pill bg-label-success me-1">Paid</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="badge bg-danger">Failed</span></td>
+                                                }
+
                                                 <td>@checkout.Total</td>
                                               <th>@checkout.Date.ToString("dd-MM-yyyy hh:mm:ss tt")</th>
+
                                             </tr>
                                         }
                                     </tbody>
