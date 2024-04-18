@@ -48,18 +48,16 @@ namespace Hiraj_Foods.Models
         [Display(Name = "Description")]
         public string ProductDescription { get; set; }
 
-        [Required]
         [NotMapped]
         [Display(Name = "FlavourImage")]
-        public IFormFile ProductFlavourImage { get; set; }
+        public IFormFile? ProductFlavourImage { get; set; }
 
         public string? ProductFlavourImageUrl { get; set; }
 
 
-        [Required]
         [NotMapped]
         [Display(Name = "ProductImage")]
-        public IFormFile ProductImage { get; set; }
+        public IFormFile? ProductImage { get; set; }
 
         public string? ProductImageUrl { get; set; }
     }

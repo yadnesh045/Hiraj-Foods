@@ -235,6 +235,10 @@ namespace Hiraj_Foods.Controllers
                     productInDb.ProductFlavourImageUrl = Path.Combine("/Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
 
                 }
+                else
+                {
+                    productInDb.ProductFlavourImageUrl = productInDb.ProductFlavourImageUrl;
+                }
 
                 if (product.ProductImage != null && product.ProductImage.Length > 0)
                 {
@@ -246,6 +250,10 @@ namespace Hiraj_Foods.Controllers
                         file.CopyTo(fileStream);
                     }
                     productInDb.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
+                }
+                else
+                {
+                    productInDb.ProductImageUrl = productInDb.ProductImageUrl;
                 }
 
                 unitOfWorks.Product.Update(productInDb);
