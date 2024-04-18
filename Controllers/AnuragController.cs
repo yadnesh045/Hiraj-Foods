@@ -81,7 +81,7 @@ namespace Hiraj_Foods.Controllers
 
             return new ViewAsPdf("GeneratePDFFromView", invoice)
             {
-                FileName = $"{invoice.CustomerName}Invoice.pdf"
+                FileName = $"{invoice.CustomerName}{invoice.Date}Invoice.pdf"
             };
         }
         private string GenerateRandomInvoiceNumber()

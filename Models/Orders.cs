@@ -14,7 +14,6 @@ namespace Hiraj_Foods.Models
         [ValidateNever]
         public User User { get; set; }
         [Required]
-        [StringLength(50)]
         [Display(Name = "Product Name")]
         public string Products { get; set; }
         public decimal Total { get; set; }
