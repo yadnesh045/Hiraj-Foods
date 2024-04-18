@@ -34,7 +34,7 @@ builder.Services.AddScoped<IServices, Services>();
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(5); // You can set Time 
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // You can set Time 
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
