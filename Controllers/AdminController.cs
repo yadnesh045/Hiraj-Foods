@@ -751,12 +751,20 @@ namespace Hiraj_Foods.Controllers
         {
 
 
+            var paidCheckoutCount = unitOfWorks.Checkout.GetAll().Count(c => c.PaymentStatus == "Paid");
+
+            // Get the count of pending checkouts
+            var pendingCheckoutCount = unitOfWorks.Checkout.GetAll().Count(c => c.PaymentStatus == "Pending");
+
+            // Pass the counts to ViewBag or ViewData to be used in the view
+            ViewBag.PaidCheckoutCount = paidCheckoutCount;
+            ViewBag.PendingCheckoutCount = pendingCheckoutCount;
+
+
 
             var feedback = unitOfWorks.Feedback.GetAll().Count();
             var contact = unitOfWorks.Contact.GetAll().Count();
             var enquiry = unitOfWorks.Enquiry.GetAll().Count();
-
-
 
             ViewBag.Contact = contact;
             ViewBag.Enquiry = enquiry;

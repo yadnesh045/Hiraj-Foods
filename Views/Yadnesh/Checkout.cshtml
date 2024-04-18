@@ -309,22 +309,27 @@
             <div class="input-group input-group-icon">
                 <input asp-for="Country" type="text" placeholder="Country">
                 <div class="input-icon"><i class="bi bi-globe-americas"></i></div>
+                <span asp-validation-for="Country" class="text-danger" style="color: red; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
             </div>
             <div class="input-group input-group-icon">
                 <input asp-for="City" type="text" placeholder="City">
                 <div class="input-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                <span asp-validation-for="City" class="text-danger" style="color: red; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
             </div>
             <div class="input-group input-group-icon">
                 <input asp-for="Address1" type="text" placeholder="Address Line1">
                 <div class="input-icon"><i class="bi bi-compass-fill"></i></div>
+                <span asp-validation-for="Address1" class="text-danger" style="color: red; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
             </div>
             <div class="input-group input-group-icon">
                 <input asp-for="Address2" type="text" placeholder="Address line 2">
                 <div class="input-icon"><i class="bi bi-compass-fill"></i></div>
+                <span asp-validation-for="Address2" class="text-danger" style="color: red; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
             </div>
             <div class="input-group input-group-icon">
                 <input asp-for="pincode" type="text" placeholder="Zip Code">
                 <div class="input-icon"><i class="bi bi-pin-map-fill"></i></div>
+                <span asp-validation-for="pincode" class="text-danger" style="color: red; display: inline-block; white-space: nowrap; font-size: 0.8rem; margin-left: 5px;"></span>
             </div>
         </div>
         <div class="row">
@@ -415,10 +420,9 @@
         });
     });
 
-
-
-
-
-
-
 </script>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
