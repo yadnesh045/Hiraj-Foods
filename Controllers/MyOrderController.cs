@@ -44,7 +44,6 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Payment(string razorpay_payment_id, string razorpay_order_id, string razorpay_signature)
         {
 
-            //  RazorpayClient client = new RazorpayClient("[YOUR_KEY_ID]", "[YOUR_KEY_SECRET]");
 
             Dictionary<string, string> attributes = new Dictionary<string, string>();
 
