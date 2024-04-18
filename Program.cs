@@ -5,6 +5,8 @@ using Hiraj_Foods.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Hiraj_Foods.Models.View_Model;
+using Hiraj_Foods.Service;
+using Hiraj_Foods.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,9 @@ builder.Services.AddControllersWithViews(options =>
         NoStore = true
     });
 });
+
+builder.Services.AddScoped<IServices, Services>();
+
 
 
 

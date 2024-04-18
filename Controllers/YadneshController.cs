@@ -3,6 +3,7 @@ using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
+using Hiraj_Foods.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +15,13 @@ namespace Hiraj_Foods.Controllers
 
         private readonly IUnitOfWorks unitOfWorks;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IServices _Service;
 
-        public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
+        public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IServices services)
         {
             this.unitOfWorks = unitOfWorks;
             _httpContextAccessor = httpContextAccessor;
+            _Service = services;    
 
         }
         public IActionResult Aboutus()
@@ -98,70 +101,71 @@ namespace Hiraj_Foods.Controllers
                 var productInDb = unitOfWorks.Product.GetById(product.Id);
 
 
-            decimal total;
+                decimal total;
 
-            if (productInDb == null && cartItems.Any())
-            {
-                total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
-            }
-            else if (product != null)
-            {
-                if (!string.IsNullOrEmpty(productInDb.ProductPrice))
+                if (productInDb == null && cartItems.Any())
                 {
-                    total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
-                    productsAndQuantities = $"{productInDb.ProductName}:1";
+                    total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
+                }
+                else if (product != null)
+                {
+                    if (!string.IsNullOrEmpty(productInDb.ProductPrice))
+                    {
+                        total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
+                        productsAndQuantities = $"{productInDb.ProductName}:1";
 
+                    }
+                    else
+                    {
+                        return BadRequest("Product price is not available");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Product price is not available");
+                    return BadRequest("No product to checkout");
                 }
-            }
-            else
-            {
-                return BadRequest("No product to checkout");
-            }
 
 
 
-            var paymentSatus = "";
-            if (checkout.paymentMethod == "CashOnDelivery")
-            {
-                paymentSatus = "Pending";
-            }
-            else
-            {
-                paymentSatus = "Paid";
-            }
+                var paymentSatus = "";
+                if (checkout.paymentMethod == "CashOnDelivery")
+                {
+                    paymentSatus = "Pending";
+                }
+                else
+                {
+                    paymentSatus = "Paid";
+                }
 
-            var Chec = new Checkout
-            {
-                UserId = user.Id,
-                Country = checkout.Country,
-                City = checkout.City,
-                Address1 = checkout.Address1,
-                Address2 = checkout.Address2,
-                paymentMethod = checkout.paymentMethod,
-                ProductsAndQuantity = productsAndQuantities,
-                pincode = checkout.pincode,
-                Total = total,
-                Date = DateTime.Now,
-                PaymentStatus = paymentSatus
-            };
+                var Chec = new Checkout
+                {
+                    UserId = user.Id,
+                    Country = checkout.Country,
+                    City = checkout.City,
+                    Address1 = checkout.Address1,
+                    Address2 = checkout.Address2,
+                    paymentMethod = checkout.paymentMethod,
+                    ProductsAndQuantity = productsAndQuantities,
+                    pincode = checkout.pincode,
+                    Total = total,
+                    Date = DateTime.Now,
+                    PaymentStatus = paymentSatus
+                };
 
                 unitOfWorks.Checkout.Add(Chec);
 
 
-            if (productInDb == null)
-            {
-                foreach (var item in cartItems)
+                if (productInDb == null)
                 {
-                    unitOfWorks.Cart.Remove(item);
+                    foreach (var item in cartItems)
+                    {
+                        unitOfWorks.Cart.Remove(item);
+                    }
                 }
-            }
 
-            ViewBag.Price = total;
+                ViewBag.Price = total;
                 TempData["Success"] = "Order Placed Successfully";
+
                 var order = new Orders
                 {
                     UserId = user.Id,
@@ -169,8 +173,12 @@ namespace Hiraj_Foods.Controllers
                     date = DateTime.Now,
                     Total = total,
                 };
+
                 unitOfWorks.Uorders.Add(order);
                 unitOfWorks.Save();
+
+                _Service.SendOrderConfirmation(user.Email, productsAndQuantities, total);
+
                 return RedirectToAction("Home", "Yadnesh");
             }
             return View("Checkout");
@@ -181,8 +189,8 @@ namespace Hiraj_Foods.Controllers
 
 
         public void SetLayoutModel()
-            {
-                int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
             if (userId != 0)
             {
@@ -210,10 +218,10 @@ namespace Hiraj_Foods.Controllers
 
 
 
-            [HttpPost]
-            public IActionResult SaveTotal(decimal total, string products)
-            {
-                var userId = HttpContext.Session.GetInt32("UserId");
+        [HttpPost]
+        public IActionResult SaveTotal(decimal total, string products)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
             int intValue = (int)total;
 
 
@@ -279,12 +287,12 @@ namespace Hiraj_Foods.Controllers
 
                 return Ok();
 
-                }
-                else
-                {
-                    return BadRequest("User ID is not available.");
-                }
             }
+            else
+            {
+                return BadRequest("User ID is not available.");
+            }
+        }
 
         [HttpPost]
         public IActionResult SetProductPriceFormCart(decimal total)
@@ -293,11 +301,11 @@ namespace Hiraj_Foods.Controllers
             HttpContext.Session.SetInt32("productPrice", intValue);
             return Ok();
         }
-        
 
 
-        
+
+
 
 
     }
-    }
+}

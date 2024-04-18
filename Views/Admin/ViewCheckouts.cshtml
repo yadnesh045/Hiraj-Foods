@@ -105,9 +105,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach (var checkout in Model.Item2)
+                                        @foreach (var checkout in Model.Item2 ?? new List<Checkout>())
                                         {
-                                            var user1 = Model.Item1.FirstOrDefault(u => u.Id == checkout.UserId);
+                                            var user1 = Model.Item1?.SingleOrDefault(u => u.Id == checkout.UserId);
+                                            if(user1 != null)
+                                            { 
                                             <tr>
                                                 <td>@user1.FirstName</td>
                                                 <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
@@ -141,6 +143,7 @@
                                                     </div>
                                               </th>
                                             </tr>
+                                            }
                                         }
                                     </tbody>
                                 </table>
