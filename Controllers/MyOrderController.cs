@@ -1,4 +1,6 @@
-﻿using Hiraj_Foods.Models.View_Model;
+﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Razorpay.Api;
 
@@ -42,7 +44,6 @@ namespace Hiraj_Foods.Controllers
         public IActionResult Payment(string razorpay_payment_id, string razorpay_order_id, string razorpay_signature)
         {
 
-            //  RazorpayClient client = new RazorpayClient("[YOUR_KEY_ID]", "[YOUR_KEY_SECRET]");
 
             Dictionary<string, string> attributes = new Dictionary<string, string>();
 
@@ -61,6 +62,7 @@ namespace Hiraj_Foods.Controllers
 
 
 
+            HttpContext.Session.SetString("TranctionId", razorpay_payment_id);
             return View("PaymentSucess", orderDtl);
         }
 

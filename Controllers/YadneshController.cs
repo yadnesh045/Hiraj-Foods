@@ -86,6 +86,22 @@ namespace Hiraj_Foods.Controllers
         [HttpPost]
         public IActionResult Checkout(Checkout checkout, Product product)
         {
+
+            var TID = HttpContext.Session.GetString("TranctionId");
+
+            if(checkout.TranscationID != "CashOnDelivery")
+            {
+                if(checkout.TranscationID != TID)
+                {
+                    TempData["ErrorForPayment"] = "Transction Id Did Not matched";
+                    return View();
+                }
+            }
+
+
+            var session = _httpContextAccessor.HttpContext.Session;
+            session.Remove("TransactionId");
+
             if (checkout != null)
             {
                 var userid = HttpContext.Session.GetInt32("UserId");
@@ -149,7 +165,9 @@ namespace Hiraj_Foods.Controllers
                     pincode = checkout.pincode,
                     Total = total,
                     Date = DateTime.Now,
-                    PaymentStatus = paymentSatus
+                    PaymentStatus = paymentSatus,
+                    TranscationID = checkout.TranscationID
+                    
                 };
 
                 unitOfWorks.Checkout.Add(Chec);

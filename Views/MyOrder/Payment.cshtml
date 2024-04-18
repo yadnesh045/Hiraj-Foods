@@ -15,10 +15,60 @@
         <input id="razorpay_order_id" type="hidden" name="razorpay_order_id" />
         <input id="razorpay_signature" type="hidden" name="razorpay_signature" />
     </form>
+
+    <style>
+
+   
+        .button-92 {
+            --c: #fff;
+            /* text color */
+            background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p,100%)/300% no-repeat, #004dff;
+            /* background color */
+            color: #0000;
+            border: none;
+            transform: perspective(500px) rotateY(calc(20deg*var(--_i,-1)));
+            text-shadow: calc(var(--_i,-1)* 0.08em) -.01em 0 var(--c), calc(var(--_i,-1)*-0.08em) .01em 2px #0004;
+            outline-offset: .1em;
+            transition: 0.3s;
+        }
+
+            .button-92:hover,
+            .button-92:focus-visible {
+                --_p: 0%;
+                --_i: 1;
+            }
+
+            .button-92:active {
+                text-shadow: none;
+                color: var(--c);
+                box-shadow: inset 0 0 9e9q #0005;
+                transition: 0s;
+            }
+
+        .button-92 {
+            font-weight: bold;
+            font-size: 2rem;
+            margin: 0;
+            cursor: pointer;
+            padding: .1em .3em;
+        }
+
+        .Yad{
+            
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-top:300px;
+        }
+    </style>
 </head>
 
+
 <body>
-    <button id="rzp-button1">Pay with Razorpay</button>
+    <div class="Yad">
+        <button class="button-92" role="button" id="rzp-button1">Pay with Razorpay</button>
+    </div>
+   
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         var orderId = "@ViewBag.Orderid"
