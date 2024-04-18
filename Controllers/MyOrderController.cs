@@ -1,4 +1,6 @@
-﻿using Hiraj_Foods.Models.View_Model;
+﻿using Hiraj_Foods.Models;
+using Hiraj_Foods.Models.View_Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Razorpay.Api;
 
@@ -61,6 +63,7 @@ namespace Hiraj_Foods.Controllers
 
 
 
+            HttpContext.Session.SetString("TranctionId", razorpay_payment_id);
             return View("PaymentSucess", orderDtl);
         }
 

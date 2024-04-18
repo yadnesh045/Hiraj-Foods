@@ -41,6 +41,9 @@ namespace Hiraj_Foods.Models
         [ValidateNever]
         public string? PaymentStatus { get; set; }
 
+        [ValidateNever]
+        public string TranscationID { get; set; }
+
 
         [ForeignKey("user")]
         public int UserId { get; set; }
