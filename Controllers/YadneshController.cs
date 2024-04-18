@@ -3,8 +3,10 @@ using Hiraj_Foods.Models;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
+using Hiraj_Foods.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Hiraj_Foods.Controllers
 {
@@ -13,11 +15,13 @@ namespace Hiraj_Foods.Controllers
 
         private readonly IUnitOfWorks unitOfWorks;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IServices _Service;
 
-        public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
+        public YadneshController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IServices services)
         {
             this.unitOfWorks = unitOfWorks;
             _httpContextAccessor = httpContextAccessor;
+            _Service = services;    
 
         }
         public IActionResult Aboutus()
@@ -82,7 +86,7 @@ namespace Hiraj_Foods.Controllers
         [HttpPost]
         public IActionResult Checkout(Checkout checkout, Product product)
         {
-            if (ModelState.IsValid)
+            if (checkout != null)
             {
                 var userid = HttpContext.Session.GetInt32("UserId");
 
@@ -92,11 +96,14 @@ namespace Hiraj_Foods.Controllers
                 var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
                 var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
 
+
+
                 var productInDb = unitOfWorks.Product.GetById(product.Id);
 
 
                 decimal total;
-                if (cartItems.Any())
+
+                if (productInDb == null && cartItems.Any())
                 {
                     total = cartItems.Sum(c => c.Quantity * decimal.Parse(c.ProductPrice));
                 }
@@ -106,6 +113,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
                         productsAndQuantities = $"{productInDb.ProductName}:1";
+
                     }
                     else
                     {
@@ -115,6 +123,18 @@ namespace Hiraj_Foods.Controllers
                 else
                 {
                     return BadRequest("No product to checkout");
+                }
+
+
+
+                var paymentSatus = "";
+                if (checkout.paymentMethod == "CashOnDelivery")
+                {
+                    paymentSatus = "Pending";
+                }
+                else
+                {
+                    paymentSatus = "Paid";
                 }
 
                 var Chec = new Checkout
@@ -129,18 +149,37 @@ namespace Hiraj_Foods.Controllers
                     pincode = checkout.pincode,
                     Total = total,
                     Date = DateTime.Now,
-                    PaymentStatus = "Pending"
+                    PaymentStatus = paymentSatus
                 };
 
                 unitOfWorks.Checkout.Add(Chec);
 
-                foreach (var item in cartItems)
+
+                if (productInDb == null)
                 {
-                    unitOfWorks.Cart.Remove(item);
+                    foreach (var item in cartItems)
+                    {
+                        unitOfWorks.Cart.Remove(item);
+                    }
                 }
+
+                ViewBag.Price = total;
+                TempData["Success"] = "Order Placed Successfully";
+
+                var order = new Orders
+                {
+                    UserId = user.Id,
+                    Products = productsAndQuantities,
+                    date = DateTime.Now,
+                    Total = total,
+                    Paymentmethod = checkout.paymentMethod
+                };
+
+                unitOfWorks.Uorders.Add(order);
                 unitOfWorks.Save();
 
-                TempData["Success"] = "Order Placed Successfully";
+                _Service.SendOrderConfirmation(user.Email, productsAndQuantities, total);
+
                 return RedirectToAction("Home", "Yadnesh");
             }
             return View("Checkout");
@@ -151,15 +190,15 @@ namespace Hiraj_Foods.Controllers
 
 
         public void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            if (userId != 0)
             {
-                int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
-                if (userId != 0)
-                {
-
-                    var user = unitOfWorks.Users.GetById(userId);
-                    var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-                    var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
+                var user = unitOfWorks.Users.GetById(userId);
+                var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+                var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
 
                 var layoutModel = new LayoutModel
                 {
@@ -175,16 +214,19 @@ namespace Hiraj_Foods.Controllers
                 }
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 
-                }
             }
+        }
 
 
 
-            [HttpPost]
-            public IActionResult SaveTotal(decimal total, string products)
-            {
-                var userId = HttpContext.Session.GetInt32("UserId");
+        [HttpPost]
+        public IActionResult SaveTotal(decimal total, string products)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            int intValue = (int)total;
 
+
+            HttpContext.Session.SetInt32("productPrice", intValue);
 
 
             var userid = HttpContext.Session.GetInt32("UserId");
@@ -192,67 +234,79 @@ namespace Hiraj_Foods.Controllers
 
 
 
-                // Split the products string into an array of product details
-                var productDetails = products.Split(", ");
+            // Split the products string into an array of product details
+            var productDetails = products.Split(", ");
 
-                foreach (var detail in productDetails)
-                {
-                    // Split each detail into product name and quantity
-                    var parts = detail.Split(":");
-                    var productName = parts[0];
-                    var quantity = int.Parse(parts[1]);
+            foreach (var detail in productDetails)
+            {
+                // Split each detail into product name and quantity
+                var parts = detail.Split(":");
+                var productName = parts[0];
+                var quantity = int.Parse(parts[1]);
 
-                    // Find the product in the user's cart and update the quantity
-                    var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
-                    cartItem.Quantity = quantity;
-                    unitOfWorks.Cart.Update(cartItem);
-                }
-
-
-                unitOfWorks.Save();
-
-
-
-                if (userId.HasValue)
-                {
-                    //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
-                    //if (existingTotal != null)
-                    //{
-                    //    existingTotal.Price += total;
-                    //}
-                    //else
-                    //{
-                    //    existingTotal = new TotalPrice
-                    //    {
-                    //        UserId = userId.Value,
-                    //        Price = total
-                    //    };
-                    //    unitOfWorks.Price.Add(existingTotal);
-                    //}
-                    //unitOfWorks.Save();
-                    //return Ok();
-
-
-
-                    // Always create a new TotalPrice object and add it to the Price table
-                    var newTotal = new TotalPrice
-                    {
-                        UserId = userId.Value,
-                        Price = total
-                    };
-                    unitOfWorks.Price.Add(newTotal);
-
-                    unitOfWorks.Save();
-
-                    return Ok();
-
-                }
-                else
-                {
-                    return BadRequest("User ID is not available.");
-                }
+                // Find the product in the user's cart and update the quantity
+                var cartItem = unitOfWorks.Cart.GetByUserIdAndProductName(user.Id, productName);
+                cartItem.Quantity = quantity;
+                unitOfWorks.Cart.Update(cartItem);
             }
 
 
+            unitOfWorks.Save();
+
+
+
+            if (userId.HasValue)
+            {
+                //var existingTotal = unitOfWorks.Price.GetTotalPriceForUser(userId.Value);
+                //if (existingTotal != null)
+                //{
+                //    existingTotal.Price += total;
+                //}
+                //else
+                //{
+                //    existingTotal = new TotalPrice
+                //    {
+                //        UserId = userId.Value,
+                //        Price = total
+                //    };
+                //    unitOfWorks.Price.Add(existingTotal);
+                //}
+                //unitOfWorks.Save();
+                //return Ok();
+
+
+
+                // Always create a new TotalPrice object and add it to the Price table
+                var newTotal = new TotalPrice
+                {
+                    UserId = userId.Value,
+                    Price = total
+                };
+                unitOfWorks.Price.Add(newTotal);
+
+                unitOfWorks.Save();
+
+                return Ok();
+
+            }
+            else
+            {
+                return BadRequest("User ID is not available.");
+            }
         }
+
+        [HttpPost]
+        public IActionResult SetProductPriceFormCart(decimal total)
+        {
+            int intValue = (int)total;
+            HttpContext.Session.SetInt32("productPrice", intValue);
+            return Ok();
+        }
+
+
+
+
+
+
     }
+}

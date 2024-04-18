@@ -11,51 +11,53 @@ using Stripe;
 using Stripe.Checkout;
 
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Razorpay.Api;
 
 namespace Hiraj_Foods.Controllers
 {
-	public class UserController : Controller
-	{
-		private readonly IUnitOfWorks unitOfWorks;
-		private readonly IHttpContextAccessor _httpContextAccessor;
+    public class UserController : Controller
+    {
+        private readonly IUnitOfWorks unitOfWorks;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly StripeSettings _stripeSettings;
 
         public UserController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment _webHostEnvironment, IOptions<StripeSettings> stripeSettings)
-		{
-			this.unitOfWorks = unitOfWorks;
-			_httpContextAccessor = httpContextAccessor;
+        {
+            this.unitOfWorks = unitOfWorks;
+            _httpContextAccessor = httpContextAccessor;
             this._webHostEnvironment = _webHostEnvironment;
             _stripeSettings = stripeSettings.Value;
         }
 
-		public IActionResult Profile()
-		{
-			var userEmail = HttpContext.Session.GetString("UserEmail");
-			SetLayoutModel();
+        public IActionResult Profile()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            SetLayoutModel();
 
-			if (userEmail == null)
-			{
-				return RedirectToAction("Login", "Signup");
-			}
+            if (userEmail == null)
+            {
+                return RedirectToAction("Login", "Signup");
+            }
 
-			var user = unitOfWorks.Users.GetByEmail(userEmail);
-			var UserProfile = unitOfWorks.UserImage.GetByUserId(user.Id);
+            var user = unitOfWorks.Users.GetByEmail(userEmail);
+            var UserProfile = unitOfWorks.UserImage.GetByUserId(user.Id);
 
             var model = new Tuple<User, UserProfileImg>(user, UserProfile);
 
             return View(model);
-		}
+        }
 
 
-		[HttpGet]
-		public IActionResult Cart()
-		{
-			int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-			var cartItems = unitOfWorks.Cart.GetByUserId(userId);
-			SetLayoutModel();
-			return View(cartItems);
-		}
+        [HttpGet]
+        public IActionResult Cart()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+            SetLayoutModel();
+            return View(cartItems);
+        }
 
         [HttpGet]
         public IActionResult Payment()
@@ -67,69 +69,69 @@ namespace Hiraj_Foods.Controllers
         }
 
         [HttpGet]
-		public IActionResult AddCart(int id)
-		{
-			int? userId = HttpContext.Session.GetInt32("UserId");
-			var product = unitOfWorks.Product.GetById(id);
+        public IActionResult AddCart(int id)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            var product = unitOfWorks.Product.GetById(id);
 
-			if (userId is not null)
-			{
-				var user = unitOfWorks.Users.GetById(userId.Value);
-				var existingCartItem = unitOfWorks.Cart.GetByUserIdAndProductId(user.Id, product.Id);
+            if (userId is not null)
+            {
+                var user = unitOfWorks.Users.GetById(userId.Value);
+                var existingCartItem = unitOfWorks.Cart.GetByUserIdAndProductId(user.Id, product.Id);
 
-				if (existingCartItem == null)
-				{
-					var cart = new Cart
-					{
-						UserId = user.Id,
-						ProductId = product.Id,
-						ProductName = product.ProductName,
-						ProductImageUrl = product.ProductImageUrl,
-						ProductDescription = product.ProductDescription,
-						ProductWeight = product.ProductWeight,
-						ProductPrice = product.ProductPrice
-					};
+                if (existingCartItem == null)
+                {
+                    var cart = new Cart
+                    {
+                        UserId = user.Id,
+                        ProductId = product.Id,
+                        ProductName = product.ProductName,
+                        ProductImageUrl = product.ProductImageUrl,
+                        ProductDescription = product.ProductDescription,
+                        ProductWeight = product.ProductWeight,
+                        ProductPrice = product.ProductPrice
+                    };
 
-					unitOfWorks.Cart.Add(cart);
-					unitOfWorks.Save();
-					TempData["Success"] = "Product added to cart.";
-				}
-				else
-				{
-					TempData["Info"] = "Product is already in your cart.";
-				}
+                    unitOfWorks.Cart.Add(cart);
+                    unitOfWorks.Save();
+                    TempData["Success"] = "Product added to cart.";
+                }
+                else
+                {
+                    TempData["Info"] = "Product is already in your cart.";
+                }
 
-				return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
-			}
+                return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
+            }
 
-			TempData["Error"] = "You need to be logged in to add the product to the cart.";
-			return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
-		}
+            TempData["Error"] = "You need to be logged in to add the product to the cart.";
+            return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
+        }
 
-		[HttpGet]
-		public IActionResult DeleteFromCart(int id)
-		{
-			var cartitem = unitOfWorks.Cart.GetById(id);
+        [HttpGet]
+        public IActionResult DeleteFromCart(int id)
+        {
+            var cartitem = unitOfWorks.Cart.GetById(id);
 
-			if (cartitem is not null)
-			{
-				unitOfWorks.Cart.Remove(cartitem);
-				unitOfWorks.Save();
-				TempData["Success"] = "Item Removed From Cart";
-			}
-			else
-			{
-				TempData["Error"] = "Item Not Removed";
-			}
+            if (cartitem is not null)
+            {
+                unitOfWorks.Cart.Remove(cartitem);
+                unitOfWorks.Save();
+                TempData["Success"] = "Item Removed From Cart";
+            }
+            else
+            {
+                TempData["Error"] = "Item Not Removed";
+            }
 
-			return RedirectToAction("Cart", "User");
-		}
+            return RedirectToAction("Cart", "User");
+        }
 
-		public void SetLayoutModel()
-		{
-			int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-			var user = unitOfWorks.Users.GetById(userId);
-			var cartItems = unitOfWorks.Cart.GetByUserId(userId);
+        public void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var user = unitOfWorks.Users.GetById(userId);
+            var cartItems = unitOfWorks.Cart.GetByUserId(userId);
             var Profilepic = unitOfWorks.UserImage.GetByUserId(userId);
 
 
@@ -150,9 +152,14 @@ namespace Hiraj_Foods.Controllers
 
 
             _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
-		}
+        }
 
-
+        [HttpPost]
+        public IActionResult SetProductPrice(int price)
+        {
+            HttpContext.Session.SetInt32("productPrice", price);
+            return Ok();
+        }
 
 
         [HttpPost]
@@ -234,8 +241,9 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult Strippayment()
         {
-            int amount = 200;
-            var currency = "usd"; // Currency code
+            int? amt = HttpContext.Session.GetInt32("productPrice");
+            int? amount = amt;
+            var currency = "inr"; // Change currency code to INR for Indian Rupees
             var successUrl = "https://localhost:7122/Home/success";
             var cancelUrl = "https://localhost:7122/Home/cancel";
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
@@ -243,26 +251,28 @@ namespace Hiraj_Foods.Controllers
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string>
-                {
-                    "card"
-                },
+        {
+            "card",
+           
+            // Card payment meth  // Paytm payment method
+        },
                 LineItems = new List<SessionLineItemOptions>
+        {
+            new SessionLineItemOptions
+            {
+                PriceData = new SessionLineItemPriceDataOptions
                 {
-                    new SessionLineItemOptions
+                    Currency = currency,
+                    UnitAmount = amount * 100, // Amount in smallest currency unit (paisa)
+                    ProductData = new SessionLineItemPriceDataProductDataOptions
                     {
-                        PriceData = new SessionLineItemPriceDataOptions
-                        {
-                            Currency = currency,
-                            UnitAmount = Convert.ToInt32(amount) * 100,  // Amount in smallest currency unit (e.g., cents)
-                            ProductData = new SessionLineItemPriceDataProductDataOptions
-                            {
-                                Name = "Product Name",
-                                Description = "Product Description"
-                            }
-                        },
-                        Quantity = 1
+                        Name = "Product Name",
+                        Description = "Product Description"
                     }
                 },
+                Quantity = 1
+            }
+        },
                 Mode = "payment",
                 SuccessUrl = successUrl,
                 CancelUrl = cancelUrl
@@ -271,11 +281,26 @@ namespace Hiraj_Foods.Controllers
             var service = new SessionService();
             var session = service.Create(options);
 
-
             return Redirect(session.Url);
         }
 
+
+
+
+        [HttpGet]
+        public IActionResult Orders()
+        {
+            SetLayoutModel();
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            // Fetch orders and order them by date in descending order
+            var orders = unitOfWorks.Uorders.GetAllByUserId(userId)
+                                            .OrderByDescending(o => o.date)
+                                            .ToList();
+
+            return View(orders);
+        }
+
+
     }
-
-
 }

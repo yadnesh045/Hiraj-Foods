@@ -4,172 +4,421 @@
     Layout = null;
 }
 
-<html lang="en">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<head>
 
-    <style>
-        .text-danger {
-            color: red;
+
+<style>
+    /* 64ac15 */
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    body {
+        padding: 1em;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        color: #b9b9b9;
+        background-color: #e3e3e3;
+    }
+
+    h4 {
+        color: #f0a500;
+    }
+
+    input,
+    input[type="radio"] + label,
+    input[type="checkbox"] + label:before,
+    select option,
+    select {
+        width: 100%;
+        padding: 1em;
+        background-color: #f9f9f9;
+        border: 1px solid #e5e5e5;
+        border-radius: 3px;
+        -webkit-transition: 0.35s ease-in-out;
+        -moz-transition: 0.35s ease-in-out;
+        -o-transition: 0.35s ease-in-out;
+        transition: 0.35s ease-in-out;
+        transition: all 0.35s ease-in-out;
+    }
+
+        input:focus {
+            outline: 0;
+            border-color: #bd8200;
         }
-    </style>
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
-    <link href="~/css/checkout/checkout.css" rel="stylesheet" />
-    <link href="~/css/user-css/checkoutradiobutton.css" rel="stylesheet" />
-</head>
+            input:focus + .input-icon i {
+                color: #f0a500;
+            }
+
+            input:focus + .input-icon:after {
+                border-right-color: #f0a500;
+            }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+            input[type="radio"] + label,
+            select {
+                display: inline-block;
+                width: 50%;
+                text-align: center;
+                float: left;
+                border-radius: 0;
+            }
+
+                input[type="radio"] + label:first-of-type {
+                    border-top-left-radius: 3px;
+                    border-bottom-left-radius: 3px;
+                }
+
+                input[type="radio"] + label:last-of-type {
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                }
+
+                input[type="radio"] + label i {
+                    padding-right: 0.4em;
+                }
+
+                input[type="radio"]:checked + label,
+                input:checked + label:before,
+                select:focus,
+                select:active {
+                    background-color: #f0a500;
+                    color: #fff;
+                    border-color: #bd8200;
+                }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+            input[type="checkbox"] + label {
+                position: relative;
+                display: block;
+                padding-left: 1.6em;
+            }
+
+                input[type="checkbox"] + label:before {
+                    position: absolute;
+                    top: 0.2em;
+                    left: 0;
+                    display: block;
+                    width: 1em;
+                    height: 1em;
+                    padding: 0;
+                    content: "";
+                }
+
+                input[type="checkbox"] + label:after {
+                    position: absolute;
+                    top: 0.45em;
+                    left: 0.2em;
+                    font-size: 0.8em;
+                    color: #fff;
+                    opacity: 0;
+                }
+
+        input:checked + label:after {
+            opacity: 1;
+        }
+
+    select {
+        height: 3.4em;
+    }
+
+        select:first-of-type {
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        select:last-of-type {
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        select:focus,
+        select:active {
+            outline: 0;
+        }
+
+        select option {
+            background-color: #f0a500;
+            color: #fff;
+        }
+
+    .input-group {
+        margin-bottom: 1em;
+        zoom: 1;
+    }
+
+        .input-group:before,
+        .input-group:after {
+            content: "";
+            display: table;
+        }
+
+        .input-group:after {
+            clear: both;
+        }
+
+    .input-group-icon {
+        position: relative;
+    }
+
+        .input-group-icon input {
+            padding-left: 4.4em;
+        }
+
+        .input-group-icon .input-icon {
+            position: absolute;
+            top: 0.99em;
+            left: 0;
+            width: 3.4em;
+            height: 3.4em;
+            text-align: center;
+            pointer-events: none;
+        }
+
+            .input-group-icon .input-icon:after {
+                position: absolute;
+                top: 0.6em;
+                bottom: 0.6em;
+                left: 3.4em;
+                display: block;
+                border-right: 1px solid #e5e5e5;
+                content: "";
+                -webkit-transition: 0.35s ease-in-out;
+                -moz-transition: 0.35s ease-in-out;
+                -o-transition: 0.35s ease-in-out;
+                transition: 0.35s ease-in-out;
+                transition: all 0.35s ease-in-out;
+            }
+
+            .input-group-icon .input-icon i {
+                -webkit-transition: 0.35s ease-in-out;
+                -moz-transition: 0.35s ease-in-out;
+                -o-transition: 0.35s ease-in-out;
+                transition: 0.35s ease-in-out;
+                transition: all 0.35s ease-in-out;
+            }
+
+    .container {
+        max-width: 38em;
+        padding: 1em 3em 2em 3em;
+        margin: 0em auto;
+        background-color: #fff;
+        border-radius: 4.2px;
+        box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
+    }
+
+    .row {
+        zoom: 1;
+    }
+
+        .row:before,
+        .row:after {
+            content: "";
+            display: table;
+        }
+
+        .row:after {
+            clear: both;
+        }
+
+    .col-half {
+        padding-right: 10px;
+        float: left;
+        width: 50%;
+    }
+
+        .col-half:last-of-type {
+            padding-right: 0;
+        }
+
+    .col-third {
+        padding-right: 10px;
+        float: left;
+        width: 33.33333333%;
+    }
+
+        .col-third:last-of-type {
+            padding-right: 0;
+        }
+
+    .button-5 {
+        align-items: center;
+        background-clip: padding-box;
+        background-color: #fa6400;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: auto;
+    }
+
+        .button-5:hover,
+        .button-5:focus {
+            background-color: #fb8332;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        }
+
+        .button-5:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-5:active {
+            background-color: #c85000;
+            box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+            transform: translateY(0);
+        }
+
+</style>
 
 
 
-<body>
 
-    <img src="~/img/hiraj2.png" />
 
-    <form asp-action="Checkout" asp-controller="Yadnesh" method="post" class="form">
-        <h1 class="Header">Checkout</h1>
+<div class="container">
+    <form asp-action="Checkout" asp-controller="Yadnesh" method="post">
+        <div class="row">
+            <h4>Address</h4>
+            <div class="input-group input-group-icon">
+                <input asp-for="Country" type="text" placeholder="Country">
+                <div class="input-icon"><i class="bi bi-globe-americas"></i></div>
+            </div>
+            <div class="input-group input-group-icon">
+                <input asp-for="City" type="text" placeholder="City">
+                <div class="input-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            </div>
+            <div class="input-group input-group-icon">
+                <input asp-for="Address1" type="text" placeholder="Address Line1">
+                <div class="input-icon"><i class="bi bi-compass-fill"></i></div>
+            </div>
+            <div class="input-group input-group-icon">
+                <input asp-for="Address2" type="text" placeholder="Address line 2">
+                <div class="input-icon"><i class="bi bi-compass-fill"></i></div>
+            </div>
+            <div class="input-group input-group-icon">
+                <input asp-for="pincode" type="text" placeholder="Zip Code">
+                <div class="input-icon"><i class="bi bi-pin-map-fill"></i></div>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Payment Method</h4>
+            <div class="input-group">
+                <input id="payment-method-net-banking" type="radio" name="paymentMethod" value="Netbanking">
+                <label for="payment-method-net-banking">Net Banking</label>
+                <input id="payment-method-cash-on-delivery" type="radio" name="paymentMethod" value="CashOnDelivery">
+                <label for="payment-method-cash-on-delivery">Cash on Delivery</label>
+            </div>
+        </div>
+        <div class="row" id="net-banking-dropdown" style="display: none;">
+            <h4 style="color: #f0a500;">Net Banking Options</h4>
+            <div class="input-group-1">
+                <input id="net-banking-stripe" type="radio" name="netBankingOption" value="Stripe" style="display: none;">
+                <label for="net-banking-stripe" class="btn btn-warning" style="margin-right: 10px;">Stripe</label>
 
-        <!-- Progress Bar -->
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-            <div class="progress-step active" data-title="Address"></div>
-            <div class="progress-step" data-title="Select Payment Way"></div>
-            <div class="progress-step" data-title="Confirm"></div>
+                <input id="net-banking-razor" type="radio" name="netBankingOption" value="Razor" style="display: none;">
+                <label for="net-banking-razor" class="btn btn-warning">Razor</label>
+            </div>
         </div>
 
-        <!-- Steps -->
-        <div class="form-step active">
-            <h3>Add Address</h3>
+       
 
+        <div class="row">
+            <h4>Terms and Conditions</h4>
             <div class="input-group">
-                <label asp-for="Country">Country</label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
+                <input id="terms" type="checkbox">
+                <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
             </div>
-
-            <div class="input-group">
-                <label asp-for="City">City</label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-
-            <div class="input-group">
-                <label asp-for="Address1">Address Line 1</label>
-                <input asp-for="Address1" class="form-control" />
-                <span asp-validation-for="Address1" class="text-danger"></span>
-            </div>
-
-            <div class="input-group">
-                <label asp-for="Address2">Address Line 2</label>
-                <input asp-for="Address2" class="form-control" />
-                <span asp-validation-for="Address2" class="text-danger"></span>
-            </div>
-
-            <div class="input-group">
-                <label asp-for="pincode">Pin-Code</label>
-                <input asp-for="pincode" class="form-control" type="number" placeholder="Enter 3 to 6 Digit Pin-Code" pattern="\d{3,6}" min="000" required />
-                <span asp-validation-for="pincode" class="text-danger"></span>
-            </div>
-
-
-            <div class="">
-                <a class="btn btn-next">Next</a>
-            </div>
-        </div>
-
-        <div class="form-step" style="text-align: center;">
-            <h3>Select Payment Way</h3>
-            <div class="input-group" style="margin-bottom: 20px;">
-                <input type="radio" id="cash-on-delivery" asp-for="paymentMethod" value="CashOnDelivery" class="custom-radio" checked>
-                <label for="cash-on-delivery" class="custom-radio-label">Cash on Delivery</label>
-            </div>
-            <div class="input-group" style="margin-bottom: 20px;">
-                <input type="radio" id="netbanking" asp-for="paymentMethod" value="Netbanking" class="custom-radio">
-                <label for="netbanking" class="custom-radio-label">Netbanking</label>
-            </div>
-
-            <!-- Dropdown for selecting bank -->
-            <div id="bankDropdown" style="display: none; margin-bottom: 20px;">
-                <ul style="list-style-type: none; padding: 0;">
-                    <li style="display: inline-block; margin-right: 10px;">
-                        <a asp-action="Payment" asp-controller="User" class="btn btn-outline-warning" target="_blank">Pay With RazorPay</a>
-                    </li>
-                    <li style="display: inline-block;">
-                        <a asp-action="Strippayment" asp-controller="User" class="btn btn-outline-warning" target="_blank">Pay With StripePay</a>
-                    </li>
-                </ul>
-            </div>
-
-
-            <div class="btn-group" style="margin-top: 20px;">
-                <a class="btn btn-prev" style="display: inline-block; padding: 10px 20px; border: none; border-radius: 20px; background-color: #007bff; color: #fff; text-decoration: none; transition: background-color 0.3s;">Previous</a>
-                <a class="btn btn-next" style="display: inline-block; padding: 10px 20px; border: none; border-radius: 20px; background-color: #007bff; color: #fff; text-decoration: none; transition: background-color 0.3s;">Next</a>
-            </div>
-        </div>
-
-        <div class="form-step">
-            <h3>Confirm Order</h3>
-            <div class="experiences-group">
-                <div class="experience-item">
-                    <!-- Your order details go here -->
-                </div>
-            </div>
-            <div class="message">
-                <p>Please review your order details and confirm your purchase.</p>
-            </div>
-           
-            <div class="btn-group">
-                <a class="btn btn-prev">Previous</a>
-                <button type="submit" class="btn btn-complete">Complete</button>
-            </div>
-        </div>
+            <button id="submitBtn" type="submit" class="button-5" style="display: none;">Submit </button>
     </form>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const cashOnDeliveryRadio = document.getElementById('cash-on-delivery');
-            const netbankingRadio = document.getElementById('netbanking');
-            const bankDropdown = document.getElementById('bankDropdown');
+</div>
 
-            cashOnDeliveryRadio.addEventListener('change', function () {
-                if (cashOnDeliveryRadio.checked) {
-                    bankDropdown.style.display = 'none';
-                }
-            });
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var netBankingRadio = document.getElementById("payment-method-net-banking");
+        var cashOnDeliveryRadio = document.getElementById("payment-method-cash-on-delivery");
+        var netBankingDropdown = document.getElementById("net-banking-dropdown");
 
-            netbankingRadio.addEventListener('change', function () {
-                if (netbankingRadio.checked) {
-                    bankDropdown.style.display = 'block';
-                } else {
-                    bankDropdown.style.display = 'none';
-                }
-            });
-
-            // Check initial state of the radio buttons
-            if (netbankingRadio.checked) {
-                bankDropdown.style.display = 'block';
+        // Event listener for Net Banking radio button
+        netBankingRadio.addEventListener("change", function () {
+            if (netBankingRadio.checked) {
+                netBankingDropdown.style.display = "block";
             } else {
-                bankDropdown.style.display = 'none';
+                netBankingDropdown.style.display = "none";
             }
         });
 
+        // Event listener for Cash on Delivery radio button
+        cashOnDeliveryRadio.addEventListener("change", function () {
+            if (cashOnDeliveryRadio.checked) {
+                netBankingDropdown.style.display = "none";
+            }
+        });
+    });
 
 
-      
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var stripeButton = document.getElementById("net-banking-stripe");
+        var razorButton = document.getElementById("net-banking-razor");
+
+        stripeButton.addEventListener("click", function () {
+            window.open("/User/Strippayment", "_blank"); // Open the link in a new tab
+        });
+
+        razorButton.addEventListener("click", function () {
+            window.open("/MyOrder/Index", "_blank"); // Open the link in a new tab
+        });
+    });
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var termsCheckbox = document.getElementById("terms");
+        var submitButton = document.getElementById("submitBtn");
+
+        termsCheckbox.addEventListener("change", function () {
+            if (termsCheckbox.checked) {
+                submitButton.style.display = "block";
+            } else {
+                submitButton.style.display = "none";
+            }
+        });
+    });
 
 
 
 
 
 
-    </script>
 
-    <script src="~/css/checkout/checkout.js"></script>
-</body>
-
-</html>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</script>

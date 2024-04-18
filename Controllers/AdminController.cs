@@ -11,10 +11,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Hiraj_Foods.Controllers
 {
-    
+
     [Authorize]
     public class AdminController : Controller
     {
@@ -78,32 +79,32 @@ namespace Hiraj_Foods.Controllers
 
 
 
-             var feedback = unitOfWorks.Feedback.GetAll().ToList();
+            var feedback = unitOfWorks.Feedback.GetAll().ToList();
 
 
-			// Classify feedback messages
-			int positiveCount = 0, negativeCount = 0, neutralCount = 0;
-			foreach (var feedbackItem in feedback)
-			{
-				var sentiment = ClassifySentiment(feedbackItem.Message);
-				switch (sentiment)
-				{
-					case "Positive":
-						positiveCount++;
-						break;
-					case "Negative":
-						negativeCount++;
-						break;
-					default:
-						neutralCount++;
-						break;
-				}
-			}
+            // Classify feedback messages
+            int positiveCount = 0, negativeCount = 0, neutralCount = 0;
+            foreach (var feedbackItem in feedback)
+            {
+                var sentiment = ClassifySentiment(feedbackItem.Message);
+                switch (sentiment)
+                {
+                    case "Positive":
+                        positiveCount++;
+                        break;
+                    case "Negative":
+                        negativeCount++;
+                        break;
+                    default:
+                        neutralCount++;
+                        break;
+                }
+            }
 
 
-			ViewBag.PositiveFeedbackCount = positiveCount;
-			ViewBag.NegativeFeedbackCount = negativeCount;
-			ViewBag.NeutralFeedbackCount = neutralCount;
+            ViewBag.PositiveFeedbackCount = positiveCount;
+            ViewBag.NegativeFeedbackCount = negativeCount;
+            ViewBag.NeutralFeedbackCount = neutralCount;
 
 
             var enquiry = unitOfWorks.Enquiry.GetAll().ToList();
@@ -231,7 +232,7 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    productInDb.ProductFlavourImageUrl = Path.Combine("Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
+                    productInDb.ProductFlavourImageUrl = Path.Combine("/Db_Images", "ProductFlavourImages", fileName).Replace("\\", "/"); ;
 
                 }
 
@@ -244,16 +245,21 @@ namespace Hiraj_Foods.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    productInDb.ProductImageUrl = Path.Combine("Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
+                    productInDb.ProductImageUrl = Path.Combine("/Db_Images", "ProductImages", fileName).Replace("\\", "/"); ;
                 }
 
                 unitOfWorks.Product.Update(productInDb);
                 unitOfWorks.Save();
+                TempData["Message"] = "Product Updated successfully!";
+                return RedirectToAction("ViewProduct");
+            }
+            else
+            {
 
+                TempData["Error"] = "Product Not Updated !!!";
+                return RedirectToAction("ViewProduct");
             }
 
-            TempData["Message"] = "Product Updated successfully!";
-            return RedirectToAction("ViewProduct");
 
         }
 
@@ -442,9 +448,9 @@ namespace Hiraj_Foods.Controllers
         public IActionResult ViewContact()
         {
             SetAdminData();
-            var contacts = unitOfWorks.Contact.GetAll().ToList();
+            var contacts = unitOfWorks.Contact.GetAll().OrderByDescending(c => c.Id).ToList();
 
-          
+
 
 
             var model = new Tuple<List<Contact>>(contacts);
@@ -670,7 +676,7 @@ namespace Hiraj_Foods.Controllers
             var model = new Tuple<User>(user);
 
             return View(model);
-            
+
         }
 
         [HttpPost]
@@ -743,21 +749,60 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult Notification()
         {
+
+
+
+            var feedback = unitOfWorks.Feedback.GetAll().Count();
+            var contact = unitOfWorks.Contact.GetAll().Count();
+            var enquiry = unitOfWorks.Enquiry.GetAll().Count();
+
+
+
+            ViewBag.Contact = contact;
+            ViewBag.Enquiry = enquiry;
+            ViewBag.Feedback = feedback;
+
             SetAdminData();
+
             return View();
         }
 
 
+        [HttpGet]
+        public IActionResult EditCheckout(int id)
+        {
+
+            var user = unitOfWorks.Users.GetAll().ToList();
+
+            var checkout = unitOfWorks.Checkout.GetById(id);
+
+            SetAdminData();
+
+            var model = new Tuple<Checkout,List<User>>(checkout,user);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditCheckout(Checkout checkout)
+        {
+            if (ModelState.IsValid)
+            {
+                var checkoutInDb = unitOfWorks.Checkout.GetById(checkout.id);
+
+                checkoutInDb.PaymentStatus = checkout.PaymentStatus;
 
 
-
-
-
-
-
-
-
-
+                unitOfWorks.Checkout.Update(checkoutInDb);
+                unitOfWorks.Save();
+                TempData["Message"] = "Checkout Updated successfully!";
+                return RedirectToAction("ViewCheckouts");
+            }
+            else
+            {
+                TempData["Error"] = "Checkout Not Updated !!!";
+                return RedirectToAction("ViewCheckouts");
+            }
+        }
 
     }
 }

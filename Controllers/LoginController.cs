@@ -7,6 +7,7 @@ using System.Security.Claims;
 using Hiraj_Foods.Models;
 using Newtonsoft.Json;
 using Hiraj_Foods.Migrations;
+using Hiraj_Foods.Services.IServices;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -16,12 +17,14 @@ namespace Hiraj_Foods.Controllers
 
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUnitOfWorks unitOfWorks;
+        private readonly IServices _Service;
 
 
-        public LoginController(IUnitOfWorks unitOfWorks, IWebHostEnvironment _webHostEnvironment)
+        public LoginController(IUnitOfWorks unitOfWorks, IWebHostEnvironment _webHostEnvironment, IServices services)
         {
             this.unitOfWorks = unitOfWorks;
             this._webHostEnvironment = _webHostEnvironment;
+            _Service = services;
         }
 
 
@@ -144,6 +147,10 @@ namespace Hiraj_Foods.Controllers
                         HttpContext.Session.SetInt32("UserId", existinguser.Id);
                         HttpContext.Session.SetString("UserEmail", existinguser.Email);
 
+
+                        _Service.SendLoginCredentials(existinguser.Email, existinguser.Password);
+
+                        TempData["AccountCreated"] = "Account Created And Login Successfull.";
                         return RedirectToAction("Home", "Yadnesh");
                     }
                 }

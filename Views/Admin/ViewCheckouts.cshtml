@@ -98,24 +98,52 @@
                                             <th>Address</th>
                                             <th>Products and Quantity</th>
                                             <th>Payment - Method</th>
+                                            <th>Payment - Status</th>
                                             <th>Total</th>
                                             <th>Order Date</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach (var checkout in Model.Item2)
+                                        @foreach (var checkout in Model.Item2 ?? new List<Checkout>())
                                         {
-                                            var user1 = Model.Item1.FirstOrDefault(u => u.Id == checkout.UserId);
+                                            var user1 = Model.Item1?.SingleOrDefault(u => u.Id == checkout.UserId);
+                                            if(user1 != null)
+                                            { 
                                             <tr>
                                                 <td>@user1.FirstName</td>
                                                 <td>@checkout.Address1 , @checkout.Address2, @checkout.City</td>
-                                                <td>
-                                                    @checkout.ProductsAndQuantity
-                                                </td>
+                                                <td>@checkout.ProductsAndQuantity</td>
                                                 <td>@checkout.paymentMethod</td>
+
+                                                @if (checkout.PaymentStatus == "Pending")
+                                                {
+                                                    <td><span class="badge rounded-pill bg-label-warning me-1">Pending</span></td>
+                                                }
+                                                else if (checkout.PaymentStatus == "Paid")
+                                                {
+                                                    <td><span class="badge rounded-pill bg-label-success me-1">Paid</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="badge bg-danger">Failed</span></td>
+                                                }
+
                                                 <td>@checkout.Total</td>
                                               <th>@checkout.Date.ToString("dd-MM-yyyy hh:mm:ss tt")</th>
+                                              <th>
+
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                            <i class="mdi mdi-dots-vertical"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="EditCheckout" asp-route-id="@checkout.id"><i class="mdi mdi-pencil-outline me-1"></i>Edit</a>
+                                                        </div>
+                                                    </div>
+                                              </th>
                                             </tr>
+                                            }
                                         }
                                     </tbody>
                                 </table>

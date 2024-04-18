@@ -5,6 +5,10 @@ using Hiraj_Foods.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Hiraj_Foods.Models.View_Model;
+using Hiraj_Foods.Service;
+using Hiraj_Foods.Services.IServices;
+using Microsoft.Extensions.Hosting.Internal;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,12 +26,15 @@ builder.Services.AddControllersWithViews(options =>
     });
 });
 
+builder.Services.AddScoped<IServices, Services>();
+
+
 
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(5); // You can set Time 
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // You can set Time 
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -83,11 +90,13 @@ app.UseStaticFiles();
 
 app.UseSession();
 app.UseRouting();
-
 app.UseAuthentication();
 
 app.UseAuthorization();
 
+var hostingEnvironment = app.Services.GetRequiredService<IWebHostEnvironment>();
+
+RotativaConfiguration.Setup(hostingEnvironment.WebRootPath, @"C:\Program Files\wkhtmltopdf\bin");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Yadnesh}/{action=Home}/{id?}");

@@ -1,10 +1,17 @@
 $(document).ready(function () {
-    // Add event listener to the checkout button
-    $("#checkoutButton").click(function () {
-        // Get total price
-        var totalPrice = parseFloat($("#totalAmount").text().replace('$', ''));
 
-        // Get product names and quantities
+
+    $("#checkoutButton").click(function () {
+
+        var totalPrice = 0;
+
+        $('.quantity-input').each(function () {
+            var price = parseFloat($(this).data('price'));
+            var quantity = parseInt($(this).val());
+            totalPrice += price * quantity;
+
+        });
+
         var productDetails = [];
         $(".card-title").each(function () {
             var productName = $(this).text();
@@ -13,16 +20,15 @@ $(document).ready(function () {
         });
 
 
-        // Use AJAX to send the total price and product details to the server
         $.ajax({
-            type: "POST", // Use POST method
-            url: "/Yadnesh/SaveTotal", // URL of your controller method
-            data: { total: totalPrice, products: productDetails.join(", ") }, // Data to send
+            type: "POST", 
+            url: "/Yadnesh/SaveTotal",
+            data: { total: totalPrice, products: productDetails.join(", ") }, 
             success: function (response) {
-                // Handle success response
-                console.log(response); // For example, log the response to console
+      
+                console.log(response); 
 
-                // Store the quantity in the session
+                
                 //   sessionStorage.setItem('productDetails', productDetails.join(", "));
 
 
@@ -53,6 +59,8 @@ $(document).ready(function () {
 
         });
         $('#totalAmount').text('Rs.' + totalPrice.toFixed(2));
+
+      
     }
 
     // Call updateTotalPrice immediately after defining it

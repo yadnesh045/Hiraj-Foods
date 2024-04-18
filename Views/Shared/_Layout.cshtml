@@ -1,6 +1,8 @@
-﻿@using Hiraj_Foods.Models.View_Model @{
+﻿@using Hiraj_Foods.Models.View_Model 
+@{
     var userEmail = Context.Session.GetString("UserEmail"); var userId = Context.Session.GetInt32("UserId");
-} @{
+} 
+@{
     var layoutModel = Context.Items["LayoutModel"] as LayoutModel; var firstname =
         layoutModel?.FirstName; var lastName = layoutModel?.LastName; var cartItemCount = layoutModel?.CartItemCount; string profileimg = layoutModel?.profilepic;
 }
@@ -128,7 +130,7 @@
                                 <a href="https://www.instagram.com/hiraj_foods?r=nametag" target="_blank" class=""><img src="~/img/instagram.png" /></a>&nbsp;&nbsp;
                                 <a href="mailto:info@hirajfoods.com" target="_blank" class="Email"><img src="~/img/email.png" /></a>&nbsp;&nbsp;&nbsp;
                                 <a href="#" target="_blank" class="vimeo"><img src="~/img/whatsapp.png" /></a>&nbsp;&nbsp;&nbsp;
-                                <a asp-action="Login" asp-controller="Login" class="Email"><img src="~/anurag-images/navigation-button.png" /></a>
+                                <a asp-action="Login" asp-controller="Login" target="_blank" class="Email"><img src="~/anurag-images/navigation-button.png" /></a>
                             </div>
                         </div>
                     </div>
@@ -169,7 +171,7 @@
                                         <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
                                     </li>
 
-                                  
+
 
 
                                     @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
@@ -341,13 +343,14 @@
                                                     <img src="@profileimg" alt="some user image" />
                                                 </div>
                                             </div>
-                                            
+
                                             <ul id="dropdownMenu" class="dropdown-menu">
                                                 <li><a asp-area="" asp-controller="User" asp-action="Profile">Profile</a></li>
-
+                                                <li><a asp-area="" asp-controller="User" asp-action="Orders">Orders</a></li>
                                                 <li>
                                                     <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @cartItemCount) </span></a>
                                                 </li>
+
                                                 <li><a asp-area="" asp-controller="Login" asp-action="UserLogout">Logout</a></li>
                                             </ul>
                                         </li>
