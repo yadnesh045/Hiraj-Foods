@@ -20,5 +20,7 @@ namespace Hiraj_Foods.Models
         public decimal Total { get; set; }
         [ValidateNever]
         public DateTime date { get; set; }
+
+        public string Paymentmethod { get;  set; }
     }
 }

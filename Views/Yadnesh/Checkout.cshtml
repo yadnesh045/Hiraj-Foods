@@ -122,8 +122,6 @@
                     font-size: 0.8em;
                     color: #fff;
                     opacity: 0;
-                    font-family: FontAwesome;
-                    content: "\f00c";
                 }
 
         input:checked + label:after {
@@ -252,12 +250,51 @@
         .col-third:last-of-type {
             padding-right: 0;
         }
-    /* media only screen and (max-width: 540px) {
-          .col-half {
-            width: 100%;
-            padding-right: 0;
-          }
-        } */
+
+    .button-5 {
+        align-items: center;
+        background-clip: padding-box;
+        background-color: #fa6400;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: auto;
+    }
+
+        .button-5:hover,
+        .button-5:focus {
+            background-color: #fb8332;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        }
+
+        .button-5:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-5:active {
+            background-color: #c85000;
+            box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+            transform: translateY(0);
+        }
 
 </style>
 
@@ -318,7 +355,7 @@
                 <input id="terms" type="checkbox">
                 <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
             </div>
-            <button id="submitBtn" type="submit" class="btn btn-warning" style="display: none;">Submit </button>
+            <button id="submitBtn" type="submit" class="button-5" style="display: none;">Submit </button>
     </form>
 </div>
 
@@ -353,13 +390,14 @@
         var razorButton = document.getElementById("net-banking-razor");
 
         stripeButton.addEventListener("click", function () {
-            window.location.href = "/User/Strippayment"; // Change the URL to match your route
+            window.open("/User/Strippayment", "_blank"); // Open the link in a new tab
         });
 
         razorButton.addEventListener("click", function () {
-            window.location.href = "/MyOrder/Index"; // Change the URL to match your route
+            window.open("/MyOrder/Index", "_blank"); // Open the link in a new tab
         });
     });
+
 
 
 

@@ -5,6 +5,8 @@ using Hiraj_Foods.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Hiraj_Foods.Models.View_Model;
+using Microsoft.Extensions.Hosting.Internal;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,11 +85,13 @@ app.UseStaticFiles();
 
 app.UseSession();
 app.UseRouting();
-
 app.UseAuthentication();
 
 app.UseAuthorization();
 
+var hostingEnvironment = app.Services.GetRequiredService<IWebHostEnvironment>();
+
+RotativaConfiguration.Setup(hostingEnvironment.WebRootPath, @"C:\Program Files\wkhtmltopdf\bin");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Yadnesh}/{action=Home}/{id?}");

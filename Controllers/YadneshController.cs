@@ -168,6 +168,7 @@ namespace Hiraj_Foods.Controllers
                     Products = productsAndQuantities,
                     date = DateTime.Now,
                     Total = total,
+                    Paymentmethod = checkout.paymentMethod
                 };
                 unitOfWorks.Uorders.Add(order);
                 unitOfWorks.Save();

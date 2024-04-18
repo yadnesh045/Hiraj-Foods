@@ -44,8 +44,11 @@
                                     <!-- Add any input fields or buttons here if needed -->
                                 </div>
                             </div>
+                            <a href="@Url.Action("GenerateInvoicePDF", "Anurag", new { orderId = item.Id })">Download Invoice</a>
+                            <!-- Assuming item.Id represents the order ID -->
                         </div>
                     }
+
                 </div>
             </div>
         </div>

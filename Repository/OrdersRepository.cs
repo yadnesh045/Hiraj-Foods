@@ -1,6 +1,7 @@
 ﻿using Hiraj_Foods.Data;
 using Hiraj_Foods.Models;
 using Hiraj_Foods.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hiraj_Foods.Repository
 {
@@ -15,6 +16,11 @@ namespace Hiraj_Foods.Repository
         public IEnumerable<Orders> GetAllByUserId(int userId)
         {
             return _db.Uorders.Where(o => o.UserId == userId);
+        }
+
+        public Orders GetById(int orderId)
+        {
+            return _db.Uorders.FirstOrDefault(o => o.Id == orderId);
         }
 
         public Orders GetByUserId(int userId)

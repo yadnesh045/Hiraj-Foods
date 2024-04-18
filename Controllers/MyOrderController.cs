@@ -19,8 +19,8 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult CreateOrder()
         {
-            string key = "rzp_test_qu0M6iihK5Zups";
-            string secret = "Nkea0c8Dhice4cmvsDrrH08m";
+            string key = "rzp_live_a0n3uVPQ3R5fMW";
+            string secret = "BPP8jUE1VefA2471c5cJ54E7";
 
             Random _random = new Random();
             string trasactionId = _random.Next(0, 3000).ToString();
