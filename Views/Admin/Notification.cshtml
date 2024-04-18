@@ -2,6 +2,11 @@
     var contactJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Contact);
     var enquiryJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Enquiry);
     var feedbackJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Feedback);
+
+
+    var paidJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PaidCheckoutCount);
+    var pendingJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PendingCheckoutCount);
+
 }
 
 
@@ -103,6 +108,22 @@
 
 
 
+
+
+
+
+                            <div class="col-md-12 col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-1">Payment Status </h4>
+                                        <div class="chart-container" style="height:500px; width:500px;">
+                                            <canvas id="paymentstatus"></canvas>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -145,6 +166,9 @@
         var contact = @Html.Raw(contactJson);
         var enquiry = @Html.Raw(enquiryJson);
         var feedback = @Html.Raw(feedbackJson);
+
+        var paid = @Html.Raw(paidJson);
+        var pending = @Html.Raw(pendingJson);
 
     </script>
 
