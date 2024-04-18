@@ -99,8 +99,8 @@ namespace Hiraj_Foods.Controllers
             }
 
 
-
-
+            var session = _httpContextAccessor.HttpContext.Session;
+            session.Remove("TransactionId");
 
             if (checkout != null)
             {
