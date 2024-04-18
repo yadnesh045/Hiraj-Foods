@@ -18,7 +18,7 @@ namespace Hiraj_Foods.Service
         {
             try
             {
-                var fromEmail = new MailAddress("jai.borse01@gmail.com", "Login");
+                var fromEmail = new MailAddress("jai.borse01@gmail.com", "Hiraj Foods");
                 var toEmail = new MailAddress(email);
                 var fromEmailPassword = "cqvyopzamjnvawep";  // Make sure to secure your credentials and consider environment variables or secure vaults
                 string subject = "Your Account is Successfully Created!";
