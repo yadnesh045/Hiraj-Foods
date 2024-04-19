@@ -41,6 +41,8 @@ namespace Hiraj_Foods.Repository
         public void Update(Cart obj)
         {
             _db.Cart.Update(obj);
+            _db.SaveChanges(); 
+
         }
     }
 }

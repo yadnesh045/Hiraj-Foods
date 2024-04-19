@@ -32,7 +32,7 @@ namespace Hiraj_Foods.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                contact.Date = DateTime.Now;
                 unitOfWorks.Contact.Update(contact);
                 unitOfWorks.Save();
             }
@@ -54,7 +54,7 @@ namespace Hiraj_Foods.Controllers
 
             if (ModelState.IsValid)
             {
-
+                Enq.Date = DateTime.Now;
                 unitOfWorks.Feedback.Add(Enq);
                 unitOfWorks.Save();
             }
@@ -81,7 +81,7 @@ namespace Hiraj_Foods.Controllers
 
             if (ModelState.IsValid)
             {
-
+                Enq.Date = DateTime.Now;
                 unitOfWorks.Enquiry.Add(Enq);
                 unitOfWorks.Save();
             }
