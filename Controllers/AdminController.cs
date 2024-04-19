@@ -182,7 +182,7 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult ViewProduct()
         {
-            var products = unitOfWorks.Product.GetAll().ToList();
+            var products = unitOfWorks.Product.GetAll().OrderByDescending(c => c.Id).ToList();
 
             SetAdminData();
 
@@ -315,7 +315,7 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult Enquiry()
         {
-            var Enquires = unitOfWorks.Enquiry.GetAll().ToList();
+            var Enquires = unitOfWorks.Enquiry.GetAll().OrderByDescending(c => c.Id).ToList();
 
             SetAdminData();
 
@@ -325,31 +325,12 @@ namespace Hiraj_Foods.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult Enquiry(Enquiry Enq)
-        {
-
-            if (ModelState.IsValid)
-            {
-
-                unitOfWorks.Enquiry.Add(Enq);
-                unitOfWorks.Save();
-            }
-            else
-            {
-                Console.WriteLine("-----------------------------------------------");
-                return RedirectToAction("Enquiry", "Rahul");
-            }
-
-            TempData["Enquiry"] = "Enquiry Sent to Admin";
-            return RedirectToAction("Enquiry", "Rahul");
-        }
 
 
         [HttpGet]
         public IActionResult Feedback()
         {
-            var Feedback = unitOfWorks.Feedback.GetAll().ToList();
+            var Feedback = unitOfWorks.Feedback.GetAll().OrderByDescending(c => c.Id).ToList();
 
 
             SetAdminData();
@@ -357,27 +338,6 @@ namespace Hiraj_Foods.Controllers
             var model = new Tuple<List<FeedBack>>(Feedback);
 
             return View(model);
-        }
-
-
-        [HttpPost]
-        public IActionResult Feedback(FeedBack Enq)
-        {
-
-            if (ModelState.IsValid)
-            {
-
-                unitOfWorks.Feedback.Add(Enq);
-                unitOfWorks.Save();
-            }
-            else
-            {
-                Console.WriteLine("-----------------------------------------------");
-                return RedirectToAction("Feedback", "Rahul");
-            }
-
-            TempData["Feedback"] = "Feedback Sent to Admin";
-            return RedirectToAction("Feedback", "Rahul");
         }
 
         [HttpGet]
@@ -438,19 +398,6 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Contact(Contact contact)
-        {
-            if (ModelState.IsValid)
-            {
-
-                unitOfWorks.Contact.Update(contact);
-                unitOfWorks.Save();
-            }
-
-            // If model state is not valid or an error occurred, return the same view with validation errors
-            return RedirectToAction("Contact", "Rahul");
-        }
 
         [HttpGet]
         public IActionResult ViewContact()
@@ -515,12 +462,10 @@ namespace Hiraj_Foods.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
-            return RedirectToAction("Home", "Yadnesh");
-        }
+
+
+
+
         [HttpPost]
         public IActionResult ChangePassword(Admin admin)
         {
