@@ -28,9 +28,9 @@ namespace Hiraj_Foods.Repository
             return _db.Uorders.FirstOrDefault(c => c.UserId == userId);
         }
 
-        public void Update(Cart obj)
+        public void Update(Orders obj)
         {
-            _db.Cart.Update(obj);
+            _db.Uorders.Update(obj);
         }
     }
 }

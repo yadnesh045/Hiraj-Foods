@@ -190,7 +190,8 @@ namespace Hiraj_Foods.Controllers
                     Products = productsAndQuantities,
                     date = DateTime.Now,
                     Total = total,
-                    Paymentmethod = checkout.paymentMethod
+                    Paymentmethod = checkout.paymentMethod,
+                    status = "Order Recived"
                 };
 
                 unitOfWorks.Uorders.Add(order);

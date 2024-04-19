@@ -8,6 +8,6 @@ namespace Hiraj_Foods.Repository.IRepository
 
         Orders GetById(int orderId);
         IEnumerable<Orders> GetAllByUserId(int userId);
-        void Update(Cart obj);
+        void Update(Orders obj);
     }
 }

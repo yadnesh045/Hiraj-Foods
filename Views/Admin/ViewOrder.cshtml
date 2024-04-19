@@ -1,0 +1,286 @@
+﻿@model Tuple<List<Hiraj_Foods.Models.User>, List<Hiraj_Foods.Models.Orders>>
+
+@{
+
+    var user = Model.Item1;
+    var Orders = Model.Item2;
+
+}
+
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+      data-assets-path="../assets/" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Admin-DashBoard</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" src="~/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet" />
+
+
+    <link href="/css/Admin-Css/materialdesignicons.css" rel="stylesheet" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link href="/css/Admin-Css/node-waves.css" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
+    <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+    <!-- Vendors CSS -->
+    <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="/js/Admin-js/helpers.js"></script>
+    <script src="/js/Admin-js/config.js"></script>
+
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+
+            <!--Side Menu Partial View -->
+            <!--Show the partial view of sidemenu-->
+            <partial name="_SidePartialView" />
+
+
+            <!-- / Side Menu Partial View Ends -->
+            <!-- Layout container -->
+            <div class="layout-page">
+
+                <!-- Navbar Partial View -->
+                <!--Show the partial view of navbar partial view-->
+                <partial name="_NavbarPartialView" />
+
+                <!-- / Navbar Partial View -->
+                <!-- / Navbar -->
+
+
+                <div class="content-wrapper">
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+                        <!-- Content wrapper -->
+                        <h3>Orders</h3>
+                        <div class="card">
+                            <div class="table-responsive">
+
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Products</th>
+                                            <th>Total Price</th>
+                                            <th>Date</th>
+                                            <th>Payment - Method</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @foreach (var checkout in Model.Item2 ?? new List<Orders>())
+                                        {
+                                            var user1 = Model.Item1?.SingleOrDefault(u => u.Id == checkout.UserId);
+                                            if (user1 != null)
+                                            {
+                                                <tr>
+                                                    <td>@user1.FirstName</td>
+                                                    <td>@checkout.Products</td>
+                                                    <td>@checkout.Total</td>
+@* 
+                                                    @if (checkout.PaymentStatus == "Pending")
+                                                    {
+                                                        <td><span class="badge rounded-pill bg-label-warning me-1">Pending</span></td>
+                                                    }
+                                                    else if (checkout.PaymentStatus == "Paid")
+                                                    {
+                                                        <td><span class="badge rounded-pill bg-label-success me-1">Paid</span></td>
+                                                    }
+                                                    else if (checkout.PaymentStatus == "Failed")
+                                                    {
+                                                        <td><span class="badge bg-danger">Failed</span></td>
+                                                    } *@
+
+                                                    <td>@checkout.date.ToString("dd-MM-yyyy")</td>
+                                                    <td>@checkout.Paymentmethod</td>
+
+                                                    @if (checkout.status == "Order Recived")
+                                                    {
+                                                        <td><span class="badge rounded-pill bg-label-success me-1">Order Received</span></td>
+                                                    }
+                                                    else if (checkout.status == "Dispatched")
+                                                    {
+                                                        <td><span class="badge rounded-pill bg-label-warning me-1">Dispatched</span></td>
+                                                    }
+                                                    else if (checkout.status == "Shipped")
+                                                    {
+                                                        <td><span class="badge rounded-pill bg-label-warning me-1">Shipped</span></td>
+                                                    }
+                                                    else if (checkout.status == "Delerived")
+                                                    {
+                                                        <td><span class="badge bg-success">Delivered</span></td>
+                                                    } 
+                                                    <th>
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                                <i class="mdi mdi-dots-vertical"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="EditOrder" asp-route-id="@checkout.Id"><i class="mdi mdi-pencil-outline me-1"></i>Edit</a>
+                                                            </div>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="content-backdrop fade"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+            <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+
+
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="/js/Admin-js/jquery.js"></script>
+    <script src="/js/Admin-js/popper.js"></script>
+    <script src="/js/Admin-js/bootstrap.js"></script>
+    <script src="/js/Admin-js/node-waves.js"></script>
+    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+    <script src="/js/Admin-js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <script src="/js/Admin-js/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="/js/Admin-js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="/js/Admin-js/dashboards-analytics.js"></script>
+
+
+    <!--Charts js-->
+    <script src="~/js/chart-js/chart.js"></script>
+
+    <!--script for charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>
+
+
+
+@if (TempData["Message"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Message"]');
+    </script>
+
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
+}

@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<h1 style="display:flex;justify-content:center;margin:20px;font-family:'Comic Sans MS'">ORDERS</h1>
+<h1 style="display:flex;justify-content:center;margin:20px;font-family:Arial">ORDERS</h1>
 
 @if (Model.Count != 0)
 {
@@ -47,12 +47,19 @@
                                         <div class="input-group mb-3">
                                             <!-- Add any input fields or buttons here if needed -->
                                         </div>
-                                        <button type="button" class="btn btn-warning ml-3">
-                                            <a href="@Url.Action("GenerateInvoicePDF", "Anurag", new { orderId = item.Id })" style="color: inherit; text-decoration: none;">Download Invoice</a>
-                                        </button>
-                                        <button type="button" class="btn btn-info ml-3">
-                                            <a href="@Url.Action("TrackOrder", "Anurag", new { orderId = item.Id })" style="color: inherit; text-decoration: none;">Track Order</a>
-                                        </button>
+                                    
+                                        @if (item.status != "Delerived")
+                                        {
+                                            <button type="button" class="btn btn-info ml-3">
+                                                <a href="@Url.Action("TrackOrder", "Anurag", new { orderId = item.Id })" style="color: inherit; text-decoration: none;">Track Order</a>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-warning ml-3">
+                                                <a href="@Url.Action("GenerateInvoicePDF", "Anurag", new { orderId = item.Id })" style="color: inherit; text-decoration: none;">Download Invoice</a>
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                             </div>
