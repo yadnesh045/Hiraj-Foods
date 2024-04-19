@@ -11,7 +11,7 @@ namespace Hiraj_Foods.Models
 		[Required(ErrorMessage ="LastName Is Required : ")]
 		public string LastName { get; set; }
 		[Required(ErrorMessage = "Email Is Required : ")]
-		//[RegularExpression(@"\A[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}\z", ErrorMessage = "Please enter a valid email address")]
+
 		[EmailAddress(ErrorMessage = "Invalid email address")]
 		public string Email { get; set; }
 		
@@ -19,7 +19,9 @@ namespace Hiraj_Foods.Models
 		[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$")]
 		public string Password { get; set; }
 		[Required(ErrorMessage = "Phone Is Required : ")]
-		public string Phone { get; set; }
+        [RegularExpression(@"^(\+91)?\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number.")]
+        [StringLength(10, ErrorMessage = "Phone number must be exactly 10 digits.", MinimumLength = 10)]
+        public string Phone { get; set; }
        
 
     }
