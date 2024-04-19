@@ -15,7 +15,7 @@ $(document).ready(function () {
         var productDetails = [];
         $(".card-title").each(function () {
             var productName = $(this).text();
-            var quantity = $(this).siblings('.input-group').find('.quantity-input').val();
+            var quantity = $(this).closest('.card-body').find('.quantity-input').val();
             productDetails.push(productName + ":" + quantity);
         });
 
