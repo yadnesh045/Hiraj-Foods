@@ -586,7 +586,7 @@ namespace Hiraj_Foods.Controllers
         [HttpGet]
         public IActionResult ViewUser()
         {
-            var user = unitOfWorks.Users.GetAll().ToList();
+            var user = unitOfWorks.Users.GetAll().OrderByDescending(c=>c.Id).ToList();
 
             SetAdminData();
 

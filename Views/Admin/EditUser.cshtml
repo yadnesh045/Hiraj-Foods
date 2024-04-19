@@ -88,6 +88,8 @@
                                         <form method="post" asp-controller="Admin" asp-action="EditUser">
 
                                             <input type="hidden" name="Id" value="@Model.Item1.Id" />
+                                            <input type="hidden" name="Password" value="@Model.Item1.Password" />
+
                                             <div class="form-floating form-floating-outline mb-4">
                                                 <input type="text" class="form-control" id="basic-default-fullname" placeholder="First Name" name="FirstName" value="@Model.Item1.FirstName" />
                                                 <label for="basic-default-fullname">First Name</label>
@@ -101,11 +103,6 @@
                                             <div class="form-floating form-floating-outline mb-4">
                                                 <input type="text" class="form-control" id="basic-default-company" placeholder="Email" name="Email" value="@Model.Item1.Email" />
                                                 <label for="basic-default-company">Email</label>
-                                            </div>
-
-                                            <div class="form-floating form-floating-outline mb-4">
-                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Password" name="Password" value="@Model.Item1.Password" />
-                                                <label for="basic-default-company">Password</label>
                                             </div>
 
                                             <div class="form-floating form-floating-outline mb-4">

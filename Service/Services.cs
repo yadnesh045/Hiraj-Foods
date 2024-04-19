@@ -2,6 +2,7 @@
 using Hiraj_Foods.Services.IServices;
 using System.Net.Mail;
 using System.Net;
+using System.Text;
 
 namespace Hiraj_Foods.Service
 {
@@ -13,7 +14,6 @@ namespace Hiraj_Foods.Service
         {
             _db = db;
         }
-
         public bool SendLoginCredentials(string email, string password)
         {
             try
@@ -86,7 +86,7 @@ namespace Hiraj_Foods.Service
             {
                 var fromEmail = new MailAddress("jai.borse01@gmail.com", "Hiraj Foods");
                 var toEmail = new MailAddress(email);
-                var fromEmailPassword = "cqvyopzamjnvawep"; 
+                var fromEmailPassword = "cqvyopzamjnvawep";
                 string subject = "Order Confirmation from Hiraj Foods";
 
                 string logoImageUrl = "https://drive.google.com/uc?export=view&id=1OJyqfkEouzRw56jnqqK1kwxoxor-h-wf";
@@ -94,7 +94,7 @@ namespace Hiraj_Foods.Service
                 string productsAndQuantitiesFormatted = productsAndQuantities.Replace(", ", "<br>");
 
 
-                var username  = _db.Users.Where(u => u.Email == email).SingleOrDefault().FirstName;
+                var username = _db.Users.Where(u => u.Email == email).SingleOrDefault().FirstName;
 
 
                 string body = $@"
@@ -141,5 +141,87 @@ namespace Hiraj_Foods.Service
                 return false; // Email sending failed
             }
         }
+        public string SendForgetPassword(string email)
+        {
+
+            try
+            {
+                // Generate a random password
+                string newPassword = GenerateRandomPassword(8); // Change the length as needed
+
+                // Send the email
+                var fromEmail = new MailAddress("jai.borse01@gmail.com", "Hiraj Foods");
+                var toEmail = new MailAddress(email);
+                var fromEmailPassword = "cqvyopzamjnvawep";  // Make sure to secure your credentials and consider environment variables or secure vaults
+                string subject = "Password Reset !!!";
+
+                // Replace the URL with the actual URL where your logo is hosted
+                string logoImageUrl = "https://drive.google.com/uc?export=view&id=1OJyqfkEouzRw56jnqqK1kwxoxor-h-wf";
+
+                string body = $@"
+    <div style='text-align: center;'>
+        <img src='{logoImageUrl}' alt='Company Logo' style='width: 200px; height: auto;' /><br/><br/>
+        <h2>Password Reset Request</h2>
+        <p>
+            Dear User,<br/><br/>
+            We have received a request to reset your password. Please find below your new temporary password:
+        </p>
+        <p style='font-size: 24px; font-weight: bold; color: #f00;'>{newPassword}</p>
+        <p>
+            After logging in with this temporary password, we recommend changing it to something more memorable.<br/><br/>
+            If you did not request a password reset, please ignore this email or contact support immediately.
+        </p>
+        <p>
+            If you have any questions or need further assistance, please feel free to contact our support team.
+        </p>
+    </div>";
+
+
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587, // Gmail SMTP port
+                    EnableSsl = true,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+                };
+
+
+                using (var message = new MailMessage(fromEmail, toEmail)
+                {
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                })
+                {
+                    smtp.Send(message);
+                    return newPassword; // Email sent successfully
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email: {ex.Message}");
+                return null; // Email sending failed
+            }
+
+        }
+
+
+        private string GenerateRandomPassword(int length)
+        {
+            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder sb = new StringBuilder();
+            Random rnd = new Random();
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = rnd.Next(validChars.Length);
+                sb.Append(validChars[index]);
+            }
+
+            return sb.ToString();
+        }
+
     }
 }

@@ -218,7 +218,51 @@ namespace Hiraj_Foods.Controllers
 
 
 
+        [HttpGet]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
 
+
+
+        [HttpPost]
+        public IActionResult ForgetPassword(User_SignIn_Login usr)
+        {
+            if (usr == null || usr.Login == null)
+            {
+                TempData["ForgetPassword"] = "Invalid request.";
+                return RedirectToAction("ForgetPassword", "Login");
+            }
+
+            var existingUser = unitOfWorks?.Users?.GetByEmail(usr.Login.Email);
+
+            if (existingUser != null)
+            {
+                // random password must be generated and sent to the user email address in the service named sendforgetpassword
+                string newPassword = _Service.SendForgetPassword(existingUser.Email);
+
+                if (newPassword != null)
+                {
+                    existingUser.Password = Crypto.HashPassword(newPassword);
+                    unitOfWorks.Users.Update(existingUser);
+                    unitOfWorks.Save();
+
+                    TempData["ForgetPassword"] = "Password Sent to your Email.";
+                    return RedirectToAction("Home", "Yadnesh");
+                }
+                else
+                {
+                    TempData["ForgetPassword"] = "Error sending email.";
+                    return RedirectToAction("ForgetPassword", "Login");
+                }
+            }
+            else
+            {
+                TempData["ForgetPassword"] = "Email Not Found.";
+                return RedirectToAction("ForgetPassword", "Login");
+            }
+        }
 
 
 
