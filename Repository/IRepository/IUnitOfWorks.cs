@@ -25,6 +25,9 @@
         IUserProfileImgRepository UserImage { get; }
 
         IOrdersRepository Uorders { get; }
+
+        IPositiveFeedbackRepository PositiveFeedback { get; }
+
         void Save();
     }
 }

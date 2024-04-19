@@ -31,6 +31,9 @@ namespace Hiraj_Foods.Data
 
         public DbSet<UserProfileImg> UserProfileImage { get; set; }
 
+
+        public DbSet<PositiveFeedback> PositiveFeedbacks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Admin>().HasData(

@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Hiraj_Foods.Models.Product> , List<Hiraj_Foods.Models.Banner>>
+﻿@model Tuple<List<Hiraj_Foods.Models.Product> , List<Hiraj_Foods.Models.Banner>,List<Hiraj_Foods.Models.PositiveFeedback>>
 @{
     var firstProduct = Model.Item1.FirstOrDefault();
 }
@@ -363,172 +363,52 @@
 
 
     <!-- product section ending here -->
+
+
     <!-- testimonial section start here -->
     <section class="testimonial-section home-2 padding-tb">
         <div class="container">
             <div class="section-wrapper">
                 <div class="row justify-content-center align-items-center">
+
+
+
+
                     <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="testi-slider-2">
                             <div class="section-header text-left">
                                 <h3>Our Happy Customers</h3>
                             </div>
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="testi-item style-2">
-                                        <div class="testi-inner">
-                                            <div class="testi-head">
-                                                <div class="testi-thumb">
-                                                    <img src="~/images/testimonial/01.jpg" alt="testimonial">
 
-                                                </div>
-                                                <div class="testi-clients">
-                                                    <a href="#"><h5>Satish Marwat</h5></a>
-                                                    <p>Food Expert</p>
-                                                    <div class="rating">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
+                                @foreach (var feedback in Model.Item3)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="testi-item style-2">
+                                            <div class="testi-inner">
+                                                <div class="testi-head">
+                                                    <div class="testi-thumb">
+                                                        <img src="~/images/testimonial/01.jpg" alt="testimonial">
+                                                    </div>
+                                                    <div class="testi-clients">
+                                                        <a href="#"><h5>@feedback.Name</h5></a>
+                                                        <p>@feedback.Email</p>
+                                                        <div class="rating">
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="testi-body">
-                                                <p>As a food expert we like its natural flavors very much and they are providing a wide range of flavors like guava, chocolate, mango, pineaapple, pomegranate and kaju badam the most.</p>
+                                                <div class="testi-body">
+                                                    <p>@feedback.Message</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="testi-item style-2">
-                                        <div class="testi-inner">
-                                            <div class="testi-head">
-                                                <div class="testi-thumb">
-                                                    <img src="~/images/testimonial/02.jpg" alt="testimonial">
-
-                                                </div>
-                                                <div class="testi-clients">
-                                                    <a href="#"><h5>Dipti Pawar</h5></a>
-                                                    <p>Parents</p>
-                                                    <div class="rating">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="testi-body">
-                                                <p>Its an truely called an "<b>Healthish</b>" product, which in no time is favourite of our child, and is giving them more energy and joy in having an taste of it, its an most likely food of our child.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="testi-item style-2">
-                                        <div class="testi-inner">
-                                            <div class="testi-head">
-                                                <div class="testi-thumb">
-                                                    <img src="~/images/testimonial/03.jpg" alt="testimonial">
-
-                                                </div>
-                                                <div class="testi-clients">
-                                                    <a href="#"><h5>Savita Mane</h5></a>
-                                                    <p>Parents</p>
-                                                    <div class="rating">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="testi-body">
-                                                <p>Our childs favourite flavor is Pomegranate and guava, which is most likely by him, every we fell very happy to server to our child, which makes every family an happy, truely nice product.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="testi-item style-2">
-                                        <div class="testi-inner">
-                                            <div class="testi-head">
-                                                <div class="testi-thumb">
-                                                    <img src="~/images/testimonial/03.jpg" alt="testimonial">
-
-                                                </div>
-                                                <div class="testi-clients">
-                                                    <a href="#"><h5>Samadhan Bachhav</h5></a>
-                                                    <p>Parents</p>
-                                                    <div class="rating">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="testi-body">
-                                                <p>Every parents are not tension free, what and how to give their child an healthy food at this age, yes the answer is one <b>Healthis</b> the only brand liked by all the children at this age.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="testi-item style-2">
-                                        <div class="testi-inner">
-                                            <div class="testi-head">
-                                                <div class="testi-thumb">
-                                                    <img src="~/images/testimonial/03.jpg" alt="testimonial">
-                                                </div>
-                                                <div class="testi-clients">
-                                                    <a href="#"><h5>Rohini Gaikwad</h5></a>
-                                                    <p>Parents</p>
-                                                    <div class="rating">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="testi-body">
-                                                <p>We tried its various flavors, amonst all we like the guava and the chocolate flavors very much, even our baby likes its flavor very much and enjoy the food.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="testi-item style-2">
-                                        <div class="testi-inner">
-                                            <div class="testi-head">
-                                                <div class="testi-thumb">
-                                                    <img src="~/images/testimonial/02.jpg" alt="testimonial">
-
-                                                </div>
-                                                <div class="testi-clients">
-                                                    <a href="#"><h5>Divyashree Kulkarni</h5></a>
-                                                    <p>Child Specialist</p>
-                                                    <div class="rating">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="testi-body">
-                                                <p>A Classic foods with health as an main targeted to the children, which helps them to grow in an proper manner, which every child should needs.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                }
 
                             </div>
                             <div class="testi-navigation d-flex flex-wrap">
@@ -543,17 +423,18 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
+
                     <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.4s" width="560" height="370">
-                        <!-- <div class="testi-thumb-part d-none d-lg-block"> -->
-                        <!-- <center><div class="testi-thumb"> -->
+                     
                         <div class=" embed-responsive embed-responsive-4by3">
                             <iframe width="560" src="https://www.youtube.com/embed/JWvek7bFen8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
 
-                        <!-- <img src="assets\img\hiraj1.png" alt="testi-about" style=""> -->
-                        <!-- </div>
-                        </center> -->
-                        <!-- </div> -->
+                      
                     </div>
                 </div>
             </div>

@@ -28,6 +28,8 @@ namespace Hiraj_Foods.Repository
 
         public IOrdersRepository Uorders { get; set; }
 
+        public IPositiveFeedbackRepository PositiveFeedback { get; set; }
+
         public UnitOfWorks(ApplicationDbContext _db)
 
         {
@@ -44,6 +46,7 @@ namespace Hiraj_Foods.Repository
             UserImage = new UserProfileImgRepository(_db);
             Price = new PriceRepository(_db);
             Uorders = new OrdersRepository(_db);
+            PositiveFeedback = new PositiveFeedbackRepository(_db);
 
         }
 

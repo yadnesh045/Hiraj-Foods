@@ -739,7 +739,7 @@ namespace Hiraj_Foods.Controllers
 
             SetAdminData();
 
-            var model = new Tuple<Checkout,List<User>>(checkout,user);
+            var model = new Tuple<Checkout, List<User>>(checkout, user);
             return View(model);
         }
 
@@ -764,6 +764,55 @@ namespace Hiraj_Foods.Controllers
                 return RedirectToAction("ViewCheckouts");
             }
         }
+
+
+
+
+        [HttpGet]
+        public IActionResult AddAsPositiveFeedback(int id)
+        {
+            var feedback = unitOfWorks.Feedback.GetById(id);
+            var positiveFeedback = new PositiveFeedback
+            {
+                Name = feedback.Name,
+                Email = feedback.Email,
+                Phone = feedback.Phone,
+                Message = feedback.Message,
+                Date = DateTime.Now,
+                MessageType = "Positive"
+            };
+
+            unitOfWorks.PositiveFeedback.Add(positiveFeedback);
+            unitOfWorks.Save();
+
+            TempData["Message"] = "Feedback Added as Positive Feedback!";
+            return RedirectToAction("Feedback");
+        }
+
+        [HttpGet]
+        public IActionResult PositiveFeedbacks()
+        {
+            var positiveFeedbacks = unitOfWorks.PositiveFeedback.GetAll().OrderByDescending(c => c.Id).ToList();
+            SetAdminData();
+
+            return View(positiveFeedbacks);
+        }
+
+        [HttpGet]
+        public IActionResult DeletePositiveFeedback(int id)
+        {
+            var positiveFeedback = unitOfWorks.PositiveFeedback.GetById(id);
+
+            unitOfWorks.PositiveFeedback.Remove(positiveFeedback);
+            unitOfWorks.Save();
+
+            TempData["Message"] = "Positive Feedback deleted successfully!";
+            return RedirectToAction("PositiveFeedbacks");
+        }
+
+
+
+
 
     }
 }

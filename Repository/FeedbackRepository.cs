@@ -13,9 +13,9 @@ namespace Hiraj_Foods.Repository
             _db = db;
         }
 
-        public FeedBack GetByEmail(string email)
+        public FeedBack GetById(int id)
         {
-            return _db.FeedBacks.FirstOrDefault(u => u.Email == email);
+            return _db.FeedBacks.Find(id);
         }
 
         public void Update(FeedBack obj)

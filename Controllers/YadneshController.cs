@@ -55,7 +55,10 @@ namespace Hiraj_Foods.Controllers
             var products = unitOfWorks.Product.GetAll().OrderByDescending(p => p.Id).ToList();
             var banners = unitOfWorks.Banner.GetAll().ToList();
 
-            var model = new Tuple<List<Product>, List<Banner>>(products, banners);
+            var positiveFeedbacks = unitOfWorks.PositiveFeedback.GetAll().ToList();
+
+
+            var model = new Tuple<List<Product>, List<Banner>, List<PositiveFeedback>>(products, banners, positiveFeedbacks);
             return View(model);
         }
 

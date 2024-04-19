@@ -4,7 +4,8 @@ namespace Hiraj_Foods.Repository.IRepository
 {
     public interface IFeedBackRepository : IRepository<FeedBack>
     {
-        FeedBack GetByEmail(string email);
+        FeedBack GetById(int id);
+
 
         void Update(FeedBack obj);
     }

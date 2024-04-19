@@ -120,14 +120,31 @@
             </a>
         </li>
 
-        <li class="menu-item">
-            <a asp-area="" asp-controller="Admin" asp-action="Feedback" class="menu-link">
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
 
-                <i class="menu-icon tf-icons mdi mdi-backup-restore"></i>
+                    <i class="menu-icon tf-icons mdi mdi-message-alert"></i>
 
-                <div data-i18n="Dashboards">Feedback</div>
-            </a>
-        </li>
+                    <div data-i18n="Layouts">Feedbacks </div>
+                </a>
+
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a asp-area="" asp-controller="Admin" asp-action="Feedback" class="menu-link">
+
+                            <div data-i18n="Without menu">User Feedbacks</div>
+
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a asp-area="" asp-controller="Admin" asp-action="PositiveFeedbacks" class="menu-link">
+                            <div data-i18n="Without navbar">Home Page Feedbacks</div>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
 
         <!--Settings-->
         <li class="menu-item">

@@ -1,10 +1,7 @@
-﻿@model Tuple<List<FeedBack>>
+﻿@model List<PositiveFeedback>
 
 @{
     Layout = null;
-}
-@{
-    var feedback = Model.Item1;
 }
 
 <!DOCTYPE html>
@@ -93,7 +90,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach (var data in Model.Item1)
+                                        @foreach (var data in Model)
                                         {
                                             <tr>
                                                 <td>@data.Name</td>
@@ -108,8 +105,10 @@
                                                             <i class="mdi mdi-dots-vertical"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <a class="dropdown-item" asp-controller="Admin" asp-action="AddAsPositiveFeedback"
-                                                               asp-route-id="@data.Id"><i class="mdi mdi-plus-box"></i> Add As Positive Feedback</a>
+                                                            <a class="dropdown-item" asp-controller="Admin" asp-action="DeletePositiveFeedback"
+                                                               asp-route-id="@data.Id"><i class="mdi mdi-delete"></i>Delete Positive Feedback </a>
+                                                            
+
                                                         </div>
                                                     </div>
 
