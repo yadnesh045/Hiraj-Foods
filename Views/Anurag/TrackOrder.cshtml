@@ -5,140 +5,125 @@
 }
 
 <style>
-	.hh-grayBox {
-		background-color: #F8F8F8;
-		margin-bottom: 20px;
-		padding: 35px;
-		margin-top: 20px;
-	}
+    /* Container styles */
+    .container {
+        padding: 20px;
+    }
 
-	.pt45 {
-		padding-top: 45px;
-	}
+    /* Card styles */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-	.order-tracking {
-		text-align: center;
-		width: 33.33%;
-		position: relative;
-		display: block;
-	}
+    /* Card header styles */
+    .card-header {
+        background-color: #ffb11f;
+        border-radius: 10px 10px 0 0;
+        padding: 15px 20px;
+    }
 
-		.order-tracking .is-complete {
-			display: block;
-			position: relative;
-			border-radius: 50%;
-			height: 30px;
-			width: 30px;
-			border: 0px solid #AFAFAF;
-			background-color: #f7be16;
-			margin: 0 auto;
-			transition: background 0.25s linear;
-			-webkit-transition: background 0.25s linear;
-			z-index: 2;
-		}
+        /* Card header text styles */
+        .card-header h3 {
+            margin: 0;
+            font-size: 24px;
+        }
 
-			.order-tracking .is-complete:after {
-				display: block;
-				position: absolute;
-				content: '';
-				height: 14px;
-				width: 7px;
-				top: -2px;
-				bottom: 0;
-				left: 5px;
-				margin: auto 0;
-				border: 0px solid #AFAFAF;
-				border-width: 0px 2px 2px 0;
-				transform: rotate(45deg);
-				opacity: 0;
-			}
+    /* Card body styles */
+    .card-body {
+        padding: 20px;
+    }
 
-		.order-tracking.completed .is-complete {
-			border-color: #27aa80;
-			border-width: 0px;
-			background-color: #27aa80;
-		}
+    /* Order information styles */
+    .order-info p {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
 
-			.order-tracking.completed .is-complete:after {
-				border-color: #fff;
-				border-width: 0px 3px 3px 0;
-				width: 7px;
-				left: 11px;
-				opacity: 1;
-			}
+    /* Progress bar container styles */
+    .progress-container {
+        position: relative;
+    }
 
-		.order-tracking p {
-			color: #A4A4A4;
-			font-size: 16px;
-			margin-top: 8px;
-			margin-bottom: 0;
-			line-height: 20px;
-		}
+    /* Progress label styles */
+    .progress-label {
+        position: absolute;
+        top: -30px;
+        font-size: 14px;
+        font-weight: bold;
+    }
 
-			.order-tracking p span {
-				font-size: 14px;
-			}
-
-		.order-tracking.completed p {
-			color: #000;
-		}
-
-		.order-tracking::before {
-			content: '';
-			display: block;
-			height: 3px;
-			width: calc(100% - 40px);
-			background-color: #f7be16;
-			top: 13px;
-			position: absolute;
-			left: calc(-50% + 20px);
-			z-index: 0;
-		}
-
-		.order-tracking:first-child:before {
-			display: none;
-		}
-
-		.order-tracking.completed:before {
-			background-color: #27aa80;
-		}
-
+    /* Progress bar styles */
+    .progress {
+        height: 30px;
+        margin-bottom: 20px;
+    }
 </style>
 
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card mt-5">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header  text-white">
                     <h3 class="mb-0">Track Order</h3>
                 </div>
                 <div class="card-body">
-                    <div class="mb-4">
+                    <div class="mb-4 order-info">
                         <h5>Order Information</h5>
                         <p><strong>Order ID:</strong> @Model.Id</p>
                         <p><strong>Status:</strong> @Model.Paymentmethod</p>
                         <!-- Add any other order information you want to display -->
                     </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 col-md-10 hh-grayBox pt45 pb20">
-                                <div class="row justify-content-between">
-                                    <div class="order-tracking completed">
-                                        <span class="is-complete"></span>
-                                        <p>Ordered<br><span>Mon, June 24</span></p>
-                                    </div>
-                                    <div class="order-tracking completed">
-                                        <span class="is-complete"></span>
-                                        <p>Shipped<br><span>Tue, June 25</span></p>
-                                    </div>
-                                    <div class="order-tracking">
-                                        <span class="is-complete"></span>
-                                        <p>Delivered<br><span>Fri, June 28</span></p>
-                                    </div>
-                                </div>
-                            </div>
+
+                    <br />
+                    <!-- Progress bar container -->
+                    <div class="progress-container">
+                        <!-- Progress labels -->
+                        <div class="progress-label">Order Received</div>
+                        <div class="progress-label" style="left: 25%;">Dispatched</div>
+                        <div class="progress-label" style="left: 50%;">Shipped</div>
+                        <div class="progress-label" style="right: 0;">Delivered</div>
+                        <!-- Progress bar -->
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
+                    <!-- Script for progress bar functionality -->
+                    <script>
+                        $(document).ready(function () {
+                            // Initial progress value
+                            var progress = 0;
+                            var orderStatus = '@ViewBag.OrderStatus';
+
+                            // Function to update progress
+                            function updateProgress(value) {
+                                $('.progress-bar').css('width', value + '%').attr('aria-valuenow', value);
+                            }
+
+                            // Update progress based on order status
+                            switch (orderStatus) {
+                                case 'Order Recived':
+                                    progress = 10;
+                                    break;
+                                case 'Dispatched':
+                                    progress = 25;
+                                    break;
+                                case 'Shipped':
+                                    progress = 50;
+                                    break;
+                                case 'Delerived':
+                                    progress = 100;
+                                    break;
+                                default:
+                                    progress = 0;
+                                    break;
+                            }
+
+                            // Update progress bar
+                            updateProgress(progress);
+                        });
+                    </script>
                 </div>
             </div>
         </div>
