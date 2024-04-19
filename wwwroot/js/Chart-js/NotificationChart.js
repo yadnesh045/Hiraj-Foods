@@ -33,10 +33,10 @@
     var Notification = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Paid", "Pending"],
+            labels: ["Paid", "Pending","Faild"],
             datasets: [{
                 label: 'Data',
-                data: [paid, pending], // Data for 'Contact', 'Enquiry', 'Feedback'
+                data: [paid, pending,fail], // Data for 'Contact', 'Enquiry', 'Feedback'
                 backgroundColor: [
                     'rgb(255, 99, 132)', // Color for 'Contact'
                     'rgb(54, 162, 235)', // Color for 'Enquiry'
@@ -52,5 +52,4 @@
 
     });
 
-    debugger;
 });

@@ -756,9 +756,12 @@ namespace Hiraj_Foods.Controllers
             // Get the count of pending checkouts
             var pendingCheckoutCount = unitOfWorks.Checkout.GetAll().Count(c => c.PaymentStatus == "Pending");
 
+            var faildCheckoutCount = unitOfWorks.Checkout.GetAll().Count(c => c.PaymentStatus == "Failed");
+
             // Pass the counts to ViewBag or ViewData to be used in the view
             ViewBag.PaidCheckoutCount = paidCheckoutCount;
             ViewBag.PendingCheckoutCount = pendingCheckoutCount;
+            ViewBag.FaildCheckoutCount = faildCheckoutCount;
 
 
 

@@ -6,7 +6,7 @@
 
     var paidJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PaidCheckoutCount);
     var pendingJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PendingCheckoutCount);
-
+    var faildJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.FaildCheckoutCount);
 }
 
 
@@ -169,6 +169,7 @@
 
         var paid = @Html.Raw(paidJson);
         var pending = @Html.Raw(pendingJson);
+        var fail = @Html.Raw(faildJson);
 
     </script>
 
