@@ -316,6 +316,11 @@
     <!-- counter up section ending here -->
     <!-- counter up section ending here -->
     <!-- product section start here -->
+
+
+
+
+
     <section class="product-section product-style3 padding-tb">
         <div class="container-fluid">
             <div class="section-header wow fadeInUp" data-wow-delay="0.3s">
@@ -323,59 +328,40 @@
                 <p>Conveniently customize proactives into everaged interfaces without Globally</p>
             </div>
             <div class="section-wrapper">
-                <div class="row justify-content-center no-gutters">
-                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="product-item">
-                            <div class="product-inner">
-                                <div class="product-thumb">
-                                    <img src="~/img/pineapple.jpg" alt="product">
-                                </div>
-                                <div class="product-content">
-                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Pineapple" class="product-name">Pineapple</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="product-item">
-                            <div class="product-inner">
-                                <div class="product-thumb">
-                                    <img src="~/img/apple.jpg" alt="product">
-                                </div>
-                                <div class="product-content">
-                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Apple" class="product-name">Apple</a>
+                <marquee direction="left" scrollamount="10">
+                    <div class="products-container" style="white-space: nowrap;">
+                        @foreach (var product in Model.Item1)
+                        {
+                            <div class="product-item" style="display: inline-block;">
+                                <div class="product-inner">
+                                    <div class="product-thumb">
+                                        <img src="@product.ProductImageUrl" alt="product" style="width: 370px; height: 360px;">
+                                    </div>
+                                    <div class="product-content">
+                                        <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="@product.ProductFlavour" class="product-name" style="font-size: 25px;">@product.ProductName</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+                        @* Repeat the products to ensure seamless looping *@
+                     
                     </div>
-                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="product-item">
-                            <div class="product-inner">
-                                <div class="product-thumb">
-                                    <img src="~/img/chocolate.jpg" alt="product">
-                                </div>
-                                <div class="product-content">
-                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Chocolate" class="product-name">Chocolate</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="product-item">
-                            <div class="product-inner">
-                                <div class="product-thumb">
-                                    <img src="~/img/mango-badam.jpg" alt="product">
-                                </div>
-                                <div class="product-content">
-                                    <a asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Kaju-Badam" class="product-name">Kaju Badam</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </marquee>
             </div>
         </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- product section ending here -->
     <!-- testimonial section start here -->
     <section class="testimonial-section home-2 padding-tb">
