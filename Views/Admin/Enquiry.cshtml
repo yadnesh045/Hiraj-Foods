@@ -87,6 +87,7 @@
                                             <th>Subject</th>
                                             <th>Mobile No</th>
                                             <th>Message</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
@@ -98,6 +99,8 @@
                                                 <td>@data.Subject</td>
                                                 <td>@data.Phone</td>
                                                 <td style="word-wrap: break-word; white-space:normal ">@data.Message</td>
+                                                <td>@(data.Date.HasValue ? data.Date.Value.ToString("dd-MM-yyyy hh:mm:ss tt") : "")</td>
+
                                             </tr>
 
                                         }

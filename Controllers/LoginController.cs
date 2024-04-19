@@ -8,7 +8,8 @@ using Hiraj_Foods.Models;
 using Newtonsoft.Json;
 using Hiraj_Foods.Migrations;
 using Hiraj_Foods.Services.IServices;
-
+using System.Web.Helpers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Hiraj_Foods.Controllers
 {
 
@@ -33,6 +34,15 @@ namespace Hiraj_Foods.Controllers
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Login()
         {
+            // if user is login then show tempdata message that he is not authorized to login
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                TempData["Error"] = "Not Authorized to Login!!!";
+                return RedirectToAction("Home", "Yadnesh");
+            }
+
+
+
             return View();
         }
 
@@ -137,6 +147,7 @@ namespace Hiraj_Foods.Controllers
                 else
                 {
 
+                    usr.User.Password = Crypto.HashPassword(usr.User.Password);
                     unitOfWorks.Users.Add(usr.User);
                     unitOfWorks.Save();
 
@@ -166,16 +177,27 @@ namespace Hiraj_Foods.Controllers
         public IActionResult UserLogin(User_SignIn_Login log)
         {
             var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
+            // Crypto.VerifyHashedPassword(existingUser.Password, log.Login.Password);
 
-
-            if (existingUser != null && existingUser.Password == log.Login.Password)
+            if (existingUser != null)
             {
-                //set session for user -- store user id and email
-                HttpContext.Session.SetInt32("UserId", existingUser.Id);
-                HttpContext.Session.SetString("UserEmail", existingUser.Email);
+                bool doesPasswordMatch = Crypto.VerifyHashedPassword(existingUser.Password, log.Login.Password);
 
-                TempData["sucessLogin"] = "Login Successfull.";
-                return RedirectToAction("Home", "Yadnesh");
+                if (doesPasswordMatch)
+                {
+                    //set session for user -- store user id and email
+                    HttpContext.Session.SetInt32("UserId", existingUser.Id);
+                    HttpContext.Session.SetString("UserEmail", existingUser.Email);
+
+                    TempData["sucessLogin"] = "Login Successfull.";
+                    return RedirectToAction("Home", "Yadnesh");
+                }
+                else
+                {
+                    TempData["ErrorLogin"] = "Invalid Credentials";
+                    return View("Signup");
+                }
+                
             }
             else
             {

@@ -56,8 +56,10 @@ $(document).ready(function () {
             var price = parseFloat($(this).data('price'));
             var quantity = parseInt($(this).val());
             totalPrice += price * quantity;
-
         });
+
+
+
         $('#totalAmount').text('Rs.' + totalPrice.toFixed(2));
 
       

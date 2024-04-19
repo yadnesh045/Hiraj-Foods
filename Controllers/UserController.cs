@@ -89,7 +89,8 @@ namespace Hiraj_Foods.Controllers
                         ProductImageUrl = product.ProductImageUrl,
                         ProductDescription = product.ProductDescription,
                         ProductWeight = product.ProductWeight,
-                        ProductPrice = product.ProductPrice
+                        ProductPrice = product.ProductPrice,
+                        Quantity = 1 // Set quantity to 1 by default
                     };
 
                     unitOfWorks.Cart.Add(cart);
@@ -98,7 +99,10 @@ namespace Hiraj_Foods.Controllers
                 }
                 else
                 {
-                    TempData["Info"] = "Product is already in your cart.";
+                    existingCartItem.Quantity += 1; // Increase quantity by 1
+                    unitOfWorks.Cart.Update(existingCartItem); // Update the existing cart item
+                    unitOfWorks.Save();
+                    TempData["Info"] = "Product quantity increased in your cart.";
                 }
 
                 return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
@@ -107,6 +111,28 @@ namespace Hiraj_Foods.Controllers
             TempData["Error"] = "You need to be logged in to add the product to the cart.";
             return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
         }
+
+
+        [HttpPost]
+        public IActionResult UpdateCartQuantity(int id, int quantity)
+        {
+            var cartItem = unitOfWorks.Cart.GetById(id);
+
+            if (cartItem != null)
+            {
+                cartItem.Quantity = quantity;
+                unitOfWorks.Cart.Update(cartItem);
+                unitOfWorks.Save();
+                TempData["Success"] = "Cart item quantity updated successfully.";
+            }
+            else
+            {
+                TempData["Error"] = "Cart item not found.";
+            }
+
+            return RedirectToAction("Cart");
+        }
+
 
         [HttpGet]
         public IActionResult DeleteFromCart(int id)
