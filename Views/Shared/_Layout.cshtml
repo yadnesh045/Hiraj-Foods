@@ -135,8 +135,14 @@
                                     <img src="~/img/whatsapp.png" />
                                 </a>&nbsp;&nbsp;&nbsp;
 
+                                @* if user is login then this button should not be shown *@
+                                @if (userEmail == null)
+                                {
+                                    <a asp-action="Login" asp-controller="Login" target="_blank" class="Email"><img src="~/anurag-images/navigation-button.png" /></a>
 
-                                <a asp-action="Login" asp-controller="Login" target="_blank" class="Email"><img src="~/anurag-images/navigation-button.png" /></a>
+                                }
+
+
                             </div>
                         </div>
                     </div>

@@ -113,35 +113,6 @@
     </div>
     </div>
 
-    <!-- Contact Us Section ENding Here -->
-    <!-- newsletters section start here -->
-    <!-- <div class="newsletter-section">
-        <div class="container">
-            <div class="row justify-content-lg-between justify-content-center align-items-center">
-                <div class="col-lg-6 col-12">
-                    <div class="newsletter-title">
-                        <h4>Subscribe Our Newsletter</h4>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-12">
-                    <div class="newsletter-form">
-                        <form action="/" class="d-flex flex-wrap">
-                            <input type="text" placeholder="Enter Your Email" class="input-email">
-                            <input type="submit" value="Suibscribe" class="subscribe-btn">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- newsletters section ending here -->
-    <!-- footer section start here -->
-    <!-- footer section ending here -->
-    <!-- scrollToTop start here -->
-    <!-- <a href="#" class="scrollToTop"><i class="icofont-swoosh-up"></i><span class="pluse_1"></span><span class="pluse_2"></span></a> -->
-    <!-- scrollToTop ending here -->
-
-
 
     <script src="assets\js\jquery.js"></script>
     <script src="assets\js\fontawesome.min.js"></script>
@@ -157,6 +128,8 @@
 </body>
 </html>
 
+
+
 @if (TempData["Contact"] != null)
 {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -164,16 +137,27 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <script type="text/javascript">
-        // Set Toastr options including custom background color
-            toastr.options = {
-                "toastClass": "toastr-custom", // Custom class for styling
-                "closeButton": true,
-                "progressBar": true,
-                "positionClass": "toast-top-left",
-                "progressBarColor": "white"
-            };
-
-            // Display the Toastr notification
-        toastr.success('@TempData["Contact"]');
-        </script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
         }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Contact"]');
+    </script>
+
+}

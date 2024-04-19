@@ -91,5 +91,14 @@ namespace Hiraj_Foods.Controllers
             return new string(Enumerable.Repeat(chars, 12).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+
+        public IActionResult TrackOrder(int orderId)
+        {
+
+            var orders = unitOfWorks.Uorders.GetById(orderId);
+            return View(orders);
+        }
+
+        
     }
 }

@@ -28,5 +28,11 @@ namespace Hiraj_Foods.Models
         [StringLength(500)]
         [Display(Name = "Message")]
         public string Message { get; set; }
+
+
+        public DateTime? Date { get; set; }
+
+
+
     }
 }

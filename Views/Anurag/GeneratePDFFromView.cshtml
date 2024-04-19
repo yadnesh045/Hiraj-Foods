@@ -2,6 +2,8 @@
     Layout = null;
 }
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,42 +14,59 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles -->
     <style>
-        /* Company logo */
-        .company-logo {
-            max-width: 200px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
         }
-        /* Invoice container */
+
+        .company-logo {
+            max-width: 150px;
+        }
+
         .invoice-container {
             border: 1px solid #dee2e6;
             border-radius: 10px;
             padding: 20px;
             margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
         }
-        /* Invoice header */
+
         .invoice-header {
             background-color: #ffb11f;
             color: #fff;
-            padding: 10px;
+            padding: 20px;
             border-radius: 10px 10px 0 0;
+            margin-bottom: 20px;
         }
-        /* Invoice details */
+
         .invoice-details {
-            margin-top: 20px;
-            background-color: #f8f9fa;
             padding: 20px;
             border-radius: 0 0 10px 10px;
+            background-color: #f8f9fa;
+            margin-bottom: 20px;
         }
-        /* Table styling */
+
         .invoice-table {
             margin-top: 20px;
         }
-        /* Footer */
+
         .invoice-footer {
-            margin-top: 20px;
             background-color: #ffb11f;
             color: #fff;
-            padding: 10px;
+            padding: 20px;
             border-radius: 0 0 10px 10px;
+        }
+
+        .table th, .table td {
+            border-top: none;
+            border-color: #dee2e6;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            color: #6c757d;
         }
     </style>
 </head>
