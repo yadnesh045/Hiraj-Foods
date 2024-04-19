@@ -36,6 +36,11 @@ namespace Hiraj_Foods.Controllers
                 unitOfWorks.Contact.Update(contact);
                 unitOfWorks.Save();
             }
+            else
+            {
+                Console.WriteLine("-----------------------------------------------");
+                return View();
+            }
 
             TempData["Contact"] = "Contact Sent to Hiraj Foods";
             return RedirectToAction("Contact", "Rahul");
@@ -61,7 +66,7 @@ namespace Hiraj_Foods.Controllers
             else
             {
                 Console.WriteLine("-----------------------------------------------");
-                return RedirectToAction("Feedback", "Rahul");
+                return View();
             }
 
             TempData["Feedback"] = "Feedback Sent to Hiraj Foods";
@@ -88,7 +93,7 @@ namespace Hiraj_Foods.Controllers
             else
             {
                 Console.WriteLine("-----------------------------------------------");
-                return RedirectToAction("Enquiry", "Rahul");
+                return View();
             }
 
             TempData["Enquiry"] = "Enquiry Sent to Hiraj Foods";

@@ -45,14 +45,18 @@
                                       border-style:inset;padding-top: 15px;padding-left: 15px;padding-right: 15px;padding-bottom: 15px;">
                         <form method="post" asp-action="Contact" asp-controller="Rahul" id="commentform" class="comment-form">
 
-                            <input type="text" asp-for="Name" name="name" class="" placeholder="Enter Name" required="">
+                            <input type="text" asp-for="Name" name="name" class="" placeholder="Enter Name"> <br>
+                            <span asp-validation-for="Name" class="text-danger"></span>  
 
 
-                            <input type="email" asp-for="Email" name="email" class="" placeholder="Enter Email" required="">
+                            <input type="email" asp-for="Email" name="email" class="" placeholder="Enter Email" ><br />
+                            <span asp-validation-for="Email" class="text-danger"></span>
 
-                            <input type="text" asp-for="Phone" name="Phone" class="" placeholder="Enter Mobile Number" required="">
+                            <input type="text" asp-for="Phone" name="Phone" class="" placeholder="Enter Mobile Number"><br />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
 
-                            <textarea type="text" asp-for="Message" name="message" id="role" cols="30" rows="10" placeholder="Enter Message" required=""></textarea>
+                            <textarea type="text" asp-for="Message" name="message" id="role" cols="30" rows="10" placeholder="Enter Message" ></textarea> <br />
+                            <span asp-validation-for="Message" class="text-danger"></span>
 
 
                             <button type="submit" class="lab-btn" name="submit" value="submit">
@@ -126,6 +130,7 @@
     <script src="assets\js\lightcase.js"></script>
     <script src="assets\js\functions.js"></script>
 </body>
+
 </html>
 
 
