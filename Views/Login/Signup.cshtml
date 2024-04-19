@@ -34,20 +34,12 @@
                         <i class="fas fa-user"></i>
                         <input type="text" asp-for="Login.Email" placeholder="Username" />
                     </div>
-                    <span asp-validation-for="Login.Email" class="text-danger d-block mt-2"></span>
+                    <span asp-validation-for="Login.Email" class="text-danger d-block mt-2"></span> <!-- Add d-block and mt-2 classes to ensure proper display -->
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
                         <input type="password" asp-for="Login.Password" placeholder="Password" />
                     </div>
-                    <span asp-validation-for="Login.Password" class="text-danger d-block mt-2"></span>
-
-                    <p class="forgot resetPass">
-                        <a asp-action="ForgetPassword" asp-controller="Login" target="_blank">Forgot Password?</a>
-                    </p>
-
-
-
-
+                    <span asp-validation-for="Login.Password" class="text-danger d-block mt-2"></span> <!-- Add d-block and mt-2 classes to ensure proper display -->
                     <input type="submit" value="Login" class="btn solid" />
                     <p class="social-text">Or Sign in with social platforms</p>
                     <div class="social-media">
@@ -68,8 +60,6 @@
 
 
                
-
-
 
                 <form method="post" asp-action="UserReg" asp-controller="Login" class="sign-up-form ">
                     <h4 class="title">Sign up</h4>
@@ -387,23 +377,4 @@
             length.classList.add("invalid");
         }
     }
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>

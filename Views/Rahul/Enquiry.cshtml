@@ -117,15 +117,18 @@
 
                             <form method="post" id="commentform" asp-controller="Rahul" asp-action="Enquiry" class="comment-form">
 
-                                <input type="text" name="name" class="form-control" placeholder="Enter Name" required="">
+                                <input type="text" name="name" class="form-control" placeholder="Enter Name" > <br/>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <input type="email" name="Email" class="form-control" placeholder="Enter Email"> <br />
+                                <span asp-validation-for="Email" class="text-danger"></span>
 
-                                <input type="email" name="email" class="form-control" placeholder="Enter Email" required="">
+                                <input type="text" name="subject" class="form-control" placeholder="Enter Subject" > <br />
+                                <span asp-validation-for="Subject" class="text-danger"></span>
+                                <input type="text" name="Phone" class="form-control" placeholder="Enter Mobile Number" > <br />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
 
-                                <input type="text" name="subject" class="form-control" placeholder="Enter Subject" required="">
-
-                                <input type="text" name="Phone" class="form-control" placeholder="Enter Mobile Number" required="">
-
-                                <textarea type="text" id="role" cols="30" rows="10" name="message" placeholder="Enter Message" required=""></textarea>
+                                <textarea type="text" id="role" cols="30" rows="10" name="message" placeholder="Enter Message" ></textarea><br />
+                                <span asp-validation-for="Message" class="text-danger"></span>
 
                                 <button type="submit" class="lab-btn" name="submit" value="Submit">
                                     Submit Now
@@ -188,7 +191,13 @@
 
 
 
-
-
 </body>
+
 </html>
+
+<script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>\
+
+</script>

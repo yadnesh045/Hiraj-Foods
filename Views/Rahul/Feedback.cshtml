@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
     <title>Feedback</title>
+  
 
 </head>
 
@@ -90,14 +91,14 @@
 
                                     <form method="post" asp-controller="Rahul" asp-action="Feedback" id="commentform" class="comment-form">
 
-                                        <input type="text" name="Name" class="form-control" placeholder="Enter Name" required="">
-
-                                        <input type="email" name="Email" class="form-control" placeholder=" Enter Email" required="">
-
-                                        <input type="text" name="Phone" class="form-control" placeholder=" Enter Mobile Number" required="">
-
-                                        <textarea type="text" id="role" class="form-control" cols="30" name="Message" rows="10" placeholder="Message" required=""></textarea>
-
+                                        <input type="text" name="Name" class="form-control" placeholder="Enter Name"> <br />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                        <input type="email" name="Email" class="form-control" placeholder=" Enter Email" ><br />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                        <input type="text" name="Phone" class="form-control" placeholder=" Enter Mobile Number" ><br />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                        <textarea type="text" id="role" class="form-control" cols="30" name="Message" rows="10" placeholder="Message" ></textarea><br />
+                                        <span asp-validation-for="Message" class="text-danger"></span>
 
                                         <button type="submit" class="lab-btn" name="submit" value="Submit">Submit</button>
 
@@ -146,10 +147,22 @@
             toastr.success('@TempData["Feedback"]');
         </script>
 
+
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+
+
     }
 
 
 
 
 </body>
+
 </html>
+
