@@ -176,6 +176,13 @@ namespace Hiraj_Foods.Controllers
         [HttpPost]
         public IActionResult UserLogin(User_SignIn_Login log)
         {
+            if (HttpContext.Session.GetInt32("AdminId") != null)
+            {
+                TempData["Error"] = "Not Authorized to Login!!!";
+                return RedirectToAction("SignUp", "Login");
+            }
+
+
             var existingUser = unitOfWorks.Users.GetByEmail(log.Login.Email);
             // Crypto.VerifyHashedPassword(existingUser.Password, log.Login.Password);
 
@@ -197,7 +204,7 @@ namespace Hiraj_Foods.Controllers
                     TempData["ErrorLogin"] = "Invalid Credentials";
                     return View("Signup");
                 }
-                
+
             }
             else
             {
