@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Net.NetworkInformation;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -767,6 +768,57 @@ namespace Hiraj_Foods.Controllers
                 return RedirectToAction("ViewCheckouts");
             }
         }
+
+
+
+        public IActionResult ViewOrder()
+        {
+            SetAdminData();
+
+
+            var user = unitOfWorks.Users.GetAll().ToList();
+            var orders = unitOfWorks.Uorders.GetAll().ToList();
+
+            var model = new Tuple<List<User>, List<Orders>>(user, orders);
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public IActionResult EditOrder(int id)
+        {
+            var orders = unitOfWorks.Uorders.GetById(id);
+
+            SetAdminData();
+
+            var model = new Tuple<Orders>(orders);
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult EditOrder(Orders Order)
+        {
+            if (ModelState.IsValid)
+            {
+                var Orders = unitOfWorks.Uorders.GetById(Order.Id);
+                Orders.status = Order.status;
+
+
+                unitOfWorks.Uorders.Update(Orders);
+                unitOfWorks.Save();
+                TempData["Message"] = "Checkout Updated successfully!";
+                return RedirectToAction("ViewOrder");
+            }
+            else
+            {
+                TempData["Error"] = "Order Not Updated !!!";
+                return RedirectToAction("ViewOrder");
+            }
+        }
+
+
 
 
 

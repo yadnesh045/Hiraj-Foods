@@ -30,5 +30,7 @@ namespace Hiraj_Foods.Models
         public DateTime date { get; set; }
 
         public string Paymentmethod { get;  set; }
+
+        public string status { get; set; }
     }
 }

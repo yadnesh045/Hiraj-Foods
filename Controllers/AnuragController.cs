@@ -13,6 +13,7 @@ namespace Hiraj_Foods.Controllers
     {
         private readonly IUnitOfWorks unitOfWorks;
         private readonly IHttpContextAccessor _httpContextAccessor;
+  
 
         public AnuragController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
         {
@@ -98,9 +99,9 @@ namespace Hiraj_Foods.Controllers
         {
             SetLayoutModel();
             var orders = unitOfWorks.Uorders.GetById(orderId);
+            ViewBag.OrderStatus = orders.status;
             return View(orders);
         }
-
 
 
         public void SetLayoutModel()
@@ -133,4 +134,6 @@ namespace Hiraj_Foods.Controllers
 
 
     }
+
 }
+
