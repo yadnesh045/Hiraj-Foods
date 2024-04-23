@@ -21,7 +21,7 @@ namespace Hiraj_Foods.Controllers
     {
 
 
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;   
         private readonly IUnitOfWorks unitOfWorks;
 
         public AdminController(IUnitOfWorks unitOfWorks, IWebHostEnvironment _webHostEnvironment)
