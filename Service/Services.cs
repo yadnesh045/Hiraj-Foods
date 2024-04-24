@@ -86,38 +86,54 @@ namespace Hiraj_Foods.Service
             {
                 var fromEmail = new MailAddress("jai.borse01@gmail.com", "Hiraj Foods");
                 var toEmail = new MailAddress(email);
-                var fromEmailPassword = "cqvyopzamjnvawep";
-                string subject = "Order Confirmation from Hiraj Foods";
+                var fromEmailPassword = "cqvyopzamjnvawep"; // Ensure this is secured
 
+                // Email settings
+                string subject = "Order Confirmation from Hiraj Foods";
                 string logoImageUrl = "https://drive.google.com/uc?export=view&id=1OJyqfkEouzRw56jnqqK1kwxoxor-h-wf";
 
-                string productsAndQuantitiesFormatted = productsAndQuantities.Replace(", ", "<br>");
+                // Parsing the products, quantities, and prices
+                var items = productsAndQuantities.Split(',');
+                var productsTableHtml = "<table border='1' style='width: 100%; border-collapse: collapse;'><tr><th>Sr. No.</th><th>Product Name</th><th>Quantity</th><th>Price Each</th><th>Total</th></tr>";
+                int index = 1;
+                decimal subtotal = 0;
 
+                foreach (var item in items)
+                {
+                    var parts = item.Trim().Split(new string[] { "\t:" }, StringSplitOptions.None);
+                    if (parts.Length == 3)
+                    {
+                        string productName = parts[0].Trim();
+                        if (int.TryParse(parts[1].Trim(), out int quantity) && decimal.TryParse(parts[2].Trim(), out decimal price))
+                        {
+                            decimal totalOfProduct = quantity * price;
+                            subtotal += totalOfProduct;
+                            productsTableHtml += $"<tr><td>{index++}</td><td>{productName}</td><td>{quantity}</td><td>Rs. {price:0.00}</td><td> Rs. {totalOfProduct:0.00}</td></tr>";
+                        }
+                    }
+                }
+                productsTableHtml += $"<tr><th colspan='4' style='text-align:right;'>Subtotal</th><th>Rs. {subtotal:0.00}</th></tr></table>";
 
-                var username = _db.Users.Where(u => u.Email == email).SingleOrDefault().FirstName;
+                // Fetch username from database
+                var username = _db.Users.Where(u => u.Email == email).SingleOrDefault()?.FirstName ?? "Customer";
 
-
+                // Email body
                 string body = $@"
-                <div style='text-align: center;'>
-                    <img src='{logoImageUrl}' alt='Company Logo' style='width: 200px; height: auto;' /><br/><br/>
+        <div style='text-align: center;'>
+            <img src='{logoImageUrl}' alt='Company Logo' style='width: 200px; height: auto;' /><br/><br/>
+            <h2>Order Confirmation</h2>
+            <p>Dear {username},<br/><br/>
+            Your order has been successfully placed with Hiraj Foods! Here are the order details:</p>
+            {productsTableHtml}
+            <p><strong>Grand Total:</strong> Rs.    {total.ToString("0.00")}</p>
+            <p>Thank you for shopping with us. Your satisfaction is our top priority!</p>
+        </div>";
 
-                    <h2>Order Confirmation</h2>
-                    <p>
-
-                        Dear {username},<br/><br/>
-                        Your order has been successfully placed with Hiraj Foods! Here are the details:
-                    </p>
-                    <p><strong>Products:</strong> {productsAndQuantitiesFormatted}</p>
-                    <p><strong>Total:</strong> {total}</p>
-                    <p>
-                        Thank you for shopping with us. Your satisfaction is our top priority!
-                    </p>
-                </div>";
-
+                // SMTP configuration
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.gmail.com",
-                    Port = 587, // Gmail SMTP port
+                    Port = 587,
                     EnableSsl = true,
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
@@ -136,7 +152,6 @@ namespace Hiraj_Foods.Service
             }
             catch (Exception ex)
             {
-                // Handle exceptions
                 Console.WriteLine($"Error sending email: {ex.Message}");
                 return false; // Email sending failed
             }

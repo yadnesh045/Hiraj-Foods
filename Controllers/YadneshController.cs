@@ -113,7 +113,8 @@ namespace Hiraj_Foods.Controllers
                 var user = unitOfWorks.Users.GetById(userid);
 
                 var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
-                var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}:{c.Quantity}")); // Ensure Quantity is correctly retrieved
+
+                var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}\t:{c.Quantity}\t:{c.ProductPrice}"));
 
 
 
