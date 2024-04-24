@@ -156,6 +156,10 @@ namespace Hiraj_Foods.Controllers
                     paymentSatus = "Paid";
                 }
 
+
+
+
+               
                 var Chec = new Checkout
                 {
                     UserId = user.Id,
@@ -172,6 +176,7 @@ namespace Hiraj_Foods.Controllers
                     TranscationID = checkout.TranscationID
                     
                 };
+                    
 
                 unitOfWorks.Checkout.Add(Chec);
 
@@ -187,17 +192,38 @@ namespace Hiraj_Foods.Controllers
                 ViewBag.Price = total;
                 TempData["Success"] = "Order Placed Successfully";
 
-                var order = new Orders
-                {
-                    UserId = user.Id,
-                    Products = productsAndQuantities,
-                    date = DateTime.Now,
-                    Total = total,
-                    Paymentmethod = checkout.paymentMethod,
-                    status = "Order Recived"
-                };
 
-                unitOfWorks.Uorders.Add(order);
+                if (productInDb != null)
+                {
+                    var order = new Orders
+                    {
+                        UserId = user.Id,
+                        Products = productsAndQuantities,
+                        date = DateTime.Now,
+                        Total = total,
+                        Paymentmethod = checkout.paymentMethod,
+                        status = "Order Recived",
+                        ProductImageUrl = productInDb.ProductImageUrl
+                    };
+
+                    unitOfWorks.Uorders.Add(order);
+
+                }
+                else
+                {
+                    var order = new Orders
+                    {
+                        UserId = user.Id,
+                        Products = productsAndQuantities,
+                        date = DateTime.Now,
+                        Total = total,
+                        Paymentmethod = checkout.paymentMethod,
+                        status = "Order Recived",
+                        ProductImageUrl = "/All Products.jpg"
+                    };
+
+                    unitOfWorks.Uorders.Add(order);
+                }
                 unitOfWorks.Save();
 
                 _Service.SendOrderConfirmation(user.Email, productsAndQuantities, total);

@@ -32,5 +32,7 @@ namespace Hiraj_Foods.Models
         public string Paymentmethod { get;  set; }
 
         public string status { get; set; }
+
+        public string ProductImageUrl { get; set; }
     }
 }
