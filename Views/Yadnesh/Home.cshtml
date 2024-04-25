@@ -1,6 +1,7 @@
 ﻿@model Tuple<List<Hiraj_Foods.Models.Product> , List<Hiraj_Foods.Models.Banner>,List<Hiraj_Foods.Models.PositiveFeedback>>
 @{
     var firstProduct = Model.Item1.FirstOrDefault();
+    int userId = Context.Session.GetInt32("UserId") ?? 0;
 }
 
 <body>
@@ -607,6 +608,26 @@
 
         // Display the Toastr notification
         toastr.success('@TempData["ForgetPassword"]');
+    </script>
+
+}
+
+
+@if (TempData["Order-Recived"] != null && (int)TempData["user-id"] == userId)
+{
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script type="text/javascript">
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "@TempData["Order-Recived"]",
+            showConfirmButton: false,
+            timer: 5000 
+        });
+
     </script>
 
 }

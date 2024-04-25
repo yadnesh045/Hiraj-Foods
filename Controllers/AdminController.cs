@@ -807,6 +807,12 @@ namespace Hiraj_Foods.Controllers
 
 
 
+                if (Orders.status == "Delerived")
+                {
+
+                    TempData["user-id"] = Order.UserId;
+                    TempData["Order-Recived"] = "Your order for " +Order.Products +" Is Delivered";
+                }
 
 
 
