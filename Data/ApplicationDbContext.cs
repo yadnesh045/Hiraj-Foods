@@ -41,7 +41,29 @@ namespace Hiraj_Foods.Data
             );
 
 
+        
+
+
+       
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserProfileImg)
+                .WithOne(i => i.User)
+                .HasForeignKey<UserProfileImg>(i => i.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+          
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Carts)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
+
+
+
 
     }
 }

@@ -16,7 +16,7 @@
 
 
 <div class="preloader">
-    <div class="preloader-inner">
+    <div class="preloader-inner"> 
         <div class="preloader-icon">
             <span></span>
             <span></span>
@@ -44,9 +44,28 @@
                                                 <img src="@item.ProductImageUrl" style="height:200px;width:200px" alt="Image Description" class="img-fluid">
                                             </div>
                                             <div class="col-md-9">
-                                                <p class="card-text">@item.Products</p>
-                                                <p class="card-text">@item.date.ToString("dd-MM-yyyy")</p>
-                                                <p class="card-text">Price: Rs.@item.Total</p>
+
+
+                                                @foreach (var product in item.Products.Split(','))
+                                                {
+                                                    var productDetails = product.Split(':');
+                                                    if (productDetails.Length == 3)
+                                                    {
+                                                        <p class="card-text">
+                                                            <b>Name:</b> @productDetails[0], 
+                                                            <b>Quantity:</b>  @productDetails[1], 
+                                                            <b> Price:</b> Rs.@productDetails[2]
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="card-text">Invalid product details: @product</p>
+                                                    }
+                                                }
+
+
+                                                <p class="card-text"><b>Date :</b> @item.date.ToString("dd-MM-yyyy")</p>
+                                                <p class="card-text"> <b>Total:</b> Rs.@item.Total</p>
                                             </div>
                                         </div>
                                     </div>
