@@ -55,8 +55,9 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult dashboard()
         {
+            
             SetAdminData();
-
+            
 
             var products = unitOfWorks.Product.GetAll().ToList();
             var productPrice = products.Select(p => p.ProductPrice).ToList();

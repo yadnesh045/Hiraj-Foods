@@ -41,6 +41,12 @@
                     </div>
                     <span asp-validation-for="Login.Password" class="text-danger d-block mt-2"></span> <!-- Add d-block and mt-2 classes to ensure proper display -->
                     <input type="submit" value="Login" class="btn solid" />
+
+                    <div>
+                        <a asp-action="ForgetPassword" asp-controller="Login" target="_blank">Forgot Password !!!</a>
+
+                    </div>
+
                     <p class="social-text">Or Sign in with social platforms</p>
                     <div class="social-media">
                         <a href="#" class="social-icon">
@@ -59,7 +65,7 @@
                 </form>
 
 
-               
+
 
                 <form method="post" asp-action="UserReg" asp-controller="Login" class="sign-up-form ">
                     <h4 class="title">Sign up</h4>
