@@ -806,6 +806,10 @@ namespace Hiraj_Foods.Controllers
                 Orders.status = Order.status;
 
 
+
+
+
+
                 unitOfWorks.Uorders.Update(Orders);
                 unitOfWorks.Save();
                 TempData["Message"] = "Checkout Updated successfully!";
