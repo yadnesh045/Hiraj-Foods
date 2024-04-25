@@ -92,9 +92,19 @@ namespace Hiraj_Foods.Controllers
 
             var TID = HttpContext.Session.GetString("TranctionId");
 
-            if(checkout.TranscationID != "CashOnDelivery")
+ 
+
+
+            if(checkout.City != "nashik" && checkout.paymentMethod == "CashOnDelivery")
             {
-                if(checkout.TranscationID != TID)
+                TempData["Delivery"] = "COD is Not Avalilable Outside Nashik";
+                return View();
+            }
+
+
+            if (checkout.TranscationID != "CashOnDelivery")
+            {
+                if (checkout.TranscationID != TID)
                 {
                     TempData["ErrorForPayment"] = "Transction Id Did Not matched";
                     return View();
@@ -144,9 +154,6 @@ namespace Hiraj_Foods.Controllers
                 {
                     return BadRequest("No product to checkout");
                 }
-
-
-
                 var paymentSatus = "";
                 if (checkout.paymentMethod == "CashOnDelivery")
                 {
@@ -156,11 +163,6 @@ namespace Hiraj_Foods.Controllers
                 {
                     paymentSatus = "Paid";
                 }
-
-
-
-
-               
                 var Chec = new Checkout
                 {
                     UserId = user.Id,
