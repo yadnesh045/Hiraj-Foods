@@ -33,6 +33,8 @@ namespace Hiraj_Foods.Models
 
         public string status { get; set; }
 
+
+        [ValidateNever]
         public string ProductImageUrl { get; set; }
     }
 }

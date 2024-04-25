@@ -172,7 +172,7 @@ namespace Hiraj_Foods.Controllers
             // If Profilepic is null, set a default image or leave it as null
             if (Profilepic == null)
             {
-                layoutModel.profilepic = null; // Or set a default image path
+                layoutModel.profilepic = "\"~/img/avatars/2.png\""; // Or set a default image path
             }
 
 

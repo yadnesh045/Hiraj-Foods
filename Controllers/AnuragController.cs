@@ -37,10 +37,7 @@ namespace Hiraj_Foods.Controllers
 
         public IActionResult GenerateInvoicePDF(int orderId)
         {
-
-
             var order = unitOfWorks.Uorders.GetById(orderId);
-
             var user = unitOfWorks.Users.GetById(order.UserId);
 
             string invoiceNumber = GenerateRandomInvoiceNumber();
@@ -53,23 +50,25 @@ namespace Hiraj_Foods.Controllers
             {
                 var parts = productEntry.Trim().Split(':');
 
-                if (parts.Length != 2)
+                if (parts.Length != 3)
                 {
                     continue;
                 }
 
                 var productName = parts[0].Trim();
                 var quantity = int.Parse(parts[1].Trim());
+                var price = decimal.Parse(parts[2].Trim());
 
                 var invoiceItem = new InvoiceItem
                 {
                     ItemName = productName,
                     Quantity = quantity,
-                    UnitPrice = 0.0m
+                    UnitPrice = price
                 };
 
                 invoiceItems.Add(invoiceItem);
             }
+
             var invoice = new Invoice
             {
                 InvoiceNumber = GenerateRandomInvoiceNumber(),
@@ -79,14 +78,16 @@ namespace Hiraj_Foods.Controllers
                 PaymentMode = order.Paymentmethod
             };
 
-            invoice.TotalAmount = order.Total;
-
+            // Calculate total amount based on product prices
+            invoice.TotalAmount = invoiceItems.Sum(item => item.Quantity * item.UnitPrice);
 
             return new ViewAsPdf("GeneratePDFFromView", invoice)
             {
                 FileName = $"{invoice.CustomerName}{invoice.Date}Invoice.pdf"
             };
         }
+
+
         private string GenerateRandomInvoiceNumber()
         {
             Random random = new Random();
@@ -125,12 +126,13 @@ namespace Hiraj_Foods.Controllers
                 // If Profilepic is null, set a default image or leave it as null
                 if (Profilepic == null)
                 {
-                    layoutModel.profilepic = null; // Or set a default image path
+                    layoutModel.profilepic = "\"~/img/avatars/2.png\""; // Or set a default image path
                 }
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
 
             }
         }
+
 
 
     }
