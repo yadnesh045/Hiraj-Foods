@@ -41,7 +41,7 @@ namespace Hiraj_Foods.Models
         [ValidateNever]
         public string? PaymentStatus { get; set; }
 
-        [ValidateNever]
+        [Required]
         public string TranscationID { get; set; }
 
 
