@@ -47,7 +47,7 @@ builder.Services.AddScoped<IUnitOfWorks, UnitOfWorks>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
        .AddCookie(options =>
        {
-           options.LoginPath = "/Admin/Login";
+           options.LoginPath = "/Login/Login";
        });
 
 

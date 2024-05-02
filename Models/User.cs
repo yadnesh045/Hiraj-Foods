@@ -6,7 +6,7 @@ namespace Hiraj_Foods.Models
     {
         [Key]
         public int Id { get; set; }
-		[Required(ErrorMessage ="Name Is Required :")]
+		[Required(ErrorMessage = "Name Is Required :")]
 		public string FirstName { get; set; }
 		[Required(ErrorMessage ="LastName Is Required : ")]
 		public string LastName { get; set; }
