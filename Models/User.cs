@@ -6,17 +6,22 @@ namespace Hiraj_Foods.Models
     {
         [Key]
         public int Id { get; set; }
+
+
 		[Required(ErrorMessage = "Name Is Required :")]
 		public string FirstName { get; set; }
+
+
 		[Required(ErrorMessage ="LastName Is Required : ")]
 		public string LastName { get; set; }
-		[Required(ErrorMessage = "Email Is Required : ")]
-        [Required(ErrorMessage = "Name Is Required :")]
-        public string FirstName { get; set; }
-        [Required(ErrorMessage = "LastName Is Required : ")]
-        public string LastName { get; set; }
-        [Required(ErrorMessage = "Email Is Required : ")]
 
+		
+
+
+    
+
+
+        [Required(ErrorMessage = "Email Is Required : ")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
