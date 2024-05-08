@@ -43,7 +43,7 @@ namespace Hiraj_Foods.Controllers
             var order = unitOfWorks.Uorders.GetById(orderId);
             var user = unitOfWorks.Users.GetById(order.UserId);
 
-            string invoiceNumber = _services.GenerateRandomInvoiceNumber();
+            string invoiceNumber = GenerateRandomInvoiceNumber();
 
             var productEntries = order.Products.Split(',');
 
@@ -74,7 +74,7 @@ namespace Hiraj_Foods.Controllers
 
             var invoice = new Invoice
             {
-                InvoiceNumber = _services.GenerateRandomInvoiceNumber(),
+                InvoiceNumber = GenerateRandomInvoiceNumber(),
                 Date = DateTime.Now,
                 CustomerName = user.FirstName,
                 Items = invoiceItems,
@@ -92,7 +92,12 @@ namespace Hiraj_Foods.Controllers
 
 
 
-
+        private string GenerateRandomInvoiceNumber()
+        {
+            Random random = new Random();
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, 12).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         public IActionResult TrackOrder(int orderId)
         {
             SetLayoutModel();
