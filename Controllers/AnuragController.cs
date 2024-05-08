@@ -6,6 +6,7 @@ using Rotativa.AspNetCore;
 using Hiraj_Foods.Models.View_Model;
 using Hiraj_Foods.Repository;
 using Hiraj_Foods.Repository.IRepository;
+using Hiraj_Foods.Services.IServices;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -13,12 +14,14 @@ namespace Hiraj_Foods.Controllers
     {
         private readonly IUnitOfWorks unitOfWorks;
         private readonly IHttpContextAccessor _httpContextAccessor;
-  
+        private readonly IServices _services;
 
-        public AnuragController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor)
+
+        public AnuragController(IUnitOfWorks unitOfWorks, IHttpContextAccessor httpContextAccessor, IServices services)
         {
             this.unitOfWorks = unitOfWorks;
             _httpContextAccessor = httpContextAccessor;
+            _services = services;
         }
         public IActionResult Index()
         {
@@ -40,7 +43,7 @@ namespace Hiraj_Foods.Controllers
             var order = unitOfWorks.Uorders.GetById(orderId);
             var user = unitOfWorks.Users.GetById(order.UserId);
 
-            string invoiceNumber = GenerateRandomInvoiceNumber();
+            string invoiceNumber = _services.GenerateRandomInvoiceNumber();
 
             var productEntries = order.Products.Split(',');
 
@@ -71,7 +74,7 @@ namespace Hiraj_Foods.Controllers
 
             var invoice = new Invoice
             {
-                InvoiceNumber = GenerateRandomInvoiceNumber(),
+                InvoiceNumber = _services.GenerateRandomInvoiceNumber(),
                 Date = DateTime.Now,
                 CustomerName = user.FirstName,
                 Items = invoiceItems,
@@ -88,12 +91,6 @@ namespace Hiraj_Foods.Controllers
         }
 
 
-        private string GenerateRandomInvoiceNumber()
-        {
-            Random random = new Random();
-            const string chars = "0123456789";
-            return new string(Enumerable.Repeat(chars, 12).Select(s => s[random.Next(s.Length)]).ToArray());
-        }
 
 
         public IActionResult TrackOrder(int orderId)
