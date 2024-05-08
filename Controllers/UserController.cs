@@ -110,7 +110,7 @@ namespace Hiraj_Foods.Controllers
 
             TempData["Error"] = "You need to be logged in to add the product to the cart.";
             return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });
-        }
+         }
 
 
         [HttpPost]
