@@ -94,19 +94,7 @@ else
     </div>
 }
 
-@if (TempData["Error"] != null)
-{
-    <script type="text/javascript">
-        toastr.error('@TempData["Error"]');
-    </script>
-}
-
-@if (TempData["Success"] != null)
-{
-    <script type="text/javascript">
-        toastr.success('@TempData["Success"]');
-    </script>
-}
+<partial name="_toastr" />
 
 <style>
     .card {

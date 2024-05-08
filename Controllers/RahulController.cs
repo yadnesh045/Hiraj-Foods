@@ -42,7 +42,7 @@ namespace Hiraj_Foods.Controllers
                 return View();
             }
 
-            TempData["Contact"] = "Contact Sent to Hiraj Foods";
+            TempData["Success"] = "Contact Sent to Hiraj Foods";
             return RedirectToAction("Contact", "Rahul");
         }
 
@@ -69,7 +69,7 @@ namespace Hiraj_Foods.Controllers
                 return View();
             }
 
-            TempData["Feedback"] = "Feedback Sent to Hiraj Foods";
+            TempData["Success"] = "Feedback Sent to Hiraj Foods";
             return RedirectToAction("Feedback", "Rahul");
         }
 
@@ -96,7 +96,7 @@ namespace Hiraj_Foods.Controllers
                 return View();
             }
 
-            TempData["Enquiry"] = "Enquiry Sent to Hiraj Foods";
+            TempData["Success"] = "Enquiry Sent to Hiraj Foods";
             return RedirectToAction("Enquiry", "Rahul");
         }
 
