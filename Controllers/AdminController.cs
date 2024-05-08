@@ -486,11 +486,12 @@ namespace Hiraj_Foods.Controllers
                 AdminInDb.Password = admin.NewPassword;
                 unitOfWorks.Admin.Update(AdminInDb);
                 unitOfWorks.Save();
-                TempData["Message"] = "Password Changed Successfully!";
+                TempData["Success"] = "Password Changed Successfully!";
                 return RedirectToAction("dashboard", "Admin");
             }
             else
             {
+                TempData["Error"] = "Password Not Changed!";
                 return RedirectToAction("dashboard", "Admin");
             }
         }
@@ -581,6 +582,7 @@ namespace Hiraj_Foods.Controllers
 
                 unitOfWorks.Admin.Update(Admin);
                 unitOfWorks.Save();
+                TempData["Success"] = "Admin Deactivated Successfull !";
                 return RedirectToAction("Login", "Login");
             }
         }
@@ -813,6 +815,7 @@ namespace Hiraj_Foods.Controllers
 
                     TempData["user-id"] = Order.UserId;
                     TempData["Order-Recived"] = "Your order for " +Order.Products +" Is Delivered";
+                
                 }
 
 

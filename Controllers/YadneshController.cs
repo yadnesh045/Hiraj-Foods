@@ -97,7 +97,7 @@ namespace Hiraj_Foods.Controllers
 
             if(checkout.City != "nashik" && checkout.paymentMethod == "CashOnDelivery")
             {
-                TempData["Delivery"] = "COD is Not Avalilable Outside Nashik";
+                TempData["Message"] = "COD is Not Avalilable Outside Nashik";
                 return View();
             }
 
@@ -106,7 +106,7 @@ namespace Hiraj_Foods.Controllers
             {
                 if (checkout.TranscationID != TID)
                 {
-                    TempData["ErrorForPayment"] = "Transction Id Did Not matched";
+                    TempData["Error"] = "Transction Id Did Not matched";
                     return View();
                 }
             }
