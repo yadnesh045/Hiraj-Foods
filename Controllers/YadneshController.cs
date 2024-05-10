@@ -118,16 +118,9 @@ namespace Hiraj_Foods.Controllers
             if (checkout != null)
             {
                 var userid = HttpContext.Session.GetInt32("UserId");
-
-
                 var user = unitOfWorks.Users.GetById(userid);
-
                 var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
-
                 var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}\t:{c.Quantity}\t:{c.ProductPrice}"));
-
-
-
                 var productInDb = unitOfWorks.Product.GetById(product.Id);
 
 
