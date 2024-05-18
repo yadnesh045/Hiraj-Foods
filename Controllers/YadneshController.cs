@@ -97,7 +97,7 @@ namespace Hiraj_Foods.Controllers
 
             if(checkout.City != "nashik" && checkout.paymentMethod == "CashOnDelivery")
             {
-                TempData["Delivery"] = "COD is Not Avalilable Outside Nashik";
+                TempData["Message"] = "COD is Not Avalilable Outside Nashik";
                 return View();
             }
 
@@ -106,7 +106,7 @@ namespace Hiraj_Foods.Controllers
             {
                 if (checkout.TranscationID != TID)
                 {
-                    TempData["ErrorForPayment"] = "Transction Id Did Not matched";
+                    TempData["Error"] = "Transction Id Did Not matched";
                     return View();
                 }
             }
@@ -121,12 +121,10 @@ namespace Hiraj_Foods.Controllers
 
 
                 var user = unitOfWorks.Users.GetById(userid);
-
+                    
                 var cartItems = unitOfWorks.Cart.GetByUserId(user.Id);
 
                 var productsAndQuantities = string.Join(", ", cartItems.Select(c => $"{c.ProductName}\t:{c.Quantity}\t:{c.ProductPrice}"));
-
-
 
                 var productInDb = unitOfWorks.Product.GetById(product.Id);
 
@@ -142,7 +140,7 @@ namespace Hiraj_Foods.Controllers
                     if (!string.IsNullOrEmpty(productInDb.ProductPrice))
                     {
                         total = decimal.Parse(productInDb.ProductPrice); // Parse the string to decimal
-                        productsAndQuantities = $"{productInDb.ProductName}:1";
+                        productsAndQuantities = $"{productInDb.ProductName}\t\t:1\t:{productInDb.ProductPrice}";
 
                     }
                     else

@@ -111,6 +111,7 @@ namespace Hiraj_Foods.Service
                             productsTableHtml += $"<tr><td>{index++}</td><td>{productName}</td><td>{quantity}</td><td>Rs. {price:0.00}</td><td> Rs. {totalOfProduct:0.00}</td></tr>";
                         }
                     }
+
                 }
                 productsTableHtml += $"<tr><th colspan='4' style='text-align:right;'>Subtotal</th><th>Rs. {subtotal:0.00}</th></tr></table>";
 
@@ -239,5 +240,8 @@ namespace Hiraj_Foods.Service
             return sb.ToString();
         }
 
+       
+
+       
     }
 }

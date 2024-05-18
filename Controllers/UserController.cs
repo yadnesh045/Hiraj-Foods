@@ -102,7 +102,7 @@ namespace Hiraj_Foods.Controllers
                     existingCartItem.Quantity += 1; // Increase quantity by 1
                     unitOfWorks.Cart.Update(existingCartItem); // Update the existing cart item
                     unitOfWorks.Save();
-                    TempData["Info"] = "Product quantity increased in your cart.";
+                    TempData["Message"] = "Product quantity increased in your cart.";
                 }
 
                 return RedirectToAction("HomeInside", "Yadnesh", new { id = product.Id });

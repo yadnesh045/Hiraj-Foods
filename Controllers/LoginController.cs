@@ -86,7 +86,7 @@ namespace Hiraj_Foods.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-                    TempData["Message"] = "Login Successfull !";
+                    TempData["Success"] = "Login Successfull !";
 
                     return RedirectToAction("dashboard", "Admin");
                 }
@@ -106,6 +106,8 @@ namespace Hiraj_Foods.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
+            TempData["Success"] = "Logout Successfull !";
+
             return RedirectToAction("Login", "Login");
         }
 
@@ -128,7 +130,7 @@ namespace Hiraj_Foods.Controllers
                 var existingEmailUser = unitOfWorks.Users.GetByEmail(usr.User.Email);
                 if (existingEmailUser != null)
                 {
-                    TempData["repeatemail"] = "Email is Already Exists";
+                    TempData["Error"] = "Email is Already Exists";
                     //return RedirectToAction("Signup", "Login");
                 }
 
@@ -136,7 +138,7 @@ namespace Hiraj_Foods.Controllers
                 var existingPhoneUser = unitOfWorks.Users.GetByPhone(usr.User.Phone);
                 if (existingPhoneUser != null)
                 {
-                    TempData["repeatephone"] = "Phone no. is Already Exists";
+                    TempData["Error"] = "Phone no. is Already Exists";
                     return RedirectToAction("Signup", "Login");
                 }
 
@@ -161,7 +163,7 @@ namespace Hiraj_Foods.Controllers
 
                         _Service.SendLoginCredentials(existinguser.Email, existinguser.Password);
 
-                        TempData["AccountCreated"] = "Account Created And Login Successfull.";
+                        TempData["Success"] = "Account Created And Login Successfull.";
                         return RedirectToAction("Home", "Yadnesh");
                     }
                 }
@@ -196,19 +198,19 @@ namespace Hiraj_Foods.Controllers
                     HttpContext.Session.SetInt32("UserId", existingUser.Id);
                     HttpContext.Session.SetString("UserEmail", existingUser.Email);
 
-                    TempData["sucessLogin"] = "Login Successfull.";
+                    TempData["Success"] = "Login Successfull.";
                     return RedirectToAction("Home", "Yadnesh");
                 }
                 else
                 {
-                    TempData["ErrorLogin"] = "Invalid Credentials";
+                    TempData["Error"] = "Invalid Credentials";
                     return View("Signup");
                 }
 
             }
             else
             {
-                TempData["ErrorLogin"] = "Invalid Credentials";
+                TempData["Error"] = "Invalid Credentials";
                 return View("Signup");
             }
         }
@@ -219,6 +221,7 @@ namespace Hiraj_Foods.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
+            TempData["Success"] = "Logout Successfull !";
 
             return RedirectToAction("Home", "Yadnesh");
         }
@@ -238,7 +241,7 @@ namespace Hiraj_Foods.Controllers
         {
             if (usr == null || usr.Login == null)
             {
-                TempData["ForgetPassword"] = "Invalid request.";
+                TempData["Error"] = "Invalid request.";
                 return RedirectToAction("ForgetPassword", "Login");
             }
 
@@ -255,18 +258,18 @@ namespace Hiraj_Foods.Controllers
                     unitOfWorks.Users.Update(existingUser);
                     unitOfWorks.Save();
 
-                    TempData["ForgetPassword"] = "Password Sent to your Email.";
+                    TempData["Success"] = "Password Sent to your Email.";
                     return RedirectToAction("Home", "Yadnesh");
                 }
                 else
                 {
-                    TempData["ForgetPassword"] = "Error sending email.";
+                    TempData["Error"] = "Error sending email.";
                     return RedirectToAction("ForgetPassword", "Login");
                 }
             }
             else
             {
-                TempData["ForgetPassword"] = "Email Not Found.";
+                TempData["Error"] = "Email Not Found.";
                 return RedirectToAction("ForgetPassword", "Login");
             }
         }
