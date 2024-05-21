@@ -180,6 +180,7 @@ namespace Hiraj_Foods.Controllers
             _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
         }
 
+      
         [HttpPost]
         public IActionResult SetProductPrice(int price)
         {
