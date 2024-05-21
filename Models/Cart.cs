@@ -21,6 +21,7 @@ namespace Hiraj_Foods.Models
         [ForeignKey("Product")]
         public int ProductId { get; set; }
 
+
         [NotMapped]
         [ValidateNever]
         public Product Product { get; set; }
