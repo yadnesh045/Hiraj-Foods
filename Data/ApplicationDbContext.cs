@@ -37,7 +37,8 @@ namespace Hiraj_Foods.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Admin>().HasData(
-                new Admin { Id = 1, Email = "Admin@gmail.com", FirstName = "Admin", LastName="HighTech", Mobile = "8668212142", Address = "Nashik", Password = "Admin@123" }
+                new Admin { Id = 1, Email = "Admin@gmail.com", FirstName = "Admin", LastName="HighTech",
+                    Mobile = "8668212142", Address = "Nashik", Password = "Admin@123" }
             );
 
 
