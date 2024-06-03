@@ -95,7 +95,7 @@ namespace Hiraj_Foods.Controllers
  
 
 
-            if(checkout.City != "nashik" && checkout.paymentMethod == "CashOnDelivery")
+            if(checkout.City != "Nashik" && checkout.paymentMethod == "CashOnDelivery")
             {
                 TempData["Message"] = "COD is Not Avalilable Outside Nashik";
                 return View();
@@ -161,6 +161,10 @@ namespace Hiraj_Foods.Controllers
                 {
                     paymentSatus = "Paid";
                 }
+
+            
+
+
                 var Chec = new Checkout
                 {
                     UserId = user.Id,
@@ -175,7 +179,6 @@ namespace Hiraj_Foods.Controllers
                     Date = DateTime.Now,
                     PaymentStatus = paymentSatus,
                     TranscationID = checkout.TranscationID
-                    
                 };
                     
 
