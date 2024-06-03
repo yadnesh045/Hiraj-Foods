@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Net.NetworkInformation;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Hiraj_Foods.Controllers
 {
@@ -134,6 +136,7 @@ namespace Hiraj_Foods.Controllers
         {
             if (ModelState.IsValid)
             {
+                string plainTextContent = ExtractPlainTextFromHtml(productVM.ProductDescription);
                 var product = new Product
                 {
                     ProductName = productVM.ProductName,
@@ -142,7 +145,7 @@ namespace Hiraj_Foods.Controllers
                     ProductNutrition = productVM.ProductNutrition,
                     ProductWeight = productVM.ProductWeight,
                     ProductIngredient = productVM.ProductIngredient,
-                    ProductDescription = productVM.ProductDescription,
+                    ProductDescription = plainTextContent,
                 };
 
                 if (productVM.ProductFlavourImage != null && productVM.ProductFlavourImage.Length > 0)
@@ -180,6 +183,13 @@ namespace Hiraj_Foods.Controllers
             return RedirectToAction("ViewProduct");
         }
 
+        private string ExtractPlainTextFromHtml(string htmlContent)
+        {
+            // Remove HTML tags and decode HTML entities to get plain text
+            string plainText = Regex.Replace(htmlContent, "<.*?>", String.Empty);
+            plainText = WebUtility.HtmlDecode(plainText);
+            return plainText;
+        }
 
         [HttpGet]
         public IActionResult ViewProduct()
