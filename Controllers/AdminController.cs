@@ -391,7 +391,7 @@ namespace Hiraj_Foods.Controllers
                     unitOfWorks.Save();
 
                     TempData["Success"] = "Banner Added Succefully";
-                    return View();
+                    return RedirectToAction("Banner");
                 }
             }
 
