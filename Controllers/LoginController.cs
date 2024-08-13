@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Hiraj_Foods.Models;
 using Newtonsoft.Json;
-using Hiraj_Foods.Migrations;
 using Hiraj_Foods.Services.IServices;
 using System.Web.Helpers;
 using static System.Runtime.InteropServices.JavaScript.JSType;
