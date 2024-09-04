@@ -1,49 +1,609 @@
-﻿<!DOCTYPE html>
+﻿        @using Hiraj_Foods.Models.View_Model
+@{
+    var userEmail = Context.Session.GetString("UserEmail"); var userId = Context.Session.GetInt32("UserId");
+}
+@{
+    var layoutModel = Context.Items["LayoutModel"] as LayoutModel; var firstname =
+        layoutModel?.FirstName; var lastName = layoutModel?.LastName; var cartItemCount = layoutModel?.CartItemCount; string profileimg = layoutModel?.profilepic;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - Hiraj_Foods</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Hiraj_Foods.styles.css" asp-append-version="true" />
+    <link rel="icon" href="~/favicon.ico" />
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/animate.css" rel="stylesheet" />
+    <link href="~/css/icofont.min.css" rel="stylesheet" />
+    <link href="~/css/lightcase.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/swiper.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hiraj_Foods</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <div class="mobile-menu transparent-header" style="background-color: gray;">
+        <nav class="mobile-header">
+            <div class="header-logo">
+                <a asp-area="" asp-controller="Yadnesh" asp-action="Home"><img src="~/img/hiraj food white logo website.png" alt="logo" /></a>
+            </div>
+            <div class="header-bar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <nav class="mobile-menu">
+            <div class="mobile-menu-area">
+                <div class="mobile-menu-area-inner">
+                    <ul class="agri-ul">
+                        <li>
+                            <a asp-area="" asp-controller="Yadnesh" asp-action="Home">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Yadnesh" asp-action="Aboutus">About Us</a>
                         </li>
+                        <li>
+                            <a asp-area="" asp-controller="Yadnesh" asp-action="Quality_Values">Quality & Values</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Rahul" asp-action="Feedback">FeedBack</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
+                        </li>
+
+                        <li>
+                            <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
+                        </li>
+
+                        @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="User" asp-action="Cart">Cart <span id="cartItemCount">( @cartItemCount) </span></a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="Login" asp-action="Signup">Login and Signup</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
+    </div>
+
+    <header class="header-section">
+        <div class="header-top">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-9 col-12">
+                        <div class="ht-left">
+                            <ul class="agri-ul d-flex flex-wrap">
+                                <a href="mailto:info@hirajfoods.com">
+                                <li>
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>
+                                        info@hirajfoods.com
+                                    </span>
+                                </li>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <li>
+                                    <i class="fa-solid fa-phone"></i>
+                                    <span>+91 70306 00089</span>
+                                </li>
+                                &nbsp;
+                                <li>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Address -Gat No 577, Janori, Tal - Dindori, dist - Nashik</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-12">
+                        <div class="ht-right">
+                            <div class="scocial-media">
+                                <a href="https://fb.me/hirajf00ds" target="_blank" class="facebook"><img src="~/img/facebook.png" /></a>&nbsp;&nbsp;
+                                <a href="https://www.instagram.com/hiraj_foods?r=nametag" target="_blank" class=""><img src="~/img/instagram.png" /></a>&nbsp;&nbsp;
+                                <a href="mailto:info@hirajfoods.com" target="_blank" class="Email"><img src="~/img/email.png" /></a>&nbsp;&nbsp;&nbsp;
+
+
+                                <a href="https://api.whatsapp.com/send/?phone=917040554228&text=Hello&app_absent=1" target="_blank" class="vimeo">
+                                    <img src="~/img/whatsapp.png" />
+                                </a>&nbsp;&nbsp;&nbsp;
+
+                                @* if user is login then this button should not be shown *@
+                                @if (userEmail == null)
+                                {
+                                    <a asp-action="Login" asp-controller="Login" target="_blank" class="Email"><img src="~/anurag-images/navigation-button.png" /></a>
+
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+            <div class="header-area">
+                <div class="container">
+                    <div class="primary-menu">
+                        <div class="main-area w-100">
+                            <div class="main-menu d-flex flex-wrap align-items-center justify-content-center w-100">
+                                <ul class="agri-ul">
+                                    <li>
+                                        <a asp-area="" asp-controller="Yadnesh" asp-action="Home">Home</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Yadnesh" asp-action="Aboutus">About Us</a>
+                                    </li>
+
+                                    <li>
+                                        <a asp-area="" asp-controller="Yadnesh" asp-action="Quality_Values">Quality & Values</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Rahul" asp-action="Feedback">FeedBack</a>
+                                    </li>
+                                </ul>
+                                <div class="logo px-4">
+                                    <a asp-area="" asp-controller="Yadnesh" asp-action="Home"><img src="~/img/hiraj food.png" alt="logo" /></a>
+                                </div>
+                                <ul class="agri-ul">
+                                    <li>
+                                        <a asp-area="" asp-controller="Rahul" asp-action="Enquiry">Enquiry</a>
+                                    </li>
+
+                                    <li>
+                                        <a asp-area="" asp-controller="Rahul" asp-action="Contact">Contact</a>
+                                    </li>
+
+
+
+
+                                    @if (!string.IsNullOrEmpty(userEmail) && userId.HasValue)
+                                    {
+                                        <style>
+                                            * {
+                                                margin: 0;
+                                                padding: 0;
+                                                box-sizing: border-box;
+                                                font-family: "Figtree", sans-serif;
+                                            }
+
+                                            nav {
+                                                position: fixed;
+                                                top: 0;
+                                                left: 0;
+                                                width: 100%;
+                                                height: 80px;
+                                                background: white;
+                                                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                                                padding: 16px;
+                                                display: flex;
+                                                justify-content: space-between;
+                                                align-items: center;
+                                            }
+
+                                            /* menu toggle */
+
+                                            .menu-toggle {
+                                                position: relative;
+                                                width: 40px;
+                                                height: 40px;
+                                                cursor: not-allowed;
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                            }
+
+                                                .menu-toggle::before {
+                                                    content: "";
+                                                    position: absolute;
+                                                    width: 24px;
+                                                    height: 4px;
+                                                    background: #000;
+                                                    box-shadow: 0 8px 0 #000, 0 -8px 0 #000;
+                                                }
+
+                                            /* profile menu */
+
+                                            .profile {
+                                                position: relative;
+                                                display: flex;
+                                                justify-content: flex-end;
+                                                align-items: center;
+                                                gap: 12px;
+                                                cursor: pointer;
+                                                text-align: end;
+                                            @* margin-left:130px; *@ margin-top:-1px;
+                                            }
+
+                                                .profile h3 {
+                                                    text-align: end;
+                                                    line-height: 1;
+                                                    margin-bottom: 4px;
+                                                    font-weight: 600;
+                                                }
+
+                                                .profile p {
+                                                    line-height: 1;
+                                                    font-size: 2rem;
+                                                    opacity: 0.6;
+                                                }
+
+                                                .profile .img-box {
+                                                    position: relative;
+                                                    width: 48px;
+                                                    height: 48px;
+                                                    border-radius: 50%;
+                                                    overflow: hidden;
+                                                }
+
+                                                    .profile .img-box img {
+                                                        position: absolute;
+                                                        top: 0;
+                                                        left: 0;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        object-fit: cover;
+                                                    }
+
+                                            /* menu (the right one) */
+
+                                            .menu {
+                                                position: absolute;
+                                                top: calc(100% + 24px);
+                                                right: 16px;
+                                                width: 200px;
+                                                min-height: 100px;
+                                                background: #fff;
+                                                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                                                opacity: 0;
+                                                transform: translateY(-10px);
+                                                visibility: hidden;
+                                                transition: 300ms;
+                                            }
+
+                                                .menu::before {
+                                                    content: "";
+                                                    position: absolute;
+                                                    top: -10px;
+                                                    right: 14px;
+                                                    width: 20px;
+                                                    height: 20px;
+                                                    background: #fff;
+                                                    transform: rotate(45deg);
+                                                    z-index: -1;
+                                                }
+
+                                                .menu.active {
+                                                    opacity: 1;
+                                                    transform: translateY(0);
+                                                    visibility: visible;
+                                                }
+
+                                                /* menu links */
+
+                                                .menu ul {
+                                                    position: relative;
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    z-index: 10;
+                                                    background: #fff;
+                                                }
+
+                                                    .menu ul li {
+                                                        list-style: none;
+                                                    }
+
+                                                        .menu ul li:hover {
+                                                            background: #eee;
+                                                        }
+
+                                                        .menu ul li a {
+                                                            text-decoration: none;
+                                                            color: #000;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            padding: 15px 20px;
+                                                            gap: 6px;
+                                                        }
+
+                                                            .menu ul li a i {
+                                                                font-size: 2rem;
+                                                            }
+
+                                            .h5 {
+                                                color: black;
+                                            }
+                                        </style>
+
+                                        <li>
+                                            <div class="profile" onclick="toggleDropdown()">
+                                                <div class="user">
+                                                    <a style="color: black;">@firstname</a>
+                                                </div>
+                                                <div class="img-box">
+                                                    <img src="@profileimg" alt="some user image" />
+                                                </div>
+                                            </div>
+
+                                            <ul id="dropdownMenu" class="dropdown-menu">
+                                                <li><a asp-area="" asp-controller="User" asp-action="Profile">Profile</a></li>
+                                                <li><a asp-area="" asp-controller="User" asp-action="Orders">Orders</a></li>
+                                                <li>
+                                                    <a id="cartLink" asp-area="" asp-controller="User" asp-action="Cart">Cart<span id="cartItemCount">( @cartItemCount) </span></a>
+                                                </li>
+
+                                                <li><a asp-area="" asp-controller="Login" asp-action="UserLogout">Logout</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <script>
+                                            function toggleDropdown() {
+                                                var dropdownMenu = document.getElementById("dropdownMenu");
+                                                if (dropdownMenu.style.display === "block") {
+                                                    dropdownMenu.style.display = "none";
+                                                } else {
+                                                    dropdownMenu.style.display = "block";
+                                                }
+                                            }
+                                        </script>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a asp-area="" asp-controller="Login" asp-action="Signup">Login and Signup</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
-    <div class="container">
+    <!-- Include toastr CSS -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+    <!-- Include jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Include toastr JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        document.getElementById("cartLink").addEventListener("click", function (event) {
+            const isUserLoggedIn = @((userEmail != null || userId != null).ToString().ToLower());
+
+            if (!isUserLoggedIn) {
+                event.preventDefault();
+                // Display a toastr notification
+                toastr.error('You need to log in first to access the cart.');
+                // Redirect to the login/signup page after the toastr notification is shown
+                setTimeout(function () {
+                    window.location.href = "/Login/Signup";
+                }, 3000); // Redirect after 3 seconds (adjust as needed)
+            }
+        });
+    </script>
+
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <!-- footer section start here -->
+    <footer class="footer-section padding-tb pb-0">
         <div class="container">
-            &copy; 2024 - Hiraj_Foods - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-top">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="footer-item">
+                            <div class="footer-inner">
+                                <div class="footer-logo">
+                                    <img src="~/img/hiraj food white logo website.png" />
+                                </div>
+                                <div class="footer-desc">
+                                    <p>Our Brand gives us the opportunity to create positive change to grow our products & achieve our purpose of making sustainable living in common place.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="footer-item footer-addtess">
+                            <div class="footer-inner">
+                                <div class="footer-title">
+                                    <h5>Keep In Touch</h5>
+                                </div>
+                                <div class="footer-body">
+                                    <ul class="agri-ul">
+                                        <li>
+                                            <div class="contact-item">
+                                                <div class="contact-icon">
+                                                    <i class="fa-solid fa-location-dot"></i>
+                                                </div>
+                                                <div class="detalis">
+                                                    <p>&nbsp;&nbsp;Address -Gat No 577, Janori,&nbsp; Tal - Dindori, dist - Nashik</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="contact-item">
+                                                <div class="contact-icon">
+                                                    <i class="fa-solid fa-phone"></i>
+                                                </div>
+                                                <div class="detalis">
+                                                    <p>&nbsp;&nbsp;+91 70306 00089</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="contact-item">
+                                                <div class="contact-icon">
+                                                    <i class="fa-solid fa-envelope"></i>
+                                                </div>
+                                                <div class="detalis">
+                                                    <a href="mailto:info@hirajfoods.com"><p>&nbsp;info@hirajfoods.com</p></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="footer-item footer-blog">
+                            <div class="footer-inner">
+                                <div class="footer-title">
+                                    <h5>Hiraj Product</h5>
+                                </div>
+                                <!-- This part was PHP-generated, you may replace it with static HTML if needed -->
+                                <div class="footer-body">
+                                    <ul>
+                                        <li><a style="color: #ffffff;" asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Apple">Apple</a></li>
+                                        <li><a style="color: #ffffff;" asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Guava">Guava</a></li>
+                                        <li><a style="color: #ffffff;" asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Chocolate	">Chocolate</a></li>
+                                        <li><a style="color: #ffffff;" asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Elaichi">Elaichi</a></li>
+                                        <li><a style="color: #ffffff;" asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Mix Fruit">Mix Fruit</a></li>
+                                        <li><a style="color: #ffffff;" asp-action="MoreInfo" asp-controller="Yadnesh" asp-route-name="Mango">Mango</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="footer-item footer-gallery">
+                            <div class="footer-inner">
+                                <div class="footer-title">
+                                    <h5>Social Links</h5>
+                                </div>
+                                <div class="col-lg-3 col-12">
+                                    <div class="ht-right">
+                                        <div class="scocial-media">
+                                            <a href="https://fb.me/hirajf00ds" target="_blank" class="facebook">
+                                                <img src="~/img/facebook.png" />
+                                            </a>
+                                            <a href="https://www.instagram.com/hiraj_foods?r=nametag" target="_blank" class="">
+                                                <img src="~/img/instagram.png" />
+                                            </a>
+                                            <a href="mailto:info@hirajfoods.com" target="_blank" class="Email">
+                                                <img src="~/img/email.png" />
+                                            </a>
+                                            <a href="https://api.whatsapp.com/send/?phone=917040554228&text=Hello&app_absent=1" target="_blank" class="vimeo">
+                                                <img src="~/img/whatsapp.png" />
+                                            </a>&nbsp;&nbsp;&nbsp;
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    &copy;
+                    <script type="text/javascript">
+                        document.write(new Date().getFullYear());
+                    </script>
+                    All Rights reserved. Designed by
+                    <a href="https://sumagoinfotech.com/" target="_blank">
+                        <img src="~/img/flogo2.png" />
+                        <span> Sumago Infotech Pvt. Ltd.</span>
+                    </a>
+                </p>
+            </div>
         </div>
     </footer>
+
+    <!-- footer section ending here -->
+    @*
+    <footer class="border-top footer text-muted">
+    <div class="container">&copy; 2024 - Hiraj_Foods - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
+    </footer>
+    *@
+
+
+
+
+    <script src="https://cdn.tiny.cloud/1/xcxpej3c8vgx3kt5pgkj052gguxrol392wpvq739a37glrf0/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/fontawesome.min.js"></script>
+    <script src="~/js/functions.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/jquery.countdown.min.js"></script>
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/lightcase.js"></script>
+    <script src="~/js/swiper.min.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    <script src="~/js/wow.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/fontawesome.min.js"></script>
+    <script src="~/js/functions.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/jquery.countdown.min.js"></script>
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/lightcase.js"></script>
+    <script src="~/js/swiper.min.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    <script src="~/js/wow.min.js"></script>
+
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/fontawesome.min.js"></script>
+    <script src="~/js/functions.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/jquery.countdown.min.js"></script>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/lightcase.js"></script>
+    <script src="~/js/swiper.min.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    <script src="~/js/wow.min.js"></script>
+
+    <!--script for charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

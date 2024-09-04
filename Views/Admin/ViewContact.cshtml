@@ -1,0 +1,143 @@
+﻿@model Tuple<List<Contact>>
+
+@{
+    Layout = null;
+}
+@{
+    var contact = Model.Item1;
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+      data-assets-path="../assets/" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Admin-DashBoard</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" src="~/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet" />
+
+
+    <link href="/css/Admin-Css/materialdesignicons.css" rel="stylesheet" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link href="/css/Admin-Css/node-waves.css" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
+    <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+    <!-- Vendors CSS -->
+    <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="/js/Admin-js/helpers.js"></script>
+    <script src="/js/Admin-js/config.js"></script>
+</head>
+
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+
+            <!--Side Menu Partial View -->
+            <!--Show the partial view of sidemenu-->
+            <partial name="_SidePartialView" />
+
+
+            <!-- / Side Menu Partial View Ends -->
+            <!-- Layout container -->
+            <div class="layout-page">
+
+
+                <!-- Navbar Partial View -->
+                <!--Show the partial view of navbar partial view-->
+                <partial name="_NavbarPartialView" />
+
+                <!-- / Navbar Partial View -->
+
+                <!-- / Navbar -->
+
+
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+                        <h3>Contacts</h3>
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Message</th>
+                                            <th>Date</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @foreach (var a in Model.Item1)
+                                        {
+                                            <tr>
+                                                <td>@a.Name</td>
+                                                <td>@a.Email</td>
+                                                <td>@a.Phone</td>
+                                                <td>@a.Message</td>
+                                                <td>@(a.Date.HasValue ? a.Date.Value.ToString("dd-MM-yyyy hh:mm:ss tt") : "")</td>
+
+                                            </tr>
+
+                                        }
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+      
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <section>
+
+                        <partial name="_Footer" />
+
+
+                    </section>
+
+
+
+
+                    <!-- / Footer -->
+                    <div class="content-backdrop fade"></div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

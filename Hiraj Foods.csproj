@@ -7,4 +7,47 @@
     <RootNamespace>Hiraj_Foods</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+
+    <Compile Remove="wwwroot\DB-Images\**" />
+    <Content Remove="wwwroot\DB-Images\**" />
+    <EmbeddedResource Remove="wwwroot\DB-Images\**" />
+    <None Remove="wwwroot\DB-Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <Folder Include="wwwroot\Db_Images\ProfileImages\" />
+
+    <Folder Include="wwwroot\Db_Images\ProductImages\" />
+    <Folder Include="wwwroot\Db_Images\ProductFlavourImages\" />
+
+    <Folder Include="wwwroot\BannerImages\" />
+
+    <Folder Include="wwwroot\UserProfilePic\" />
+
+    <PackageReference Include="itext7" Version="8.0.5" />
+
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.5" />
+
+    <PackageReference Include="MailboxValidator.SingleValidation" Version="2.0.1" />
+
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RazorPay.Core" Version="1.0.2" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.3.2" />
+    <PackageReference Include="Stripe.net" Version="45.7.0" />
+    <Folder Include="Views\Rahul\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Admin\Source\Repos\Hiraj-Foods\Repository\IRepository\.editorconfig" />
+  </ItemGroup>
+
 </Project>

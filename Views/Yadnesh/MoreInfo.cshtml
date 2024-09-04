@@ -1,0 +1,93 @@
+﻿@model Hiraj_Foods.Models.Product
+
+
+
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<!-- preloader ending here -->
+<!-- Page Header Section Start Here -->
+<section class="page-header page-header4 bg_img padding-tb">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="page-header-content-area">
+            <h3 class="ph-title" style="margin-top:70px;">Healthish @Model.ProductFlavour Product</h3>
+        </div>
+    </div>
+</section>
+<!-- Page Header Section Ending Here -->
+<!-- Shop Page Section start here -->
+<section class="shop-single padding-tb">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12 sticky-widget">
+                <div class="product-details" style="background-image: url('../img/t1.jpeg');">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 col-12">
+                            <div class="product-thumb" class="border">
+                                <div class="swiper-container gallery-top">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="shop-item">
+                                                <div class="shop-thumb" style="padding-top:-50px; " height="300">
+                                                    <img src="@Model.ProductImageUrl" alt="shop-single">
+                                                </div><br>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="post-content">
+                                <label><b>Product Name : </b></label><p style="margin-left: 120px;margin-top: -30px;">@Model.ProductName</p>
+                                <label>
+                                    <b>
+                                        Nutritions :
+                                    </b>
+                                </label> <p style="margin-left: 120px;margin-top: -30px;">
+                                    @Model.ProductNutrition
+                                </p>
+                                <label>
+                                    <b>
+                                        Ingradients :
+                                    </b>
+                                </label> <p style="margin-left: 120px;margin-top: -33px;">
+                                    @Model.ProductIngredient
+                                </p>
+
+
+                                <label><b>Net.Wt. :</b></label><p style="margin-left: 120px;margin-top: -30px;">@Model.ProductWeight</p>
+                                <br>
+
+                                <label>
+                                    <b>
+                                        Description :
+                                    </b>
+                                </label><p style="margin-left: 120px;margin-top: -31px;">
+                                    @Model.ProductDescription
+                                </p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 style="font-size: 20px;margin-top: 10px;"><b>Steps to prepare Healthish Products</b></h4>
+                    <img src="~/img/procedure.jpg" style="margin-bottom: 40px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
