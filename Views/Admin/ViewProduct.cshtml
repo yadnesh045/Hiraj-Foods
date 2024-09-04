@@ -1,0 +1,207 @@
+﻿@model Tuple<List<Product>>
+
+@{
+    Layout = null;
+}
+
+@{
+    var products = Model.Item1;
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+      data-assets-path="../assets/" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Admin-DashBoard</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" src="~/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet" />
+
+
+    <link href="/css/Admin-Css/materialdesignicons.css" rel="stylesheet" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link href="/css/Admin-Css/node-waves.css" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
+    <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+
+    <!-- Vendors CSS -->
+    <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="/js/Admin-js/helpers.js"></script>
+    <script src="/js/Admin-js/config.js"></script>
+
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+
+</head>
+
+
+<body>
+
+
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!--Side Menu Partial View -->
+            <!--Show the partial view of sidemenu-->
+            <partial name="_SidePartialView" />
+
+
+            <!-- / Side Menu Partial View Ends -->
+            <!-- Layout container -->
+            <div class="layout-page">
+
+                <!-- Navbar Partial View -->
+                <!--Show the partial view of navbar partial view-->
+                <partial name="_NavbarPartialView" />
+
+                <!-- / Navbar Partial View -->
+
+                <div class="content-wrapper">
+                    <!-- Content -->
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills flex-column flex-md-row mb-4 gap-2 gap-lg-0">
+                                    <li class="nav-item">
+
+                                        <a class="nav-link active" asp-area="" asp-controller="Admin" asp-action="AddProduct" class="menu-link"><i class="mdi mdi-account-outline mdi-20px me-1"></i>Add Product</a>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Hoverable Table rows -->
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Product Flavour	</th>
+                                            <th>Product Price</th>
+                                            <th>Nutrition</th>
+                                            <th>Ingredients</th>
+                                            <th>Description</th>
+                                            <th>Flavour Image</th>
+                                            <th>Product Image</th>
+                                            <th>Actions</th>
+
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="table-border-bottom-0">
+                                        @foreach (var product in Model.Item1)
+                                        {
+                                            <tr>
+                                                <td>@product.ProductName</td>
+                                                <td>@product.ProductFlavour</td>
+                                                <td>@product.ProductPrice</td>
+                                                <td style="word-wrap: break-word; white-space:normal ">@product.ProductNutrition</td>
+                                                <td style="word-wrap: break-word; white-space:normal ">@product.ProductIngredient</td>
+                                                <td style="word-wrap: break-word; white-space:normal ">@product.ProductDescription</td>
+
+                                                <td>
+                                                    <img src="@product.ProductFlavourImageUrl" alt="Product Image" width="100" height="100" />
+                                                </td>
+                                                <td>
+
+                                                    <img src="@product.ProductImageUrl" alt="Product Image" width="100" height="100" />
+
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                            <i class="mdi mdi-dots-vertical"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@product.Id"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@product.Id"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--/ Hoverable Table rows -->
+
+                    </div>
+                    <!-- / Content -->
+
+                  
+                    <!-- Footer -->
+                    <section>
+
+                       <partial name="_Footer" />
+
+
+                    </section>
+
+                 
+
+
+                    <!-- / Footer -->
+
+
+
+
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/admin-js/bootstrap.js"></script>
+
+
+
+
+<partial name="_toastr" />
+

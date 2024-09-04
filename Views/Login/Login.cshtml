@@ -1,0 +1,25 @@
+﻿@* @model Hiraj_Foods.Models.View_Model.LoginData *@
+
+
+@{
+    Layout = null;
+}
+
+
+
+<link href="~/css/login-css/login.css" rel="stylesheet" />
+
+<img class="Logo" src="~/img/hiraj food.png" />
+
+
+<form class="login" method="post" asp-controller="Login" asp-action="Login">
+    <input name="EnteredEmail" type="text" placeholder="Email">
+    <input name="EnteredPassword" type="password" placeholder="Password">
+    <button type="submit">Login</button>
+</form>
+
+
+
+
+
+<partial name="_toastr" />

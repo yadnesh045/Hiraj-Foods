@@ -1,0 +1,204 @@
+﻿
+
+@model Hiraj_Foods.Models.Product
+
+
+@{
+    var userid = Context.Session.GetInt32("UserId");
+}
+
+
+
+<link href="~/css/user-css/timeline.css" rel="stylesheet" />
+
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<!-- preloader ending here -->
+<!-- Page Header Section Start Here -->
+<section class="page-header page-header4 bg_img padding-tb">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="page-header-content-area">
+            <h3 class="ph-title" style="margin-top:70px;">Healthish @Model.ProductFlavour Product</h3>
+        </div>
+    </div>
+</section>
+<!-- Page Header Section Ending Here -->
+<!-- Shop Page Section start here -->
+<section class="shop-single padding-tb">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-12 sticky-widget">
+                <div class="product-details" style="background-image: url('../img/t1.jpeg');">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 col-12">
+                            <div class="product-thumb" class="border">
+                                <div class="swiper-container gallery-top">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="shop-item">
+                                                <div class="shop-thumb" style="padding-top:-50px; " height="300">
+                                                    <img src="@Model.ProductImageUrl" alt="shop-single">
+                                                </div><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="post-content">
+                                <label><b>Product Name : </b></label><p style="margin-left: 120px;margin-top: -30px;">@Model.ProductName</p>
+                                <label>
+                                    <b>
+                                        Nutritions :
+                                    </b>
+                                </label> <p style="margin-left: 120px;margin-top: -30px;">
+                                    @Model.ProductNutrition
+                                </p>
+                                <label>
+                                    <b>
+                                        Ingradients :
+                                    </b>
+                                </label> <p style="margin-left: 120px;margin-top: -33px;">
+                                    @Model.ProductIngredient
+                                </p>
+
+
+                                <label><b>Net.Wt. :</b></label><p style="margin-left: 120px;margin-top: -30px;">@Model.ProductWeight</p>
+                                <br>
+
+                                <label>
+                                    <b>
+                                        Description :
+                                    </b>
+                                </label><p style="margin-left: 120px;margin-top: -31px;">
+                                    @Model.ProductDescription
+                                </p>
+                                <label>
+                                    <b>
+                                        Price :
+                                    </b>
+                                </label><p style="margin-left: 120px;margin-top: -31px;">
+                                    @Model.ProductPrice
+                                </p>
+
+
+                                <a asp-action="AddCart" asp-controller="User" asp-route-id=@Model.Id class="btn btn-warning">Add to Cart</a>
+
+                                @if (userid != null)
+                                {
+
+                                    <a id="buyNowBtn" asp-action="Checkout" asp-controller="Yadnesh" asp-route-id=@Model.Id class="btn btn-warning">Buy Now</a>
+
+
+  
+                                }
+                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#buyNowBtn').click(function () {
+                                            var productPrice = @Model.ProductPrice;
+
+                                            $.ajax({
+                                                url: '@Url.Action("SetProductPrice", "User")',
+                                                type: 'POST',
+                                                data: { price: productPrice },
+                                                success: function (response) {
+                                                    console.log('Session variable set successfully');
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    console.error('Error setting session variable:', error);
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+
+
+
+                                
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <a asp-area="" asp-controller="Yadnesh" asp-action="Home">
+                <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+            </a>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 style="font-size: 20px;margin-top: 10px;"><b>Steps to prepare Healthish Products</b></h4>
+                    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+
+                    <!-- The Timeline -->
+
+                    <ul class="timeline">
+
+                        <!-- Item 1 -->
+                        <li>
+                            <div class="direction-r">
+                                <div class="flag-wrapper">
+                                    <span class="flag">Step 1</span>
+                                    <span class="time-wrapper"> 
+                                </div>
+                                <div class="desc">Take 2-3 Spoon of Healthish</div>
+                                <img src="~/anurag-images/spoons.png" alt="Step 1 Image">
+                            </div>
+                        </li>
+
+                        <!-- Item 2 -->
+                        <li>
+                            <div class="direction-l">
+                                <div class="flag-wrapper">
+                                    <span class="flag">Step 2</span>
+                                    <span class="time-wrapper">
+                                </div>
+                                <div class="desc">Mix It With One Bowl Of Water</div>
+                                <img src="~/anurag-images/bowl.png" alt="Step 2 Image">
+                            </div>
+                        </li>
+
+                        <!-- Item 3 -->
+                        <li>
+                            <div class="direction-r">
+                                <div class="flag-wrapper">
+                                    <span class="flag">Step 3</span>
+                                    <span class="time-wrapper">
+                                </div>
+                                <div class="desc">Cook for 2-3 minutes on low Flame and Serve</div>
+                                <img src="~/anurag-images/bowl-of-rice.png" alt="Step 3 Image">
+                            </div>
+                        </li>
+                    </ul>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/timeline.js"></script>
+
+
+
+
+
+
+<partial name="_toastr" />
+

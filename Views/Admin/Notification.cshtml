@@ -1,0 +1,206 @@
+﻿@{
+    var contactJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Contact);
+    var enquiryJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Enquiry);
+    var feedbackJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Feedback);
+
+
+    var paidJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PaidCheckoutCount);
+    var pendingJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PendingCheckoutCount);
+    var faildJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.FaildCheckoutCount);
+}
+
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+      data-assets-path="../assets/" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Notification</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" src="~/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet" />
+
+
+    <link href="/css/Admin-Css/materialdesignicons.css" rel="stylesheet" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link href="/css/Admin-Css/node-waves.css" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
+    <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+    <!-- Vendors CSS -->
+    <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="/js/Admin-js/helpers.js"></script>
+    <script src="/js/Admin-js/config.js"></script>
+
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!--Side Menu Partial View -->
+            <!--Show the partial view of sidemenu-->
+            <partial name="_SidePartialView" />
+
+
+            <!-- / Side Menu Partial View Ends -->
+            <!-- Layout container -->
+            <div class="layout-page">
+
+                <!-- Navbar Partial View -->
+                <!--Show the partial view of navbar partial view-->
+                <partial name="_NavbarPartialView" />
+
+                <!-- / Navbar Partial View -->
+                <!--  Main For Enquiry-->
+                <!-- Hoverable Table rows -->
+
+                <div class="content-wrapper">
+                    <!-- Content -->
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+                        <div class="row gy-4">
+
+                            
+
+
+                            <div class="col-md-12 col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-1">Notification </h4>
+                                        <div class="chart-container" style="height:500px; width:500px;">
+                                            <canvas id="Notification"></canvas>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                            <div class="col-md-12 col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-1">Payment Status </h4>
+                                        <div class="chart-container" style="height:500px; width:500px;">
+                                            <canvas id="paymentstatus"></canvas>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Footer -->
+                    <section>
+
+                        <partial name="_Footer" />
+
+
+                    </section>
+
+
+
+
+                    <!-- / Footer -->
+
+
+                    <div class="content-backdrop fade"></div>
+
+                </div>
+            </div>
+            <div class="layout-overlay layout-menu-toggle"></div>
+        </div>
+    </div>
+
+
+
+    <script src="/js/Admin-js/jquery.js"></script>
+    <script src="/js/Admin-js/popper.js"></script>
+    <script src="/js/Admin-js/bootstrap.js"></script>
+    <script src="/js/Admin-js/node-waves.js"></script>
+    <script src="/js/Admin-js/perfect-scrollbar.js"></script>
+    <script src="/js/Admin-js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <script src="/js/Admin-js/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="/js/Admin-js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="/js/Admin-js/dashboards-analytics.js"></script>
+
+
+    <!--Charts js-->
+    <script src="~/js/chart-js/notificationchart.js"></script>
+    <script>
+
+
+
+       
+        var contact = @Html.Raw(contactJson);
+        var enquiry = @Html.Raw(enquiryJson);
+        var feedback = @Html.Raw(feedbackJson);
+
+        var paid = @Html.Raw(paidJson);
+        var pending = @Html.Raw(pendingJson);
+        var fail = @Html.Raw(faildJson);
+
+    </script>
+
+
+
+    <!--script for charts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,174 @@
+﻿@model Tuple<Product>
+
+@{
+    Layout = null;
+}
+@{
+    var product = Model.Item1;
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
+      data-assets-path="../assets/" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Admin-DashBoard</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" src="~/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet" />
+
+
+    <link href="/css/Admin-Css/materialdesignicons.css" rel="stylesheet" />
+
+    <!-- Menu waves for no-customizer fix -->
+    <link href="/css/Admin-Css/node-waves.css" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/css/Admin-Css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/css/Admin-Css/theme-default.css" class="template-customizer-theme-css" />
+    <link href="/css/Admin-Css/demo.css" rel="stylesheet" />
+    <!-- Vendors CSS -->
+    <link href="/css/Admin-Css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/css/Admin-Css/apex-charts.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="/js/Admin-js/helpers.js"></script>
+    <script src="/js/Admin-js/config.js"></script>
+</head>
+
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+
+            <!--Side Menu Partial View -->
+            <!--Show the partial view of sidemenu-->
+            <partial name="_SidePartialView" />
+
+
+            <!-- / Side Menu Partial View Ends -->
+            <div class="layout-page">
+                <!-- Navbar -->
+
+                <!-- Navbar Partial View -->
+                <!--Show the partial view of navbar partial view-->
+                <partial name="_NavbarPartialView" />
+
+                <!-- / Navbar Partial View -->
+
+                <div class="content-wrapper">
+                    <!-- Content -->
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Edit Product</h4>
+
+                        <!-- Basic Layout -->
+                        <div class="row">
+                            <div class="col-xl">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Edit Product Details</h5>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <form method="post" asp-controller="Admin" asp-action="EditProduct" enctype="multipart/form-data">
+                                            <input type="hidden" name="Id" value="@Model.Item1.Id" />
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-fullname" placeholder="Product Name" name="ProductName" value="@Model.Item1.ProductName" />
+                                                <label for="basic-default-fullname">Product Name</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Flavour" name="ProductFlavour" value="@Model.Item1.ProductFlavour" />
+                                                <label for="basic-default-company">Product Flavour</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Price" name="ProductPrice" value="@Model.Item1.ProductPrice" />
+                                                <label for="basic-default-company">Product Price</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Weight" name="ProductWeight" value="@Model.Item1.ProductWeight" />
+                                                <label for="basic-default-company">Product Weight</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Nutrition" name="ProductNutrition" value="@Model.Item1.ProductNutrition" />
+                                                <label for="basic-default-company">Nutrition</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Ingredients" name="ProductIngredient" value="@Model.Item1.ProductIngredient" />
+                                                <label for="basic-default-company">Ingredients</label>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="text" class="form-control" id="basic-default-company" placeholder="Product Description" name="ProductDescription" value="@Model.Item1.ProductDescription" />
+                                                <label for="basic-default-company">Product Description</label>
+                                            </div>
+
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="mb-3">
+                                                        <label for="formFile" class="form-label">Input Product Flavour Image</label>
+                                                        <input class="form-control" type="file" id="formFile" name="ProductFlavourImage" value="@Model.Item1.ProductFlavourImage" />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="formFileMultiple" class="form-label">Input Product Image</label>
+                                                        <input class="form-control" type="file" id="formFile" name="ProductImage" value="@Model.Item1.ProductImage" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-floating form-floating-outline mb-4 mt-3">
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Merged -->
+                        </div>
+                    </div>
+                    <!-- / Content -->
+                    <!-- Footer -->
+                    <section>
+
+                        <partial name="_Footer" />
+
+
+                    </section>
+
+
+
+
+                    <!-- / Footer -->
+
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

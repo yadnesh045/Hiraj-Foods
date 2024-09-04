@@ -1,0 +1,143 @@
+﻿@model List<Hiraj_Foods.Models.Cart>
+
+
+<!--search area-->
+<div class="search-input">
+    <div class="search-close">
+        <i class="fas fa-times"></i>
+    </div>
+    <form>
+        <input type="text" name="text" placeholder="Search Heare">
+        <button class="search-btn" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
+<!-- search area -->
+
+
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+
+
+@if (Model.Count != 0)
+{
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+
+
+                <marquee behavior="scroll" direction="left" scrollamount="8">
+                    <h1>Note: After updating quantity, please remember to update the cart!</h1>
+                </marquee>
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 shadow">
+                            <img src="@item.ProductImageUrl" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.ProductName</h5>
+                                <p class="card-text">@item.ProductDescription</p>
+                                <p class="card-text">Price: Rs.@item.ProductPrice</p>
+
+
+                                <form asp-action="UpdateCartQuantity" asp-controller="User" method="post" class="d-inline-block">
+                                    <input type="hidden" name="id" value="@item.Id">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="quantity-label">Quantity</span>
+                                        </div>
+                                        <input type="number" name="quantity" class="form-control quantity-input" value="@item.Quantity" data-price="@item.ProductPrice" aria-label="Quantity" aria-describedby="quantity-label" min="1">
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                </form>
+
+                                <a asp-action="DeleteFromCart" asp-controller="User" asp-route-id="@item.Id" class="btn btn-danger d-inline-block">Delete</a>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="float-right">
+                        <h4>Total: <span id="totalAmount">00</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 d-flex align-items-center">
+                <div class="col-sm-6 order-md-2 text-right">
+                    <a id="checkoutButton" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
+                </div>
+                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                    <a asp-area="" asp-controller="Yadnesh" asp-action="Home">
+                        <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div style="text-align: center; margin: 50px 50px; padding: 200px; background-color: white; color: #ffb11f; border: 3px solid #ffb11f; border-radius: 5px;">
+        <h3>Cart Is Empty</h3>
+        <a class="btn btn-outline-warning" asp-action="Home" asp-controller="Yadnesh">Continue Shopping</a>
+    </div>
+}
+
+<partial name="_toastr" />
+
+<style>
+    .card {
+        transition: transform 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .quantity-input {
+        max-width: 80px;
+    }
+
+    marquee {
+        font-family:Calibri;
+        font-size: 10px; /* Larger text for better readability */
+        font-weight: bold; /* Bold for emphasis */
+
+        color: black; /* White text */
+        padding: 10px 20px; /* Padding for aesthetics */
+        border-radius: 10px; /* Rounded corners */
+        width: 80%; /* Limit width to avoid full-width marquee */
+        margin: 20px auto; /* Center the marquee */
+        text-align: center; /* Center text inside the marquee */
+    }
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="~/js/user-js/addtocart.js"></script>

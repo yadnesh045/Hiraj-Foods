@@ -1,0 +1,62 @@
+﻿using Hiraj_Foods.Data;
+using Hiraj_Foods.Repository.IRepository;
+
+namespace Hiraj_Foods.Repository
+{
+    public class UnitOfWorks : IUnitOfWorks
+    {
+
+        private readonly ApplicationDbContext _db;
+        public IAdminRepository Admin { get; set; }
+        public IProductRepository Product { get; set; }
+        public IContactRepository Contact {get;set;}
+
+		public IUserRepository Users {  get; set; } 
+        public IEnquiry Enquiry { get; set; }
+
+        public IFeedBackRepository Feedback { get; set; }
+
+        public IBannerRepository Banner { get; set; }
+
+        public ICartRepository Cart { get; set; }
+
+        public ICheckoutRepository Checkout { get; set; }
+
+        public IPriceRepository Price { get; set; }
+
+        public IUserProfileImgRepository UserImage { get; set; }
+
+        public IOrdersRepository Uorders { get; set; }
+
+        public IPositiveFeedbackRepository PositiveFeedback { get; set; }
+
+        public UnitOfWorks(ApplicationDbContext _db)
+
+        {
+            this._db = _db;
+            Admin = new AdminRepository(_db);
+            Product = new ProductRepository(_db);
+            Contact = new ContactRepository(_db);
+            Users = new UserRepository(_db); 
+            Enquiry = new EnquiryRepository(_db);
+            Feedback = new FeedbackRepository(_db);
+            Banner = new BannerRepository(_db);
+            Cart = new CartRepository(_db);
+            Checkout = new CheckoutRepository(_db);
+            UserImage = new UserProfileImgRepository(_db);
+            Price = new PriceRepository(_db);
+            Uorders = new OrdersRepository(_db);
+            PositiveFeedback = new PositiveFeedbackRepository(_db);
+
+        }
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
+
+
+
+
+}
+}

@@ -1,0 +1,138 @@
+﻿@model Hiraj_Foods.Models.Contact
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Contact Us</title>
+
+</head>
+
+<body>
+    <!-- preloader start here -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- preloader ending here -->
+    <!-- desktop menu ending here -->
+
+    <section class="page-header page-header3 bg_img padding-tb">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="page-header-content-area">
+                <h4 class="ph-title"><!-- Contact Us --></h4>
+                <ul class="agri-ul">
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Us Section Start Here -->
+    <div class="contact-section padding-tb">
+        <div class="container">
+
+            <div class="row" style="margin-bottom: 45px; margin-left:0">
+                <div class="col-lg-6 col-12">
+
+                    <h4 class="text-center">Contact Form</h4>
+
+                    <div class="contact-form" style=" border-width:2px;
+
+                                      border-style:inset;padding-top: 15px;padding-left: 15px;padding-right: 15px;padding-bottom: 15px;">
+                        <form method="post" asp-action="Contact" asp-controller="Rahul" id="commentform" class="comment-form">
+
+                            <input type="text" asp-for="Name" name="name" class="" placeholder="Enter Name"> <br>
+                            <span asp-validation-for="Name" class="text-danger"></span>  
+
+
+                            <input type="email" asp-for="Email" name="email" class="" placeholder="Enter Email" ><br />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                            <input type="text" asp-for="Phone" name="Phone" class="" placeholder="Enter Mobile Number"><br />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+
+                            <textarea type="text" asp-for="Message" name="message" id="role" cols="30" rows="10" placeholder="Enter Message" ></textarea> <br />
+                            <span asp-validation-for="Message" class="text-danger"></span>
+
+
+                            <button type="submit" class="lab-btn" name="submit" value="submit">
+                                <span>Submit Now</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-12" align="center" style="margin-top: 90px;">
+                    <h4 align="center" style="margin-bottom:20px;">Contact Us</h4>
+                    <div class="contact-item" style="border-width:2px;
+                                      border-style:outset;height: 75px;" align="center">
+                        <div class="contact-icon" style="padding-left: 15px;">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                        </div>
+                        <div class="contact-details">
+                            <p style="margin-top: 5px;">Address -Gat No 577, Janori,<br> Tal - Dindori, dist - Nashik</p>
+                        </div>
+                    </div>
+                    <div class="contact-item" style="border-width:2px;
+                                      border-style:outset;height: 75px;" align="center">
+                        <div class="contact-icon" style="padding-left: 15px;">
+
+                            <i class="fa-solid fa-phone"></i>
+
+                        </div>
+                        <div class="contact-details">
+                            <p style="margin-top: 5px;margin-right:45px;">+91 70306 00089</p>
+                        </div>
+                    </div>
+                    <div class="contact-item" style="border-width:2px;
+                                      border-style:outset;height: 75px;" align="center">
+                        <div class="contact-icon" style="padding-left: 15px;">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                        </div>
+                        <div class="contact-details">
+                            <p style="margin-top: 5px;margin-right:30px;">info@hirajfoods.com</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+
+    <script src="assets\js\jquery.js"></script>
+    <script src="assets\js\fontawesome.min.js"></script>
+    <script src="assets\js\waypoints.min.js"></script>
+    <script src="assets\js\bootstrap.min.js"></script>
+    <script src="assets\js\wow.min.js"></script>
+    <script src="assets\js\swiper.min.js"></script>
+    <script src="assets\js\jquery.countdown.min.js"></script>
+    <script src="assets\js\jquery.counterup.min.js"></script>
+    <script src="assets\js\isotope.pkgd.min.js"></script>
+    <script src="assets\js\lightcase.js"></script>
+    <script src="assets\js\functions.js"></script>
+</body>
+
+</html>
+
+
+
+<partial name="_toastr" />
